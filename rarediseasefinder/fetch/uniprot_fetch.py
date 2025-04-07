@@ -88,25 +88,13 @@ def procesar_uniprot(uniProtID):
       for inter in comment.get("interactions", [])
 
     ]).sort_values(by="NumExperiments", ascending=False)
-
-    # Mostrar los DataFrames
-    mostrar_dataframe("1. Función", df_function)
-    mostrar_dataframe("2.1. Subcellular Location", df_subcellular)
-    mostrar_dataframe("2.2. Subcellular Location", df_subcellular_godata)
-    mostrar_dataframe("3. Enfermedades", df_disease)
-    for name, df in df_disease_publications.groupby("DiseaseID"):
-      mostrar_dataframe(f"## Publicaciones enfermedad: {name}", df)
-      display(Markdown("---"))
-    mostrar_dataframe("4. Variantes", df_variants)
-    mostrar_dataframe("5. Interacciones con: ", df_interactions)
-
-    # Esto sería para devolver los dataframes para cuando desacomplemos la interfaz
-    # return {
-      #  "Function": df_function,
-      #  "Subcellular Location": df_subcellular,
-      #  "Disease": df_disease,
-      #  "Variants": df_variants,
-      #  "Interactions": df_interactions
-    #}
+    
+    return {
+        "Function": df_function,
+        "Subcellular Location": df_subcellular,
+        "Disease": df_disease,
+        "Variants": df_variants,
+        "Interactions": df_interactions
+    }
 
    
