@@ -1294,6 +1294,22 @@ files = [
 ]
 
 [[package]]
+name = "unipressed"
+version = "1.4.0"
+description = "Comprehensive Python client for the Uniprot REST API"
+optional = false
+python-versions = "<4.0,>=3.8"
+groups = ["main"]
+files = [
+    {file = "unipressed-1.4.0-py3-none-any.whl", hash = "sha256:f3c53280668846b3164eae066a575b28399d1606d124f6cce5ac0bf405cf24e1"},
+    {file = "unipressed-1.4.0.tar.gz", hash = "sha256:a590f4b8f41b4daf5485400b6149449face7ca91e3e93a113dacefbfdc684887"},
+]
+
+[package.dependencies]
+requests = ">=2.28.1,<3.0.0"
+typing-extensions = ">=4.3.0,<5.0.0"
+
+[[package]]
 name = "urllib3"
 version = "2.2.3"
 description = "HTTP library with thread-safe connection pooling, file post, and more."
@@ -1396,4 +1412,4 @@ files = [
 [metadata]
 lock-version = "2.1"
 python-versions = "^3.8"
-content-hash = "ccb15a01005d36260415a313f93046a446d401179ce82a435a0912d6c0c7fa49"
+content-hash = "557e8e03c0ec5041353ea7d0cd5a6bc9c8c6a6a4b5d547d079c34d53b08d8272"
