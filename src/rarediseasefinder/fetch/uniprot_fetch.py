@@ -1,5 +1,19 @@
 import pandas as pd
-from utils import fetch_data
+import requests
+
+def fetch_data(url):
+    try:
+        response = requests.get(url)
+        response.raise_for_status()
+        
+        return response.json()
+    
+    except requests.exceptions.HTTPError as http_err:
+        print(f"HTTP error occurred: {http_err}")
+    except Exception as err:
+        print(f"An error occurred: {err}")
+    
+    return None
 
 def fetch_uniprot_data(uniprot_id):
     url = f"https://rest.uniprot.org/uniprotkb/{uniprot_id}"
