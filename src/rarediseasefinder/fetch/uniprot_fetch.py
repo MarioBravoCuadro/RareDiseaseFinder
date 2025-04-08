@@ -1,5 +1,5 @@
 import pandas as pd
-from fetch.utils import fetch_data
+from .utils import fetch_data
 
 def fetch_uniprot_data(uniprot_id):
     url = f"https://rest.uniprot.org/uniprotkb/{uniprot_id}"
