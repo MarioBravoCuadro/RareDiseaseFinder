@@ -1,9 +1,8 @@
-# from .pharos_fetch import *
-# from .selleckchem_fetch import *
+from .pharos_fetch import procesar_pharos
+from .selleckchem_fetch import obtener_link_selleckchem
 from .uniprot_fetch import procesar_uniprot
-
 __all__ = [
-    # *pharos_all,
-    # *selleckchem_all,
+    "procesar_pharos",
+    "obtener_link_selleckchem",
     "procesar_uniprot"
 ]
