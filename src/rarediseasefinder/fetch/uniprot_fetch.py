@@ -2,15 +2,6 @@ import pandas as pd
 from fetch.utils import fetch_data
 
 def fetch_uniprot_data(uniprot_id):
-    """
-    Fetch data from UniProt for a given UniProt ID.
-
-    Parameters:
-    uniprot_id (str): The UniProt ID to fetch data for.
-
-    Returns:
-    dict: The JSON response from the UniProt API, or None if an error occurs.
-    """
     url = f"https://rest.uniprot.org/uniprotkb/{uniprot_id}"
     return fetch_data(url)
 
