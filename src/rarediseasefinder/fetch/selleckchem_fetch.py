@@ -1,3 +1,4 @@
+from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
@@ -16,8 +17,8 @@ options.add_argument("--incognito")
 options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
 
 def buscar_medicamento(termino):
-    driver = gs.Chrome(options=options)
-
+   
+    driver = webdriver.Chrome()
     try:
         driver.get("https://www.selleckchem.com/search.html")
 
