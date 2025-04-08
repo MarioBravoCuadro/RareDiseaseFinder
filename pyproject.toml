@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Search engine for information on rare diseases."
 authors = ["Mario Bravo Cuadro <mario.bravo.cuadro@alumnos.upm.es>"]
 license = "MIT"
-packages = [{include = "rarediseasefinder"}]
+packages = [{ include = "rarediseasefinder", from = "src" }]
 
 [tool.poetry.dependencies]
 python = "^3.8"
