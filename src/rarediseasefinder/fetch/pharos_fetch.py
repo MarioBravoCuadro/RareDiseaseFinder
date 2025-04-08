@@ -1,12 +1,7 @@
 import pandas as pd
 import requests
-<<<<<<< HEAD
 from rarediseasefinder.fetch.uniprot_fetch import procesar_uniprot
 from rarediseasefinder.fetch.selleckchem_fetch import obtener_link_selleckchem
-=======
-from fetch.uniprot_fetch import procesar_uniprot
-from fetch.selleckchem_fetch import obtener_link_selleckchem
->>>>>>> cd26f944172cbf8e0e19e6b70604d26263385933
 
 graphql_url = "https://pharos-api.ncats.io/graphql"
 
