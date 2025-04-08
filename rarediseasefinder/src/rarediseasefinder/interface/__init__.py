@@ -1,3 +1,4 @@
-from .interface import mostrar_dataframe, mostrar_dataframe_groupby
+from .interface import *
+from .interface import __all__ as interface_all
 
-__all__ = ["mostrar_dataframe", "mostrar_dataframe_groupby"]
+__all__ = interface_all

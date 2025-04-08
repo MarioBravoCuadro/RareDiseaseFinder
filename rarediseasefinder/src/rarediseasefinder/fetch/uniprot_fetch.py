@@ -89,4 +89,6 @@ def procesar_uniprot(uniProtID):
         "Interactions": df_interactions
     }
 
+    __all__ = ['procesar_uniprot']
+
    

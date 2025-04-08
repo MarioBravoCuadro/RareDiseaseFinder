@@ -27,3 +27,6 @@ def mostrar_dataframe_groupby(titulo, df, group_by_column):
     for name, group in grouped:
         mostrar_dataframe(f"{titulo}: {name}", group)
         display(Markdown("---"))
+
+
+__all__ = ['mostrar_dataframe', 'mostrar_dataframe_groupby']
