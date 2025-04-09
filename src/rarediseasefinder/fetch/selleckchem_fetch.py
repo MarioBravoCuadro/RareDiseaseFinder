@@ -6,6 +6,8 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 from bs4 import BeautifulSoup
 import time
+import os
+import sys
 
 # Configuración de Chrome
 options = Options()
@@ -18,19 +20,24 @@ options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) Apple
 
 def buscar_medicamento(termino):
    
-    driver = webdriver.Chrome()
+    unique_dir = get_unique_directory()
+
+    chrome_options = Options()
+    chrome_options.add_argument(f"--user-data-dir={unique_dir}")
+
+    driver = webdriver.Chrome(options=chrome_options)
     try:
         driver.get("https://www.selleckchem.com/search.html")
 
         # Espera explícita para el campo de búsqueda
-        search_box = WebDriverWait(driver, 10).until(
+        search_box = WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.NAME, "searchDTO.searchParam"))
         )
         search_box.clear()
         search_box.send_keys(termino + Keys.RETURN)
 
         # Espera explícita para los resultados
-        WebDriverWait(driver, 10).until(
+        WebDriverWait(driver, 5).until(
             EC.presence_of_element_located((By.CSS_SELECTOR, "tr[name='productList']")))
 
         html = driver.page_source
@@ -89,5 +96,18 @@ def obtener_link_selleckchem(farmaco):
         print(f"Error obteniendo {farmaco}: {str(e)}")
         return None
     
+def is_colab():
+    return 'google.colab' in sys.modules
+
+def get_unique_directory():
+    if is_colab():
+        # Google Colab
+        unique_dir = "/content/ChromeProfileUnique"
+    else:
+        # entorno local
+        unique_dir = os.path.join(os.getcwd(), "ChromeProfileUnique")
+    
+    os.makedirs(unique_dir, exist_ok=True)
+    return unique_dir
 
 __all__ = ['obtener_link_selleckchem']
