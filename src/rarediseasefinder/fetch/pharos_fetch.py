@@ -1,7 +1,6 @@
 import pandas as pd
 import requests
 from rarediseasefinder.fetch.uniprot_fetch import procesar_uniprot
-from rarediseasefinder.fetch.selleckchem_fetch import obtener_link_selleckchem
 
 graphql_url = "https://pharos-api.ncats.io/graphql"
 
@@ -80,14 +79,16 @@ def procesar_pharos(target):
         df_ligandos = pd.DataFrame(target_data.get("ligandosConocidos", []))
 
         df_ligandos['Selleckchem'] = df_ligandos['nombre'].apply(
-        lambda x: obtener_link_selleckchem(x) or 'No encontrado'
+        'En desarrollo'
+        #lambda x: obtener_link_selleckchem(x) or 'No encontrado'
         )
 
         # Crear DataFrame de fármacos aprobados
         df_farmacos = pd.DataFrame(target_data.get("deLosCualesSonFarmacosAprobados", []))
 
         df_farmacos['Selleckchem'] = df_farmacos['nombre'].apply(
-        lambda x: obtener_link_selleckchem(x) or 'No encontrado'
+        'En desarrollo'
+        #lambda x: obtener_link_selleckchem(x) or 'No encontrado'
         )
 
         # Crear DataFrame de relaciones proteína-proteína con priorización

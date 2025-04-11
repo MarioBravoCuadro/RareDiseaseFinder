@@ -107,6 +107,13 @@ def procesar_uniprot(uniProtID):
         "Interactions": df_interactions
     }
 
-__all__ = ['procesar_uniprot']
+def procesar_uniprot_target(target):
+    url = f"https://rest.uniprot.org/uniprotkb/search?query=gene:{target}+AND+reviewed:true&format=json"
+    data = fetch_data(url)
+    uniProtID = data["results"][0]["primaryAccession"]
+    procesar_uniprot(uniProtID)
+
+
+__all__ = ['procesar_uniprot','procesar_uniprot_target']
 
    
