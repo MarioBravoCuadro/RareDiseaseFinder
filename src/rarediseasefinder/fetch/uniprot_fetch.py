@@ -67,7 +67,7 @@ def procesar_uniprot(uniProtID):
     "Nombre": comment.get("disease", {}).get("diseaseId"),
     "Acronym": comment.get("disease", {}).get("acronym"),
     "Description": comment.get("disease", {}).get("description"),
-    "OMIM": f"https://www.omim.org/entry/"+comment.get("disease", {}).get("diseaseCrossReference", {}).get("id"),
+    "OMIM": f"https://www.omim.org/entry/{comment.get('disease', {}).get('diseaseCrossReference', {}).get('id')}" if comment.get('disease', {}).get('diseaseCrossReference', {}).get('id') else "⚠️ No se han encontrado datos.",
     "Publications": ", ".join(ev.get("id") for ev in comment.get("disease", {}).get("evidences", []) if ev.get("id"))
     } for comment in data.get("comments", []) if comment.get("commentType") == "DISEASE"
     ])
