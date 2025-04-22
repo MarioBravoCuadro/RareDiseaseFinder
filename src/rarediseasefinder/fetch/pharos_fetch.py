@@ -160,6 +160,17 @@ def procesar_pharos(target):
     else:
         dataIsfetched = False
 
+    return {
+        "Info": df_info,
+        "Uniprot": df_uniprot,
+        "OMIM": df_omim,
+        "Ligandos": df_ligandos,
+        "Farmacos": df_farmacos,
+        "Relaciones": df_relaciones,
+        "Numero de Vias": df_numero_vias_por_fuente,
+        "Vias": df_vias
+    }
+
 
 
 __all__ = ['procesar_pharos']
