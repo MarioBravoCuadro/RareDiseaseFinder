@@ -127,20 +127,8 @@ def procesar_uniprot(uniProtID):
                         "LinkPublicacion": pubmed_link,
                         "Abstract": abstract
                     })
-    
-    # Crear el DataFrame de publicaciones
-    publicaciones_data = []
-    for pubmed_id in pubmed_ids:
-        pubmed_link = f"https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}/"
-        abstract = abstracts_dict.get(pubmed_id, "Abstract no disponible")
-        
-        publicaciones_data.append({
-            "PubMed_ID": pubmed_id,
-            "LinkPublicacion": pubmed_link,
-            "Abstract": abstract
-        })
-    
-    df_publicaciones = pd.DataFrame(publicaciones_data)
+
+    df_publicaciones = pd.DataFrame(enfermedades_publicaciones)
     
     return {
         "Function": df_function,
