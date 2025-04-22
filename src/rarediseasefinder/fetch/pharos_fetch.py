@@ -78,18 +78,19 @@ def procesar_pharos(target):
         # Crear DataFrame de ligandos conocidos
         df_ligandos = pd.DataFrame(target_data.get("ligandosConocidos", []))
 
-        df_ligandos['Selleckchem'] = df_ligandos['nombre'].apply(
-        'En desarrollo'
+        df_ligandos['Selleckchem'] = 'En desarrollo'
+        #df_ligandos['Selleckchem'] = df_ligandos['nombre'].apply(
         #lambda x: obtener_link_selleckchem(x) or 'No encontrado'
-        )
+        #)
 
         # Crear DataFrame de fármacos aprobados
         df_farmacos = pd.DataFrame(target_data.get("deLosCualesSonFarmacosAprobados", []))
 
-        df_farmacos['Selleckchem'] = df_farmacos['nombre'].apply(
-        'En desarrollo'
+        df_ligandos['Selleckchem'] = 'En desarrollo'
+        #df_farmacos['Selleckchem'] = df_farmacos['nombre'].apply(
+        #'En desarrollo'
         #lambda x: obtener_link_selleckchem(x) or 'No encontrado'
-        )
+        #)
 
         # Crear DataFrame de relaciones proteína-proteína con priorización
         relaciones = []
