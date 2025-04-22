@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+from .ncbi_fetch import obtener_abstracts_batch
 
 def fetch_data(url):
     try:
@@ -18,6 +19,35 @@ def fetch_data(url):
 def fetch_uniprot_data(uniprot_id):
     url = f"https://rest.uniprot.org/uniprotkb/{uniprot_id}"
     return fetch_data(url)
+
+def extraer_pubmed_ids(data):
+    """Extrae todos los PubMed IDs de los datos de UniProt"""
+    pubmed_ids = []
+    
+    # Extraer de función
+    for comment in data.get("comments", []):
+        if comment.get("commentType") == "FUNCTION":
+            for txt in comment.get("texts", []):
+                for ev in txt.get("evidences", []):
+                    if ev.get("id"):
+                        pubmed_ids.append(ev.get("id"))
+    
+    # Extraer de enfermedades
+    for comment in data.get("comments", []):
+        if comment.get("commentType") == "DISEASE":
+            for ev in comment.get("disease", {}).get("evidences", []):
+                if ev.get("id"):
+                    pubmed_ids.append(ev.get("id"))
+    
+    # Extraer de variantes
+    for feature in data.get("features", []):
+        if feature.get("type") == "Natural variant":
+            for ev in feature.get("evidences", []):
+                if ev.get("id"):
+                    pubmed_ids.append(ev.get("id"))
+    
+    # Eliminar duplicados y filtrar valores no válidos
+    return list(set([pid for pid in pubmed_ids if pid]))
 
 def procesar_uniprot(uniProtID):
     data = fetch_uniprot_data(uniProtID)
@@ -99,12 +129,31 @@ def procesar_uniprot(uniProtID):
 
     ]).sort_values(by="NumExperiments", ascending=False)
     
+    # 6. Publicaciones con abstracts
+    pubmed_ids = extraer_pubmed_ids(data)
+    abstracts_dict = obtener_abstracts_batch(pubmed_ids)
+    
+    # Crear el DataFrame de publicaciones
+    publicaciones_data = []
+    for pubmed_id in pubmed_ids:
+        pubmed_link = f"https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}/"
+        abstract = abstracts_dict.get(pubmed_id, "Abstract no disponible")
+        
+        publicaciones_data.append({
+            "PubMed_ID": pubmed_id,
+            "LinkPublicacion": pubmed_link,
+            "Abstract": abstract
+        })
+    
+    df_publicaciones = pd.DataFrame(publicaciones_data)
+    
     return {
         "Function": df_function,
         "Subcellular Location": df_subcellular,
         "Disease": df_disease,
         "Variants": df_variants,
-        "Interactions": df_interactions
+        "Interactions": df_interactions,
+        "Publications": df_publicaciones
     }
 
 def procesar_uniprot_target(target):
