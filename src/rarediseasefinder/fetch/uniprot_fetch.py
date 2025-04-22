@@ -127,7 +127,7 @@ def procesar_uniprot(uniProtID):
                         "LinkPublicacion": pubmed_link,
                         "Abstract": abstract
                     })
-
+    
     df_publicaciones = pd.DataFrame(enfermedades_publicaciones)
     
     return {
@@ -136,7 +136,7 @@ def procesar_uniprot(uniProtID):
         "Disease": df_disease,
         "Variants": df_variants,
         "Interactions": df_interactions,
-        "Publications": df_publicaciones
+        "Publicaciones": df_publicaciones 
     }
 
 def procesar_uniprot_target(target):
