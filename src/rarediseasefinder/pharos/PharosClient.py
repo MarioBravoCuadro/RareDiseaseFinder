@@ -62,7 +62,7 @@ class PharosClient(BaseClient):
         """
         return query
     
-    def query_graphql(self, query: str) -> Dict:
+    def query_graphql(self, query: str) -> dict:
         """
         Ejecuta una consulta GraphQL en la API de Pharos
         
@@ -77,7 +77,7 @@ class PharosClient(BaseClient):
     
         return self._post_data(self.GRAPHQL_URL, json=payload)
     
-    def get_target_data(self, target: str) -> Dict:
+    def get_target_data(self, target: str) -> dict:
         """
         Obtiene datos de un objetivo específico de Pharos
         

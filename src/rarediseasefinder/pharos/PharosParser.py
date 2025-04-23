@@ -47,32 +47,31 @@ class PharosParser(BaseParser):
                         "Valor": prop["value"]
                     })
         return relaciones
+
     def parse(self,data:dict,prioridad_clases:dict,prioridad_propiedades:dict) -> pd.DataFrame:
+        print(type(data))
+        print(data.keys())
 
-        if "data" in data and "target" in data["data"]:
-            target_data = data["data"]["target"]
+        # Crear DataFrame con información principal
+        df_info = pd.DataFrame([{key: data[key] for key in ["nombre", "uniprot_ID", "descripcion", "claseDiana", "secuencia"]}])
 
-            # Crear DataFrame con información principal
-            df_info = pd.DataFrame([{key: target_data[key] for key in ["nombre", "uniprot_ID", "descripcion", "claseDiana", "secuencia"]}])
+        # Crear DataFrame de referencia OMIM
+        df_omim = pd.DataFrame(data.get("referenciaOMIM", []))
 
-            # Crear DataFrame de referencia OMIM
-            df_omim = pd.DataFrame(target_data.get("referenciaOMIM", []))
+        #Crear DataFrame de proteina-proteina-ordenados
+        df_relaciones = pd.DataFrame(self.get_protein_to_protein_ordered_df(data,prioridad_clases,prioridad_propiedades))
 
-            #Crear DataFrame de proteina-proteina-ordenados
-            df_relaciones = pd.DataFrame(self.get_protein_to_protein_ordered_df(data,prioridad_clases,prioridad_propiedades))
+        # Crear Dataframe de numeroDeViasPorFuente
+        df_numero_vias_por_fuente = pd.DataFrame(data.get("numeroDeViasPorFuente", []))
 
-            # Crear Dataframe de numeroDeViasPorFuente
-            df_numero_vias_por_fuente = pd.DataFrame(target_data.get("numeroDeViasPorFuente", []))
+        # Crear DataFrame de vías
+        df_vias = pd.DataFrame(data.get("vias", []))
 
-            # Crear DataFrame de vías
-            df_vias = pd.DataFrame(target_data.get("vias", []))
-
-            dataframes = {
-                "info" : df_info,
-                "omim" : df_omim,
-                "protein_protein_relations" : df_relaciones,
-                "numero_vias_fuente" : df_numero_vias_por_fuente,
-                "vias" : df_vias
-            }
-
-            return  dataframes
+        dataframes = {
+            "info" : df_info,
+            "omim" : df_omim,
+            "protein_protein_relations" : df_relaciones,
+            "numero_vias_fuente" : df_numero_vias_por_fuente,
+            "vias" : df_vias
+        }
+        return  dataframes

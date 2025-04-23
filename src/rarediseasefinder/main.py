@@ -1,4 +1,4 @@
-
+from src.rarediseasefinder.pharos.PharosProcessor import PharosProcessor
 from src.rarediseasefinder.selleckchem.SelleckchemProcessor import SelleckchemProcessor
 
 if __name__ == "__main__" :
@@ -7,3 +7,8 @@ if __name__ == "__main__" :
     processor = SelleckchemProcessor()
     dataframeLinksSellectChem =  processor.obtener_links_selleckchem("TCL")
     print(dataframeLinksSellectChem)
+
+    ##Call pharos processor
+    processor = PharosProcessor()
+    pharos_df = processor.fetch("FANCA")
+    print(pharos_df)

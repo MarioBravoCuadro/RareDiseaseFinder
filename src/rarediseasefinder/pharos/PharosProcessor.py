@@ -47,7 +47,7 @@ class PharosProcessor:
                 return filtros
             else:
                 return None
-        pass
+
 
     def fetch(self, identifier:str):
 
@@ -58,6 +58,8 @@ class PharosProcessor:
         if data :
             pharos_dataframes = self.pharosParser.parse(data,prioridad_clases,prioridad_propiedades)
             return  pharos_dataframes
+        else:
+            return None
 
 
 
