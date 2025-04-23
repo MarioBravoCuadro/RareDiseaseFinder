@@ -1,3 +1,4 @@
+import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List, Dict
 
@@ -11,7 +12,7 @@ class SelleckchemParser(BaseParser):
     def __init__(self):
         super().__init__()
 
-    def extraer_medicamentos(self,html):
+    def extraer_medicamentos(self,html) -> pd.DataFrame:
         """
         Extrae información de medicamentos de un HTML dado.
         Args:
