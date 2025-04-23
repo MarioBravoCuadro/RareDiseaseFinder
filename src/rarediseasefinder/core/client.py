@@ -1,3 +1,5 @@
+from typing import Optional, Dict, Any
+
 import requests
 from .errors import BaseHTTPError, BaseParsingError, BaseError
 

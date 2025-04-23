@@ -3,6 +3,9 @@ from typing import Any, Dict, List, Union
 from .errors import BaseError, BaseParsingError
 
 class BaseParser:
+    def __init__(self):
+        pass
+    
     def parse_to_dataframe(self, data: Union[dict, list], **kwargs) -> pd.DataFrame:
         """
         Transforma datos crudos en un DataFrame de pandas.
