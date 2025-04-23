@@ -98,8 +98,8 @@ def procesar_uniprot(uniProtID):
 
     df_publicaciones = crear_dataframe_abstracts(
     df_disease, 
-    columna_nombre='NombreEnfermedad',
-    columna_pubmed_id='PubMed_ID'
+    columna_nombre='Nombre',
+    columna_pubmed_id='Publications'
 )
     
     return {
