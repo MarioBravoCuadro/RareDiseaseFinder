@@ -6,35 +6,8 @@ class PharosClient(BaseClient):
     """Cliente para interactuar con la API GraphQL de Pharos"""
     
     GRAPHQL_URL = "https://pharos-api.ncats.io/graphql"
-    
-    def query_graphql(self, query: str) -> Dict:
-        """
-        Ejecuta una consulta GraphQL en la API de Pharos
-        
-        Args:
-            query (str): Consulta GraphQL a ejecutar
-            variables (dict, optional): Variables para la consulta GraphQL
-            
-        Returns:
-            dict: Datos JSON de la respuesta
-        """
-        payload = {"query": query}
-    
-        return self._post_data(self.GRAPHQL_URL, json=payload)
-    
-    def get_target_data(self, target: str) -> Dict:
-        """
-        Obtiene datos de un objetivo específico de Pharos
-        
-        Args:
-            target (str): Símbolo del objetivo a consultar
-            
-        Returns:
-            dict: Datos del objetivo desde Pharos
-            
-        Raises:
-            BaseParsingError: Si la respuesta no contiene los datos esperados
-        """
+
+    def get_uniprot_query(self, target: str) -> str:
         query = f"""
             query ObtenerInfoVariante {{
             target(q: {{ sym: "{target}" }}) {{
@@ -87,7 +60,38 @@ class PharosClient(BaseClient):
             }}
             }}
         """
+        return query
+    
+    def query_graphql(self, query: str) -> Dict:
+        """
+        Ejecuta una consulta GraphQL en la API de Pharos
         
+        Args:
+            query (str): Consulta GraphQL a ejecutar
+            variables (dict, optional): Variables para la consulta GraphQL
+            
+        Returns:
+            dict: Datos JSON de la respuesta
+        """
+        payload = {"query": query}
+    
+        return self._post_data(self.GRAPHQL_URL, json=payload)
+    
+    def get_target_data(self, target: str) -> Dict:
+        """
+        Obtiene datos de un objetivo específico de Pharos
+        
+        Args:
+            target (str): Símbolo del objetivo a consultar
+            
+        Returns:
+            dict: Datos del objetivo desde Pharos
+            
+        Raises:
+            BaseParsingError: Si la respuesta no contiene los datos esperados
+        """
+
+        query = self.get_uniprot_query(target)
         response_data = self.query_graphql(query)
         
         if "data" in response_data and "target" in response_data["data"]:
