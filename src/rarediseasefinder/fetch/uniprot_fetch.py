@@ -95,13 +95,8 @@ def procesar_uniprot(uniProtID):
     ]).sort_values(by="NumExperiments", ascending=False)
     
     # 6. Publicaciones con abstracts
+    df_publicaciones = crear_dataframe_abstracts(df_disease)
 
-    df_publicaciones = crear_dataframe_abstracts(
-    df_disease, 
-    columna_nombre='Nombre',
-    columna_pubmed_id='Publications'
-)
-    
     return {
         "Function": df_function,
         "Subcellular Location": df_subcellular,
