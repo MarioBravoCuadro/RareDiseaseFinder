@@ -4,11 +4,27 @@ import pandas as pd
 
 
 class PharosParser(BaseParser):
+    """
+    Clase para parsear y procesar datos obtenidos de Pharos.
+    Incluye métodos para priorizar relaciones proteína-proteína y generar DataFrames con la información relevante.
+    """
     def __init__(self):
+        """
+        Inicializa el parser de Pharos.
+        """
         pass
 
-    def get_protein_to_protein_ordered_df(self,target_data: dict, prioridad_clases: dict[str, int],
-                                             prioridad_propiedades: dict[str, int]):
+    def get_protein_to_protein_ordered_df(self, target_data: dict, prioridad_clases: dict[str, int],
+                                          prioridad_propiedades: dict[str, int]):
+        """
+        Genera una lista de relaciones proteína-proteína priorizadas según las clases y propiedades indicadas.
+        Args:
+            target_data (dict): Diccionario con los datos del target.
+            prioridad_clases (dict): Prioridad de las clases de diana.
+            prioridad_propiedades (dict): Prioridad de las propiedades de relación.
+        Returns:
+            list: Lista de diccionarios con las relaciones priorizadas.
+        """
         # Crear DataFrame de relaciones proteína-proteína con priorización
         relaciones = []
 
@@ -48,7 +64,16 @@ class PharosParser(BaseParser):
                     })
         return relaciones
 
-    def parse(self,data:dict,prioridad_clases:dict,prioridad_propiedades:dict) -> dict:
+    def parse(self, data: dict, prioridad_clases: dict, prioridad_propiedades: dict) -> dict:
+        """
+        Parsea los datos de Pharos y los organiza en varios DataFrames.
+        Args:
+            data (dict): Datos crudos obtenidos de Pharos.
+            prioridad_clases (dict): Prioridad de las clases de diana.
+            prioridad_propiedades (dict): Prioridad de las propiedades de relación.
+        Returns:
+            dict: Diccionario con los DataFrames generados (info, omim, protein_protein_relations, numero_vias_fuente, vias).
+        """
         print(type(data))
         print(data.keys())
 

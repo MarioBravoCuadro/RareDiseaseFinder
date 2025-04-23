@@ -3,11 +3,23 @@ from ..core.errors import BaseParsingError
 from ..core.client import BaseClient
 
 class PharosClient(BaseClient):
-    """Cliente para interactuar con la API GraphQL de Pharos"""
+    """
+    Cliente para interactuar con la API GraphQL de Pharos.
+    Permite construir consultas, ejecutarlas y obtener datos de targets específicos.
+    """
     
     GRAPHQL_URL = "https://pharos-api.ncats.io/graphql"
 
     def get_uniprot_query(self, target: str) -> str:
+        """
+        Construye la consulta GraphQL para obtener información de un target por su símbolo.
+        
+        Args:
+            target (str): Símbolo del target a consultar.
+            
+        Returns:
+            str: Consulta GraphQL lista para enviar.
+        """
         query = f"""
             query ObtenerInfoVariante {{
             target(q: {{ sym: "{target}" }}) {{
@@ -64,14 +76,13 @@ class PharosClient(BaseClient):
     
     def query_graphql(self, query: str) -> dict:
         """
-        Ejecuta una consulta GraphQL en la API de Pharos
+        Ejecuta una consulta GraphQL en la API de Pharos.
         
         Args:
-            query (str): Consulta GraphQL a ejecutar
-            variables (dict, optional): Variables para la consulta GraphQL
+            query (str): Consulta GraphQL a ejecutar.
             
         Returns:
-            dict: Datos JSON de la respuesta
+            dict: Datos JSON de la respuesta.
         """
         payload = {"query": query}
     
@@ -79,16 +90,16 @@ class PharosClient(BaseClient):
     
     def get_target_data(self, target: str) -> dict:
         """
-        Obtiene datos de un objetivo específico de Pharos
+        Obtiene datos de un objetivo específico de Pharos.
         
         Args:
-            target (str): Símbolo del objetivo a consultar
+            target (str): Símbolo del objetivo a consultar.
             
         Returns:
-            dict: Datos del objetivo desde Pharos
+            dict: Datos del objetivo desde Pharos.
             
         Raises:
-            BaseParsingError: Si la respuesta no contiene los datos esperados
+            BaseParsingError: Si la respuesta no contiene los datos esperados.
         """
 
         query = self.get_uniprot_query(target)
