@@ -1,6 +1,7 @@
 import pandas as pd
 from typing import Any, Dict, List, Union
 from .errors import BaseError, BaseParsingError
+import json
 
 class BaseParser:
     def __init__(self):
@@ -32,3 +33,14 @@ class BaseParser:
                 
         except Exception as e:
             raise BaseError(f"Error al parsear DataFrame: {str(e)}") from e
+
+    def json_to_dataframe(json_data):
+        """
+        Convierte un JSON en un DataFrame de pandas.
+        :param json_data: Puede ser un diccionario de Python o una cadena JSON.
+        :return: DataFrame de pandas.
+        """
+        if isinstance(json_data, str):
+            json_data = json.loads(json_data)  # Convertir de cadena JSON a diccionario
+
+        return pd.json_normalize(json_data)
