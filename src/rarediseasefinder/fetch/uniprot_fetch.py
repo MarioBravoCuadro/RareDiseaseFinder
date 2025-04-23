@@ -1,6 +1,6 @@
 import pandas as pd
 import requests
-from .ncbi_fetch import obtener_abstracts_batch
+from .ncbi_fetch import crear_dataframe_abstracts
 
 def fetch_data(url):
     try:
@@ -73,12 +73,6 @@ def procesar_uniprot(uniProtID):
     } for comment in data.get("comments", []) if comment.get("commentType") == "DISEASE"
     ])
 
-    df_disease_publications = pd.DataFrame([{
-    "DiseaseID": comment.get("disease", {}).get("diseaseId"),  # Clave foránea
-    "PubMed": f"https://pubmed.ncbi.nlm.nih.gov/"+ev.get("id")
-    } for comment in data.get("comments", []) if comment.get("commentType") == "DISEASE"
-    for ev in comment.get("disease", {}).get("evidences", [])])
-
     # 4. Variantes (desnormalizado)
     df_variants = pd.DataFrame({
         "Description": [feature.get("description")
@@ -101,34 +95,12 @@ def procesar_uniprot(uniProtID):
     ]).sort_values(by="NumExperiments", ascending=False)
     
     # 6. Publicaciones con abstracts
-    enfermedades_publicaciones = []
-    
-    # Extraer publicaciones de las enfermedades
-    for comment in data.get("comments", []):
-        if comment.get("commentType") == "DISEASE":
-            disease_data = comment.get("disease", {})
-            disease_name = disease_data.get("diseaseId", "Enfermedad desconocida")
-            
-            # Recopilar IDs de PubMed para esta enfermedad
-            pubmed_ids = [ev.get("id") for ev in disease_data.get("evidences", []) if ev.get("id")]
-            
-            if pubmed_ids:
-                # Obtener abstracts para esta enfermedad
-                abstracts_dict = obtener_abstracts_batch(pubmed_ids)
-                
-                # Agregar cada publicación al listado
-                for pubmed_id in pubmed_ids:
-                    pubmed_link = f"https://pubmed.ncbi.nlm.nih.gov/{pubmed_id}/"
-                    abstract = abstracts_dict.get(pubmed_id, "Abstract no disponible")
-                    
-                    enfermedades_publicaciones.append({
-                        "NombreEnfermedad": disease_name,
-                        "PubMed_ID": pubmed_id,
-                        "LinkPublicacion": pubmed_link,
-                        "Abstract": abstract
-                    })
-    
-    df_publicaciones = pd.DataFrame(enfermedades_publicaciones)
+
+    df_publicaciones = crear_dataframe_abstracts(
+    df_disease, 
+    columna_nombre='NombreEnfermedad',
+    columna_pubmed_id='PubMed_ID'
+)
     
     return {
         "Function": df_function,
