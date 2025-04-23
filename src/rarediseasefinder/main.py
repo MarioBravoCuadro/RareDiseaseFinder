@@ -5,5 +5,5 @@ if __name__ == "__main__" :
 
     ##Call sellectChem processor
     processor = SelleckchemProcessor()
-    dataframeLinksSellectChem =  processor.obtener_link_selleckchem("TCL")
+    dataframeLinksSellectChem =  processor.obtener_links_selleckchem("TCL")
     print(dataframeLinksSellectChem)

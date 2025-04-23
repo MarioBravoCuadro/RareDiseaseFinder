@@ -44,7 +44,13 @@ class SelleckchemProcessor:
             if not html:
                 return None
             productos = self.parser.extraer_medicamentos(html)
-            links = [f"www.selleckchem.com{producto['Link']}" for producto in productos]
+
+            links = []
+            rango = range(len(productos))
+            for i in rango:
+                links.append(f"www.selleckchem.com{productos.loc[i]['Link']}")
+
+            links = self.parser.parse_to_dataframe(links)
             return links
         except Exception as e:
             print(f"Error obteniendo {farmaco}: {str(e)}")
