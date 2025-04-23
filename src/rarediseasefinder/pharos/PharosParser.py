@@ -48,7 +48,7 @@ class PharosParser(BaseParser):
                     })
         return relaciones
 
-    def parse(self,data:dict,prioridad_clases:dict,prioridad_propiedades:dict) -> pd.DataFrame:
+    def parse(self,data:dict,prioridad_clases:dict,prioridad_propiedades:dict) -> dict:
         print(type(data))
         print(data.keys())
 
