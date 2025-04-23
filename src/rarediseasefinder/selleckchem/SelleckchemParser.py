@@ -1,6 +1,4 @@
-import requests
 from bs4 import BeautifulSoup
-from requests.exceptions import RequestException
 from typing import List, Dict
 
 from ..core.parser import BaseParser
@@ -11,7 +9,7 @@ class SelleckchemParser(BaseParser):
     """
 
     def __init__(self):
-        pass
+        super().__init__()
 
     def extraer_medicamentos(self,html):
         """
@@ -38,4 +36,5 @@ class SelleckchemParser(BaseParser):
                 "Link": link,
                 "Description": descripcion
             })
-        return medicamentos
+        medicamentos_df = self.parse_to_dataframe(medicamentos)
+        return medicamentos_df

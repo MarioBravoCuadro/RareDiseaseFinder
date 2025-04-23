@@ -23,6 +23,7 @@ class SelleckchemScrapper(Scraper):
         """
         Inicializa el objeto SelleckchemScrapper.
         """
+        super().__init__()
         self.unique_dir = get_unique_directory()
         self.chrome_options = self.getOptionsChromeDriver()
         self.chrome_options.add_argument(f"--user-data-dir={self.unique_dir}")
