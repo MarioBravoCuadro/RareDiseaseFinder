@@ -13,8 +13,8 @@ if __name__ == "__main__" :
     processor = PharosProcessor()
     pharos_df_dict = processor.fetch("FANCA") #devuelve una lista de dataframes.
     print(type(pharos_df_dict))
-    print(print(tabulate(pharos_df_dict, headers='keys', tablefmt='fancy_grid')))
+    print(tabulate(pharos_df_dict, headers='keys', tablefmt='fancy_grid'))
 
     for dataFrame in pharos_df_dict:
-        print(print(tabulate(pharos_df_dict[dataFrame], headers='keys', tablefmt='fancy_grid')))
+        print(tabulate(pharos_df_dict[dataFrame], headers='keys', tablefmt='fancy_grid'))
 
