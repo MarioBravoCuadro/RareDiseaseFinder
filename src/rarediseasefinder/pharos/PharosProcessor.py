@@ -36,13 +36,11 @@ class PharosProcessor:
     ]
 
     def getFilters(self, filters: list):
-        global filtros
         for processor in filters:
             if processor["procesador"] == "Pharos":
                 prioridad_clases = processor["prioridad_clases"]
                 prioridad_propiedades = processor["prioridad_propiedades"]
-
-                filtros: {
+                filtros = {
                     "prioridad_clases": prioridad_clases,
                     "prioridad_propiedades": prioridad_propiedades
                 }
