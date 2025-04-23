@@ -24,8 +24,8 @@ class SelleckchemProcessor:
             if not html:
                 return None
             productos = self.parser.extraer_medicamentos(html)
-            if productos:
-                primer_link = f"www.selleckchem.com{productos[0]['Link']}"
+            if not productos.empty:
+                primer_link = f"www.selleckchem.com{productos.loc[0]['Link']}"
                 return primer_link
             return None
         except Exception as e:
