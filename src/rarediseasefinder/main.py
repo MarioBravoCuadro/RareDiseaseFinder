@@ -1,3 +1,4 @@
+from src.rarediseasefinder.ensembl.EnsemblProcessor import EnsemblProcessor
 from src.rarediseasefinder.pharos.PharosProcessor import PharosProcessor
 from src.rarediseasefinder.selleckchem.SelleckchemProcessor import SelleckchemProcessor
 from tabulate import tabulate
@@ -27,3 +28,8 @@ if __name__ == "__main__" :
     for key in uniprot_dict.keys():
         print(key)
         print(tabulate(uniprot_dict[key], headers='keys', tablefmt='fancy_grid'))
+
+    #Call Ensembl processor
+    processor = EnsemblProcessor()
+    ensembl_id = processor.get_ensembl_id("FANCA")
+    print("ensembl_id: " + ensembl_id)
