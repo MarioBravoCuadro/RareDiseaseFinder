@@ -1,6 +1,7 @@
+from ..core.client import BaseClient
 UNIPROT_BASE_URL = "https://rest.uniprot.org/uniprotkb"
 
-class UniProtClient:
+class UniProtClient(BaseClient):
     """Cliente para interactuar con la API de UniProt"""
     
     @classmethod

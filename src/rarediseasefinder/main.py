@@ -2,6 +2,8 @@ from src.rarediseasefinder.pharos.PharosProcessor import PharosProcessor
 from src.rarediseasefinder.selleckchem.SelleckchemProcessor import SelleckchemProcessor
 from tabulate import tabulate
 
+from src.rarediseasefinder.uniprot.UniprotProcessor import UniprotProcessor
+
 if __name__ == "__main__" :
 
     ##Call sellectChem processor
@@ -18,3 +20,10 @@ if __name__ == "__main__" :
     for dataFrame in pharos_df_dict:
         print(tabulate(pharos_df_dict[dataFrame], headers='keys', tablefmt='fancy_grid'))
 
+    ##Call Uniprot processor
+    processor = UniprotProcessor()
+    uniprot_dict = processor.get_uniprot_data("O15360") #Fanca
+    print(uniprot_dict.keys())
+    for key in uniprot_dict.keys():
+        print(key)
+        print(tabulate(uniprot_dict[key], headers='keys', tablefmt='fancy_grid'))

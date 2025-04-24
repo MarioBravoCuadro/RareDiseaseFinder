@@ -1,12 +1,14 @@
 import pandas as pd
-from .constants import (
+from src.rarediseasefinder.core.constants import (
     QUICKGO_URL_TEMPLATE,
     PUBMED_URL_TEMPLATE,
     OMIM_URL_TEMPLATE,
     NOT_FOUND_MESSAGE
 )
 
-class UniProtParser:
+from ..core.parser import BaseParser
+
+class UniProtParser(BaseParser):
     """Clase para transformar datos de UniProt en DataFrames estructurados"""
     
     @staticmethod
