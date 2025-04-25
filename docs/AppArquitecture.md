@@ -23,6 +23,15 @@ classDiagram
         class BaseWebScraper {
             +scrape_url(url) String
         }
+        class Constants {
+
+        }
+        class Utils {
+
+        }
+        class Errors {
+
+        }
     }
     namespace pharos {
         class PharosProcessor {
@@ -49,14 +58,30 @@ classDiagram
         }
     }
     namespace selleckchem {
-        class SelleckchemEnricher {
-            +enrich(data: DataFrame): DataFrame~
-        }
         class SelleckchemScraper {
             -SEARCH_URL: String
             +extract_drug_info(html) List~Dict~
         }
+        class SelleckChemProcessor {
+
+        }
+        class SelleckChemParser {
+
+        }
     }
+
+    namespace ensembl{
+        class EnsemblClient{
+
+        }
+        class EnsemblParser{
+
+        }
+        class EnsemblProcessor{
+
+        }
+    }
+
     namespace processers{
         class DataSource {
             <<Interface>>
@@ -70,19 +95,31 @@ classDiagram
             +process(data: DataFrame, enrichers: List~EnrichmentProcessor~): DataFrame~
         }
     }
-    PharosProcessor --> PharosClient
-    PharosProcessor --> PharosParser
-    DataSource <|.. PharosProcessor
-    BaseClient <|-- PharosClient
-    BaseParser <|-- PharosParser
-    Orchestrator --> DataSource
-    Orchestrator --> PostProcessor
-    PostProcessor --> EnrichmentProcessor
-    UniProtProcessor --> UniProtClient
-    UniProtProcessor --> UniProtParser
-    DataSource <|.. UniProtProcessor
-    BaseClient <|-- UniProtClient
-    BaseParser <|-- UniProtParser
-    SelleckchemEnricher --> SelleckchemScraper
-    EnrichmentProcessor <|.. SelleckchemEnricher
-    BaseWebScraper <|-- SelleckchemScraper
+
+PharosProcessor --> PharosClient
+PharosProcessor --> PharosParser
+DataSource <|.. PharosProcessor
+BaseClient <|-- PharosClient
+BaseParser <|-- PharosParser
+
+Orchestrator --> DataSource
+Orchestrator --> PostProcessor
+PostProcessor --> EnrichmentProcessor
+
+UniProtProcessor --> UniProtClient
+UniProtProcessor --> UniProtParser
+DataSource <|.. UniProtProcessor
+BaseClient <|-- UniProtClient
+BaseParser <|-- UniProtParser
+
+SelleckChemProcessor --> SelleckChemParser
+DataSource <|.. SelleckChemProcessor
+BaseParser <|-- SelleckChemParser
+SelleckChemProcessor --> SelleckchemScraper
+BaseWebScraper <|-- SelleckchemScraper
+
+EnsemblProcessor --> EnsemblClient
+EnsemblProcessor --> EnsemblParser
+DataSource <|.. EnsemblProcessor
+BaseClient <|-- EnsemblClient
+BaseParser <|-- EnsemblParser
