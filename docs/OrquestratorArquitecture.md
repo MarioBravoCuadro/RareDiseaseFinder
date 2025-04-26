@@ -1,45 +1,51 @@
-# Diagrama de clases del orquestador
-
-```mermaid
+---
+config:
+  theme: dark
+  look: classic
+  layout: elk
+---
 classDiagram
 direction TB
+    class IWorkflowStep {
+	    +getStatus()
+	    +process()
+	    +revert()
+    }
+    class WorkflowStep {
+	    +getStatus()
+	    +process()
+	    +revert()
+    }
+    class Orchestrator {
+	    +availableSteps[]
+	    +createWorkflow(workflowSteps[])
+	    +startWorkflow(workflow)
+	    +getAvailableSteps()
+	    +decodeSearchParams(searchConfigFilters)
+    }
+    class Cliente {
+    }
+    class Parser {
+    }
 
-class IWorkflowStep {
-    +getStatus()
-    +process()
-    +revert()
-}
+    class IWorkflow {
+        +getSteps()
+        +getAvailableSteps()
+    }
 
-class WorkflowStep {
-    +getStatus()
-    +process()
-    +revert()
-}
-WorkflowStep ..|> IWorkflowStep
+    class Workflow {
+	    +getSteps()
+	    +getAvailableSteps()
+    }
+    class Processor {
+	    +getData()
+	    +getData2()
+    }
 
-class Orchestrator {
-    +availableSteps[]
-    +createWorkflow(workflowSteps[])
-    +startWorkflow(workflow)
-    +getAvailableSteps()
-    +decodeSearchParams(searchConfigFilters)
-}
-
-class Processor {
-    +getData()
-}
-
-class Cliente
-
-class Parser
-
-class Workflow {
-    +getSteps()
-    +getAvailableSteps()
-}
-
-Orchestrator --> Workflow : tiene
-WorkflowStep --> Processor : uses
-WorkflowStep --* Workflow : formado por
-Processor --> Cliente : uses
-Processor --> Parser : uses
+    WorkflowStep ..|> IWorkflowStep
+    Orchestrator o-- IWorkflow : tiene
+    Workflow ..|> IWorkflow
+    WorkflowStep --> Processor : uses
+    Processor --> Cliente : uses
+    Processor --> Parser : uses
+    Workflow *-- IWorkflowStep
