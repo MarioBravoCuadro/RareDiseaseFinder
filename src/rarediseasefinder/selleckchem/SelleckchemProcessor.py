@@ -55,3 +55,7 @@ class SelleckchemProcessor:
         except Exception as e:
             print(f"Error obteniendo {farmaco}: {str(e)}")
             return None
+
+    #TODO implementar consulta al cliente mediante un ping a la url de este
+    def getStatus(self) -> str:
+        return "OK"

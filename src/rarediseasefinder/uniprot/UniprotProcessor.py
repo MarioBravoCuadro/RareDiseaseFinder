@@ -33,3 +33,7 @@ class UniprotProcessor:
             data = UniProtClient.get_by_id(identifier)
 
         return UniProtParser.parse_all(data)
+
+    #TODO implementar consulta al cliente mediante un ping a la url de este
+    def getStatus(self) -> str:
+        return "OK"

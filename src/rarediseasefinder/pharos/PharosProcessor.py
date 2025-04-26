@@ -78,6 +78,8 @@ class PharosProcessor:
         else:
             return None
 
-
+    #TODO implementar consulta al cliente mediante un ping a la url de este
+    def getStatus(self) -> str:
+        return "OK"
 
 
