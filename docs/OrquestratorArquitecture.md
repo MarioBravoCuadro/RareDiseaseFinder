@@ -1,9 +1,3 @@
----
-config:
-  theme: dark
-  look: classic
-  layout: elk
----
 classDiagram
 direction TB
     class IWorkflowStep {
@@ -27,12 +21,10 @@ direction TB
     }
     class Parser {
     }
-
     class IWorkflow {
-        +getSteps()
-        +getAvailableSteps()
+	   +getSteps()
+	   +getAvailableSteps()
     }
-
     class Workflow {
 	    +getSteps()
 	    +getAvailableSteps()
@@ -41,7 +33,6 @@ direction TB
 	    +getData()
 	    +getData2()
     }
-
     WorkflowStep ..|> IWorkflowStep
     Orchestrator o-- IWorkflow : tiene
     Workflow ..|> IWorkflow
