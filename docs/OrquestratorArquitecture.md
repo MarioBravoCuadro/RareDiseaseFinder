@@ -1,42 +1,44 @@
-classDiagram
-direction TB
-    class IWorkflowStep {
+# Diagrama de clases del orquestador
+```mermaid
+	classDiagram
+	direction TB
+	class IWorkflowStep {
 	    +getStatus()
 	    +process()
 	    +revert()
-    }
-    class WorkflowStep {
+	}
+	class WorkflowStep {
 	    +getStatus()
 	    +process()
 	    +revert()
-    }
-    class Orchestrator {
+	}
+	class Orchestrator {
 	    +availableSteps[]
 	    +createWorkflow(workflowSteps[])
 	    +startWorkflow(workflow)
 	    +getAvailableSteps()
 	    +decodeSearchParams(searchConfigFilters)
-    }
-    class Cliente {
-    }
-    class Parser {
-    }
-    class IWorkflow {
+	}
+	class Cliente {
+	}
+	class Parser {
+	}
+	class IWorkflow {
 	   +getSteps()
 	   +getAvailableSteps()
-    }
-    class Workflow {
+	}
+	class Workflow {
 	    +getSteps()
 	    +getAvailableSteps()
-    }
-    class Processor {
+	}
+	class Processor {
 	    +getData()
 	    +getData2()
-    }
-    WorkflowStep ..|> IWorkflowStep
-    Orchestrator o-- IWorkflow : tiene
-    Workflow ..|> IWorkflow
-    WorkflowStep --> Processor : uses
-    Processor --> Cliente : uses
-    Processor --> Parser : uses
-    Workflow *-- IWorkflowStep
+	}
+	WorkflowStep ..|> IWorkflowStep
+	Orchestrator o-- IWorkflow : tiene
+	Workflow ..|> IWorkflow
+	WorkflowStep --> Processor : uses
+	Processor --> Cliente : uses
+	Processor --> Parser : uses
+	Workflow *-- IWorkflowStep
