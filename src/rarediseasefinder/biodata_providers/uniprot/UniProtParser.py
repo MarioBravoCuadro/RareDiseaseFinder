@@ -7,7 +7,7 @@ from src.rarediseasefinder.core.constants import (
     NOT_FOUND_MESSAGE
 )
 
-from ..core.parser import BaseParser
+from ...core.parser import BaseParser
 
 class UniProtParser(BaseParser):
     """Clase para transformar datos de UniProt en DataFrames estructurados"""

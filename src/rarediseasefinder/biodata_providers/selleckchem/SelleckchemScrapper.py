@@ -5,8 +5,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from ..core.utils import get_unique_directory
-from ..core.scraper import Scraper
+from src.rarediseasefinder.core.utils import get_unique_directory
+from src.rarediseasefinder.core.scraper import Scraper
 
 class SelleckchemScrapper(Scraper):
     """

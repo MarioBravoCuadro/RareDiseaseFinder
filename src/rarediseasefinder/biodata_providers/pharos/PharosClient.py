@@ -1,6 +1,5 @@
-from typing import Dict
-from ..core.errors import BaseParsingError
-from ..core.client import BaseClient
+from ...core.errors import BaseParsingError
+from ...core.client import BaseClient
 
 class PharosClient(BaseClient):
     """

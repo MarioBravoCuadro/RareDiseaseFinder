@@ -1,4 +1,4 @@
-from ..core.client import BaseClient
+from ...core.client import BaseClient
 
 
 class EnsemblClient(BaseClient):

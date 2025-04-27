@@ -1,7 +1,7 @@
 import pandas as pd
 
 from ...orchestrator.IWorkflowStep import IWorkflowStep
-from ...pharos.PharosProcessor import PharosProcessor
+from ...biodata_providers.pharos import PharosProcessor
 
 class PharosWorkflowStep(IWorkflowStep):
     name = None

@@ -1,4 +1,4 @@
-from ..core.parser import BaseParser
+from ...core.parser import BaseParser
 from typing import Union, Dict, List
 
 import pandas as pd

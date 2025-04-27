@@ -2,6 +2,7 @@ import pandas as pd
 
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PharosWorkflowStep import PharosWorkflowStep
+from src.rarediseasefinder.orchestrator.WorkflowSteps.SelleckchemWorkflowStep import SelleckchemWorkflowStep
 
 
 class Workflow(IWorkflow):
@@ -19,7 +20,7 @@ class Workflow(IWorkflow):
             },
             "Selleckchem data": {
                 "Description": "Gets links from selleckchem for x term",
-                "Object": PharosWorkflowStep(gen_param)
+                "Object": SelleckchemWorkflowStep(gen_param)
             }
         }
         pass
