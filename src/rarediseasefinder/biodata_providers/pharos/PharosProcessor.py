@@ -3,7 +3,7 @@ from pandas import DataFrame
 from .PharosClient import PharosClient
 from .PharosParser import PharosParser
 import pandas as pd
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List
 
 class PharosProcessor:
     """
@@ -20,70 +20,91 @@ class PharosProcessor:
         self.pharosClient = PharosClient()
         self.pharosParser = PharosParser()
 
-    filters =[
-            {
-                "procesador":"Pharos",
-                "prioridad_clases":{
-                    "Tclin": 1,
-                    "Tchem": 2,
-                    "Tbio": 3,
-                    "Tdark": 4
-                },
-                "prioridad_propiedades":{
-                    "p_wrong": 1,
-                    "p_ni": 2
-                    # "p_int": 3,
-                    # "novelty": 4
-                }
-            },
-            {
-                "procesador": "Uniprot",
-            },
-            {
-                "procesador": "Selleckchem",
-            }
-    ]
-
-    def getFilters(self, filters: list) -> Dict[str, Dict]:
+    def parseFilters(self, data: dict, filters: dict) -> dict:
         """
-        Devuelve los filtros de prioridad para el procesador 'Pharos'.
+        Procesa los datos según los filtros configurados.
+        
         Args:
-            filters (list): Lista de diccionarios de filtros.
+            data (dict): Datos obtenidos del cliente Pharos.
+            filters (dict): Diccionario de configuraciones de filtros.
+            
         Returns:
-            Dict[str, Dict]: Diccionario con prioridades de clases y propiedades.
-                            Si no se encuentra, devuelve un diccionario vacío.
+            dict: Resultados procesados por cada método del parser.
+        """
+        results = {}
+        for processor in filters:
+            if processor["PROCESSOR"] == "PharosProcessor":
+                if "METODOS_PARSER" in processor:
+                    for method_config in processor["METODOS_PARSER"]:
+                        method_name = method_config.get("NOMBRE_METODO", "")
+                        filter_params = method_config.get("FILTROS_METODO_PARSER", {})
+                        
+                        match method_name:
+                            case "df_info": 
+                                results[method_name] = self.pharosParser.create_info_df(data)
+                            case "df_omim": 
+                                results[method_name] = self.pharosParser.create_omim_df(data)
+                            case "create_protein_protein_relations_df":
+                                results[method_name] = self.pharosParser.create_protein_protein_relations_df(data, filter_params)
+                            case "df_numero_vias_por_fuente": 
+                                results[method_name] = self.pharosParser.create_numero_vias_por_fuente_df(data)
+                            case "df_vias": 
+                                results[method_name] = self.pharosParser.create_vias_df(data)
+                            case _: 
+                                print(f"El procesador {processor['PROCESSOR']} no admite la instrucción {method_name} en el parser.")
+        return results
+
+    def clientFilters(self, filters: dict) -> Optional[dict]:
+        """
+        Extrae los parámetros de búsqueda para el cliente Pharos desde la configuración de filtros.
+        
+        Args:
+            filters (dict): Lista de diccionarios con configuraciones de procesadores.
+            
+        Returns:
+            Optional[dict]: Parámetros de búsqueda para el cliente Pharos o None si no se encuentra.
         """
         for processor in filters:
-            if processor["procesador"] == "Pharos":
-                prioridad_clases = processor["prioridad_clases"]
-                prioridad_propiedades = processor["prioridad_propiedades"]
-                filtros = {
-                    "prioridad_clases": prioridad_clases,
-                    "prioridad_propiedades": prioridad_propiedades
-                }
-                return filtros
-        # Si no se encuentra, devolver un diccionario vacío en lugar de None
-        return {"prioridad_clases": {}, "prioridad_propiedades": {}}
+            if processor["PROCESSOR"] == "PharosProcessor":
+                if "SEARCH_PARAMS" in processor:
+                    search_params = processor["SEARCH_PARAMS"]
+                    # Si SEARCH_PARAMS es una lista, tomar el primer elemento
+                    if isinstance(search_params, list) and len(search_params) > 0:
+                        return search_params[0]
+                    return search_params
+    
+        return None  # Si no encuentra el procesador o no tiene SEARCH_PARAMS, devuelve None
 
-    def fetch(self, identifier: str) -> dict[str, DataFrame] | DataFrame:
+    def fetch(self, filters: dict) -> Dict[str, DataFrame]:
         """
         Obtiene y procesa los datos de Pharos para un identificador dado.
-        Args:
-            identifier (str): Identificador del target a buscar.
-        Returns:
-            pd.DataFrame: DataFrame con los datos procesados por PharosParser o DataFrame vacío si no hay datos.
-        """
-        filters = self.getFilters(self.filters)
-        prioridad_clases = filters["prioridad_clases"]
-        prioridad_propiedades = filters["prioridad_propiedades"]
-        data = self.pharosClient.get_target_data(identifier)
         
+        Args:
+            filters (list): Lista de filtros con configuraciones de búsqueda.
+            
+        Returns:
+            Dict[str, DataFrame]: Diccionario donde las claves son nombres de métodos y 
+                               los valores son DataFrames con los datos procesados.
+        """
+        search_params = self.clientFilters(filters)
+        if not search_params or "search_id" not in search_params:
+            print("Error: No se encontró un search_id válido en los filtros")
+            return {}
+        
+        search_id = search_params["search_id"]
+        data = self.pharosClient.get_target_data(search_id)
         if data:
-            return self.pharosParser.parse(data, prioridad_clases, prioridad_propiedades)
-        return None
+            return self.parseFilters(data, filters)
+        return {}
 
     #TODO implementar consulta al cliente mediante un ping a la url de este
     def getStatus(self) -> str:
+        """
+        Verifica el estado de la conexión con Pharos.
+        
+        Returns:
+            str: Estado de la conexión ("OK" si la conexión está activa).
+        """
         return "OK"
 
 
