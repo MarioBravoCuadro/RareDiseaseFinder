@@ -11,7 +11,7 @@ if __name__ == "__main__" :
     filters_json = '''[
             {
                 "PROCESSOR": "PharosProcessor",
-                "SEARCH_PARAMS": [
+                "CLIENT_SEARCH_PARAMS": [
                     {"search_id": "FANCA"}
                 ],
                 "METODOS_PARSER": [

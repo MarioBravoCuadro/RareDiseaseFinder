@@ -66,8 +66,8 @@ class PharosProcessor:
         """
         for processor in filters:
             if processor["PROCESSOR"] == "PharosProcessor":
-                if "SEARCH_PARAMS" in processor:
-                    search_params = processor["SEARCH_PARAMS"]
+                if "CLIENT_SEARCH_PARAMS" in processor:
+                    search_params = processor["CLIENT_SEARCH_PARAMS"]
                     # Si SEARCH_PARAMS es una lista, tomar el primer elemento
                     if isinstance(search_params, list) and len(search_params) > 0:
                         return search_params[0]
