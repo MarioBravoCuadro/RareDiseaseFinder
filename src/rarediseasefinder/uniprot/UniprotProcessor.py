@@ -1,5 +1,7 @@
 from .UniProtClient import UniProtClient
 from .UniProtParser import UniProtParser
+from typing import Dict, Any, Optional, Union
+import pandas as pd
 
 
 class UniprotProcessor:
@@ -11,8 +13,7 @@ class UniprotProcessor:
         self.uniprotClient = UniProtClient()
         self.uniprotParser = UniProtParser()
 
-        pass
-    def get_uniprot_data(self,identifier, search_by_gene=False) -> dict:
+    def get_uniprot_data(self, identifier: str, search_by_gene: bool = False) -> Dict[str, pd.DataFrame]:
         """
         Obtiene y procesa datos de UniProt a partir de un identificador
 
@@ -21,7 +22,7 @@ class UniprotProcessor:
             search_by_gene (bool): Si es True, busca por nombre de gen en lugar de ID
 
         Returns:
-            dict: Diccionario con DataFrames procesados con la información de UniProt
+            Dict[str, pd.DataFrame]: Diccionario con DataFrames procesados con la información de UniProt
         """
         if search_by_gene:
             data = self.uniprotClient.search_by_gene(identifier)
@@ -32,7 +33,6 @@ class UniprotProcessor:
         else:
             data = UniProtClient.get_by_id(identifier)
 
-        # Usar la instancia del parser para llamar al método parse_all
         return self.uniprotParser.parse_all(data)
 
     #TODO implementar consulta al cliente mediante un ping a la url de este

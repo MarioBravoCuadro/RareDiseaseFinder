@@ -1,5 +1,9 @@
+from pandas import DataFrame
+
 from .PharosClient import PharosClient
 from .PharosParser import PharosParser
+import pandas as pd
+from typing import Dict, Any, Optional
 
 class PharosProcessor:
     """
@@ -40,13 +44,14 @@ class PharosProcessor:
             }
     ]
 
-    def getFilters(self, filters: list)-> dict:
+    def getFilters(self, filters: list) -> Dict[str, Dict]:
         """
         Devuelve los filtros de prioridad para el procesador 'Pharos'.
         Args:
             filters (list): Lista de diccionarios de filtros.
         Returns:
-            dict or None: Diccionario con prioridades de clases y propiedades, o None si no se encuentra.
+            Dict[str, Dict]: Diccionario con prioridades de clases y propiedades.
+                            Si no se encuentra, devuelve un diccionario vacío.
         """
         for processor in filters:
             if processor["procesador"] == "Pharos":
@@ -57,26 +62,25 @@ class PharosProcessor:
                     "prioridad_propiedades": prioridad_propiedades
                 }
                 return filtros
-            else:
-                return None
+        # Si no se encuentra, devolver un diccionario vacío en lugar de None
+        return {"prioridad_clases": {}, "prioridad_propiedades": {}}
 
-    def fetch(self, identifier:str)-> dict: 
+    def fetch(self, identifier: str) -> dict[str, DataFrame] | DataFrame:
         """
         Obtiene y procesa los datos de Pharos para un identificador dado.
         Args:
             identifier (str): Identificador del target a buscar.
         Returns:
-            dict or None: Dataframes procesados por PharosParser o None si no hay datos.
+            pd.DataFrame: DataFrame con los datos procesados por PharosParser o DataFrame vacío si no hay datos.
         """
         filters = self.getFilters(self.filters)
         prioridad_clases = filters["prioridad_clases"]
         prioridad_propiedades = filters["prioridad_propiedades"]
         data = self.pharosClient.get_target_data(identifier)
-        if data :
-            pharos_dataframes = self.pharosParser.parse(data,prioridad_clases,prioridad_propiedades)
-            return  pharos_dataframes
-        else:
-            return None
+        
+        if data:
+            return self.pharosParser.parse(data, prioridad_clases, prioridad_propiedades)
+        return None
 
     #TODO implementar consulta al cliente mediante un ping a la url de este
     def getStatus(self) -> str:

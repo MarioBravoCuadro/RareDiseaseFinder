@@ -1,5 +1,7 @@
 from ..selleckchem import SelleckchemScrapper
 from ..selleckchem import SelleckchemParser
+import pandas as pd
+from typing import Optional
 
 class SelleckchemProcessor:
     """Clase processor para interactuar con la API de Selleckchem.
@@ -12,12 +14,12 @@ class SelleckchemProcessor:
         self.scrapper = SelleckchemScrapper.SelleckchemScrapper()
         self.parser = SelleckchemParser.SelleckchemParser()
         
-    def obtener_link_selleckchem(self,farmaco):
+    def obtener_link_selleckchem(self, farmaco: str) -> Optional[str]:
         """Obtiene el primer link relevante de Selleckchem para un fármaco
         Args:
             farmaco (str): Nombre del fármaco a buscar.
         Returns:
-            str: Primer link relevante de Selleckchem para el fármaco    
+            Optional[str]: Primer link relevante de Selleckchem para el fármaco o None si no se encuentra    
         """
         try:
             html = self.scrapper.buscar_medicamento(farmaco)
@@ -32,17 +34,17 @@ class SelleckchemProcessor:
             print(f"Error obteniendo {farmaco}: {str(e)}")
             return None
         
-    def obtener_links_selleckchem(self,farmaco):
+    def obtener_links_selleckchem(self, farmaco: str) -> pd.DataFrame:
         """Obtiene todos los links relevantes de Selleckchem para un fármaco
         Args:
             farmaco (str): Nombre del fármaco a buscar. 
         Returns:
-            list: Lista de links relevantes de Selleckchem para el fármaco  
+            pd.DataFrame: DataFrame con links relevantes de Selleckchem para el fármaco o DataFrame vacío si no se encuentra
         """
         try:
             html = self.scrapper.buscar_medicamento(farmaco)
             if not html:
-                return None
+                return pd.DataFrame()
             productos = self.parser.extraer_medicamentos(html)
 
             links = []
@@ -54,7 +56,7 @@ class SelleckchemProcessor:
             return links
         except Exception as e:
             print(f"Error obteniendo {farmaco}: {str(e)}")
-            return None
+            return pd.DataFrame()
 
     #TODO implementar consulta al cliente mediante un ping a la url de este
     def getStatus(self) -> str:
