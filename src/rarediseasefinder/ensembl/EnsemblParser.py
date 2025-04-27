@@ -1,4 +1,5 @@
 import pandas as pd
+from typing import Dict, Any
 from ..core.parser import BaseParser
 
 
@@ -13,12 +14,13 @@ class EnsemblParser(BaseParser):
         """
         super().__init__()
 
-    def parse_id(self, data: dict) -> str:
+    def parse_id(self, data: Dict[str, Any]) -> pd.DataFrame:
         """
         Extrae el identificador 'id' de los datos proporcionados por Ensembl.
         Args:
-            data (dict): Diccionario con los datos de Ensembl.
+            data (Dict[str, Any]): Diccionario con los datos de Ensembl.
         Returns:
-            str: Identificador extraído del diccionario.
+            pd.DataFrame: DataFrame con el identificador extraído del diccionario.
         """
-        return data["id"]
+        id_data = {"ID": data.get("id", "")}
+        return self.parse_to_dataframe(id_data)
