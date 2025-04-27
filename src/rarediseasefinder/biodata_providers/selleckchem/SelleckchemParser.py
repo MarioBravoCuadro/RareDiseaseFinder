@@ -2,7 +2,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 from typing import List, Dict
 
-from ...core.parser import BaseParser
+from ...core.BaseParser import BaseParser
 
 class SelleckchemParser(BaseParser):
     """

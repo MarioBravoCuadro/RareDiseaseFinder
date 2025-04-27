@@ -1,4 +1,4 @@
-from ...core.client import BaseClient
+from ...core.BaseClient import BaseClient
 UNIPROT_BASE_URL = "https://rest.uniprot.org/uniprotkb"
 
 class UniProtClient(BaseClient):

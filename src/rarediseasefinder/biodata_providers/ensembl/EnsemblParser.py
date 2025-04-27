@@ -1,6 +1,6 @@
 import pandas as pd
 from typing import Dict, Any
-from ...core.parser import BaseParser
+from ...core.BaseParser import BaseParser
 
 
 class EnsemblParser(BaseParser):

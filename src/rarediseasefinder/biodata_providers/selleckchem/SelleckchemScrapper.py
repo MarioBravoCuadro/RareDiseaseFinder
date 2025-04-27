@@ -6,9 +6,9 @@ from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
 from src.rarediseasefinder.core.utils import get_unique_directory
-from src.rarediseasefinder.core.scraper import Scraper
+from src.rarediseasefinder.core.BaseScraper import BaseScraper
 
-class SelleckchemScrapper(Scraper):
+class SelleckchemScrapper(BaseScraper):
     """
     Clase para automatizar la búsqueda de medicamentos en Selleckchem usando Selenium.
     Proporciona la función buscar_medicamento para obtener el HTML de los resultados

@@ -1,6 +1,6 @@
 from selenium.webdriver.chrome.options import Options
 
-class Scraper:
+class BaseScraper:
     def __init__(self):
         pass
     #TODO implementar firefox driver también
