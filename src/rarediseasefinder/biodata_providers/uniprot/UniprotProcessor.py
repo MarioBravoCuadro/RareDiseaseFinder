@@ -20,7 +20,7 @@ class UniprotProcessor:
         Procesa los datos según los filtros configurados.
 
         Args:
-            data (dict): Datos obtenidos del cliente Pharos.
+            data (dict): Datos obtenidos del cliente Uniprot.
             filters (dict): Diccionario de configuraciones de filtros.
 
         Returns:
@@ -54,13 +54,13 @@ class UniprotProcessor:
 
     def clientFilters(self, filters: dict) -> Optional[dict]:
         """
-        Extrae los parámetros de búsqueda para el cliente Pharos desde la configuración de filtros.
+        Extrae los parámetros de búsqueda para el cliente Uniprot desde la configuración de filtros.
 
         Args:
             filters (dict): Lista de diccionarios con configuraciones de procesadores.
 
         Returns:
-            Optional[dict]: Parámetros de búsqueda para el cliente Pharos o None si no se encuentra.
+            Optional[dict]: Parámetros de búsqueda para el cliente Uniprot o None si no se encuentra.
         """
         for processor in filters:
             if processor["PROCESSOR"] == "UniprotProcessor":
@@ -75,7 +75,7 @@ class UniprotProcessor:
 
     def fetch(self, filters: dict) -> Dict[str, DataFrame]:
         """
-        Obtiene y procesa los datos de Pharos para un identificador dado.
+        Obtiene y procesa los datos de Uniprot para un identificador dado.
 
         Args:
             filters (list): Lista de filtros con configuraciones de búsqueda.
