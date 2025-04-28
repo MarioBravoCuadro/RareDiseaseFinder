@@ -159,31 +159,6 @@ class UniProtParser(BaseParser):
         ]
         # El ordenamiento se hace ahora dentro de parse_to_dataframe con un parámetro
         return self.parse_to_dataframe(interactions_data, sort_by="NumExperiments", ascending=False)
-    
-    def parse_all(self, data: Dict[str, Any]) -> Dict[str, pd.DataFrame]:
-        """
-        Procesa todos los tipos de datos disponibles
-        
-        Args:
-            data (Dict[str, Any]): Datos crudos de UniProt
-            
-        Returns:
-            Dict[str, pd.DataFrame]: Diccionario con todos los DataFrames procesados
-                                    organizados por tipo de información
-        """
-        if not data:
-            return {}
-            
-        return {
-            "Function": self.parse_function(data),
-            "Subcellular Location": self.parse_subcellular_location(data),
-            "GO Terms": self.parse_go_terms(data),
-            "Disease": self.parse_disease(data),
-            "Disease Publications": self.parse_disease_publications(data),
-            "Variants": self.parse_variants(data),
-            "Interactions": self.parse_interactions(data)
-        }
-
 
 # uniprot/errors.py
 class UniProtError(Exception):

@@ -49,17 +49,38 @@ if __name__ == "__main__" :
                 ]
             },
             {
-                "PROCESSOR": "SelleckchemProcessor",
+                "PROCESSOR": "UniprotProcessor",
                 "METODOS_PARSER": [
                     {
-                        "NOMBRE_METODO": "createaa_df",
-                        "FILTROS_METODO_PARSER": {
-
-                        }
+                        "NOMBRE_METODO": "function",
+                        "FILTROS_METODO_PARSER": ""
+                    }
+                    ,
+                    {
+                        "NOMBRE_METODO": "subcellular_location",
+                        "FILTROS_METODO_PARSER": ""
+                    }
+                    ,
+                    {
+                        "NOMBRE_METODO": "go_terms",
+                        "FILTROS_METODO_PARSER": ""
+                    }
+                    ,
+                    {
+                        "NOMBRE_METODO": "disease",
+                        "FILTROS_METODO_PARSER": ""
                     },
                     {
-                        "NOMBRE_METODO": "metodo2",
-                        "FILTROS_METODO_PARSER": "filtro2"
+                        "NOMBRE_METODO": "disease_publications",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "parse_variants",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "parse_interactions",
+                        "FILTROS_METODO_PARSER": ""
                     }
                 ]
             }
