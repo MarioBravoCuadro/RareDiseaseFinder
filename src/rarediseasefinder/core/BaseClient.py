@@ -64,3 +64,19 @@ class BaseClient:
             raise BaseParsingError(f"JSON inválido: {json_err}")
         except Exception as err:
             raise BaseError(f"Error inesperado: {err}")
+    
+    def check_connection(self):
+        """
+        Verifica la disponibilidad de la API o servicio asociado al cliente.
+        
+        Este método debe ser implementado por las clases derivadas para proporcionar
+        una verificación específica de la conexión con su respectivo servicio.
+        
+        Returns:
+            str: "OK" si la conexión es exitosa, mensaje de error en caso contrario.
+        
+        Raises:
+            NotImplementedError: Si la clase derivada no implementa este método.
+             BaseHTTPError: Si hay un error en la comunicación con la API
+        """
+        raise NotImplementedError("El método check_connection debe ser implementado por las clases derivadas")
