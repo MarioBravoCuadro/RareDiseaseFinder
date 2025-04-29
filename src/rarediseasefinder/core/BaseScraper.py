@@ -15,5 +15,7 @@ class BaseScraper:
         options.add_argument("--incognito")
         options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/119.0.0.0 Safari/537.36")
         options.add_argument("--headless")
+        options.add_argument("--verbose")
+
         return options
 

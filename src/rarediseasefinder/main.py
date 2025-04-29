@@ -49,30 +49,78 @@ if __name__ == "__main__" :
                 ]
             },
             {
-                "PROCESSOR": "SelleckchemProcessor",
+                "PROCESSOR": "UniprotProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "O15360"}
+                ],                
                 "METODOS_PARSER": [
                     {
-                        "NOMBRE_METODO": "createaa_df",
-                        "FILTROS_METODO_PARSER": {
-
-                        }
+                        "NOMBRE_METODO": "function",
+                        "FILTROS_METODO_PARSER": ""
+                    }
+                    ,
+                    {
+                        "NOMBRE_METODO": "subcellular_location",
+                        "FILTROS_METODO_PARSER": ""
+                    }
+                    ,
+                    {
+                        "NOMBRE_METODO": "go_terms",
+                        "FILTROS_METODO_PARSER": ""
+                    }
+                    ,
+                    {
+                        "NOMBRE_METODO": "disease",
+                        "FILTROS_METODO_PARSER": ""
                     },
                     {
-                        "NOMBRE_METODO": "metodo2",
-                        "FILTROS_METODO_PARSER": "filtro2"
+                        "NOMBRE_METODO": "disease_publications",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "parse_variants",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "parse_interactions",
+                        "FILTROS_METODO_PARSER": ""
+                    }
+                ]
+            },
+            {
+                "PROCESSOR": "SelleckchemProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "TCL"}
+                ],                
+                "METODOS_PARSER": [
+                    {
+                        "NOMBRE_METODO": "obtener_link_selleckchem",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "obtener_links_selleckchem",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "Funcion que da error",
+                        "FILTROS_METODO_PARSER": ""
                     }
                 ]
             }
         ]'''
-
+    filters_json = json.loads(filters_json)
     ##Call sellectChem processor
+    print("\033[91msellectChem\033[0m")
     processor = SelleckchemProcessor()
-    dataframeLinksSellectChem =  processor.obtener_links_selleckchem("TCL")
-    print(tabulate(dataframeLinksSellectChem, headers='keys', tablefmt='fancy_grid'))
+    dataframeLinksSellectChem = processor.fetch(filters_json)
+    for dataFrame in dataframeLinksSellectChem:
+        print(dataFrame)
+        print(tabulate(dataframeLinksSellectChem[dataFrame],headers='keys', tablefmt='fancy_grid'))
 
     ##Call pharos processor
+    print("\033[91mpharos\033[0m")
     processor = PharosProcessor()
-    pharos_df_dict = processor.fetch(json.loads(filters_json)) #devuelve una lista de dataframes.
+    pharos_df_dict = processor.fetch(filters_json) #devuelve una lista de dataframes.
     #print(pharos_df_dict.keys())
     #print(tabulate(pharos_df_dict, headers='keys', tablefmt='fancy_grid'))
 
@@ -81,14 +129,16 @@ if __name__ == "__main__" :
         print(tabulate(pharos_df_dict[dataFrame], headers='keys', tablefmt='fancy_grid'))
 
     ##Call Uniprot processor
+    print("\033[91mUniProt\033[0m")
     processor = UniprotProcessor()
-    uniprot_dict = processor.get_uniprot_data("O15360") #Fanca
+    uniprot_dict = processor.fetch(filters_json) #Fanca
     print(uniprot_dict.keys())
     for key in uniprot_dict.keys():
         print(key)
         print(tabulate(uniprot_dict[key], headers='keys', tablefmt='fancy_grid'))
 
     #Call Ensembl processor
+    print("\033[91mEnsembl\033[0m")
     processor = EnsemblProcessor()
     ensembl_id = processor.get_ensembl_id("FANCA")
     print("ensembl_id: " + ensembl_id)

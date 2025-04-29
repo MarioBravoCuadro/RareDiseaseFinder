@@ -39,3 +39,20 @@ class SelleckchemParser(BaseParser):
             })
         medicamentos_df = self.parse_to_dataframe(medicamentos)
         return medicamentos_df
+
+    def obtener_link_selleckchem(self,html: str)-> pd.DataFrame:
+        productos = self.extraer_medicamentos(html)
+        if not productos.empty:
+            primer_link = f"www.selleckchem.com{productos.loc[0]['Link']}"
+            return self.parse_to_dataframe([primer_link])
+        return self.parse_to_dataframe([])
+
+    def obtener_links_selleckchem(self, html: str) -> pd.DataFrame:
+        productos = self.extraer_medicamentos(html)
+        links = []
+        rango = range(len(productos))
+        for i in rango:
+            links.append(f"www.selleckchem.com{productos.loc[i]['Link']}")
+
+        links = self.parse_to_dataframe(links)
+        return links
