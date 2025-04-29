@@ -4,8 +4,14 @@ UNIPROT_BASE_URL = "https://rest.uniprot.org/uniprotkb"
 class UniProtClient(BaseClient):
     """Cliente para interactuar con la API de UniProt"""
     
-    @classmethod
-    def get_by_id(cls, uniprot_id):
+    def __init__(self):
+        """
+        Inicializa el cliente de Ensembl.
+        """
+        pass
+
+
+    def get_by_id(self, cls, uniprot_id):
         """
         Obtiene información de una proteína por su ID de UniProt
         
@@ -22,8 +28,8 @@ class UniProtClient(BaseClient):
         url = f"{UNIPROT_BASE_URL}/{uniprot_id}"
         return cls._fetch_data(url)
     
-    @classmethod
-    def search_by_gene(cls, gene_name, reviewed_only=True):
+    
+    def search_by_gene(self, cls, gene_name, reviewed_only=True):
         """
         Busca proteínas por nombre de gen
         
@@ -42,3 +48,6 @@ class UniProtClient(BaseClient):
         url = f"{UNIPROT_BASE_URL}/search?query=gene:{gene_name}+{reviewed_param}&format=json"
         return cls._fetch_data(url)
     
+    def _ping_logic(self):
+        
+        return BaseClient._fetch_response("https://rest.uniprot.org/uniprotkb/api/docs")

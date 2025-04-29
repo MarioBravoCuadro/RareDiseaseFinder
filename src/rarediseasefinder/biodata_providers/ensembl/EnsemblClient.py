@@ -42,5 +42,5 @@ class EnsemblClient(BaseClient):
         server = "https://grch37.rest.ensembl.org"
         ext = "/info/ping?"
         
-        return EnsemblClient._fetch_response(server+ext)
+        return BaseClient._fetch_response(server+ext)
         

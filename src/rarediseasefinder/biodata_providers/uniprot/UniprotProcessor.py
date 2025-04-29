@@ -1,19 +1,24 @@
 from pandas import DataFrame
 
+from ...core.BaseClient import BaseClient
 from .UniProtClient import UniProtClient
 from .UniProtParser import UniProtParser
-from typing import Dict, Any, Optional, Union
-import pandas as pd
+from typing import Dict, Optional
 
 
-class UniprotProcessor:
-
-    uniprotClient = None
-    uniprotParser = None
+class UniprotProcessor(BaseClient):
+    """
+    Clase para procesar datos de Ensembl utilizando UniProtClient y UniProtParser.
+    Permite obtener el identificador Ensembl de un gen dado su uniprotID.
+    """
 
     def __init__(self):
-        self.uniprotClient = UniProtClient()
-        self.uniprotParser = UniProtParser()
+        """
+        Inicializa el procesador creando instancias de UniProtClient y UniProtParser.
+        """
+        super().__init__()
+        self.client = UniProtClient()
+        self.parser = UniProtParser()
 
     def parse_filters(self, data: dict, filters: dict) -> dict:
         """
@@ -94,8 +99,3 @@ class UniprotProcessor:
         if data:
             return self.parse_filters(data, filters)
         return {}
-
-
-    #TODO implementar consulta al cliente mediante un ping a la url de este
-    def getStatus(self) -> str:
-        return "OK"
