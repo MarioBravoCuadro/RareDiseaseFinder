@@ -15,7 +15,7 @@ class UniprotProcessor:
         self.uniprotClient = UniProtClient()
         self.uniprotParser = UniProtParser()
 
-    def parseFilters(self, data: dict, filters: dict) -> dict:
+    def parse_filters(self, data: dict, filters: dict) -> dict:
         """
         Procesa los datos según los filtros configurados.
 
@@ -52,7 +52,7 @@ class UniprotProcessor:
                                     f"El procesador {processor['PROCESSOR']} no admite la instrucción {method_name} en el parser.")
         return results
 
-    def clientFilters(self, filters: dict) -> Optional[dict]:
+    def client_filters(self, filters: dict) -> Optional[dict]:
         """
         Extrae los parámetros de búsqueda para el cliente Uniprot desde la configuración de filtros.
 
@@ -84,7 +84,7 @@ class UniprotProcessor:
             Dict[str, DataFrame]: Diccionario donde las claves son nombres de métodos y
                                los valores son DataFrames con los datos procesados.
         """
-        search_params = self.clientFilters(filters)
+        search_params = self.client_filters(filters)
         if not search_params or "search_id" not in search_params:
             print("Error: No se encontró un search_id válido en los filtros")
             return {}
@@ -92,7 +92,7 @@ class UniprotProcessor:
         search_id = search_params["search_id"]
         data = self.uniprotClient.get_by_id(search_id)
         if data:
-            return self.parseFilters(data, filters)
+            return self.parse_filters(data, filters)
         return {}
 
 

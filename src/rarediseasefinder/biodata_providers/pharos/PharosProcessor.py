@@ -10,14 +10,16 @@ class PharosProcessor(BaseProcessor):
     Clase para procesar datos de Pharos utilizando PharosClient y PharosParser.
     Permite obtener datos de un identificador y filtrarlos según prioridades definidas.
     """
+    pharosClient = None
+    pharosParser = None
 
     def __init__(self):
         """
         Inicializa el procesador creando instancias de PharosClient y PharosParser.
         """
         super().__init__()
-        self.client = PharosClient()
-        self.parser = PharosParser()
+        self.pharosClient = PharosClient()
+        self.pharosParser = PharosParser()
 
     def parse_filters(self, data: dict, filters: dict) -> dict:
         """
@@ -85,7 +87,7 @@ class PharosProcessor(BaseProcessor):
             Dict[str, DataFrame]: Diccionario donde las claves son nombres de métodos y 
                                los valores son DataFrames con los datos procesados.
         """
-        search_params = self.clientFilters(filters)
+        search_params = self.client_filters(filters)
         if not search_params or "search_id" not in search_params:
             print("Error: No se encontró un search_id válido en los filtros")
             return {}
@@ -93,7 +95,7 @@ class PharosProcessor(BaseProcessor):
         search_id = search_params["search_id"]
         data = self.pharosClient.get_target_data(search_id)
         if data:
-            return self.parseFilters(data, filters)
+            return self.parse_filters(data, filters)
         return {}
 
 
