@@ -16,7 +16,7 @@ class EnsemblClient(BaseClient):
         """
         pass
 
-    def create_url_string(self,gen_term )-> str:
+    def _create_url_string(self,gen_term )-> str:
         """
         Construye la URL para consultar un gen en Ensembl.
         Args:
