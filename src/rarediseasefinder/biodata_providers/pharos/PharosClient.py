@@ -108,3 +108,8 @@ class PharosClient(BaseClient):
             return response_data["data"]["target"]
         else:
             raise BaseParsingError(f"No se encontraron datos para el objetivo: {target}")
+        
+    def _ping_logic(self):
+        query = "query { dbVersion }"
+        response = self.query_graphql(query=query)
+        return response

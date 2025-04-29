@@ -1,6 +1,5 @@
 from ...core.BaseClient import BaseClient
 
-
 class EnsemblClient(BaseClient):
     """
     Cliente para interactuar con la API REST de Ensembl.
@@ -37,3 +36,11 @@ class EnsemblClient(BaseClient):
         url = self._create_url_string(gen_term)
         data = self._fetch_data(url)
         return data
+    
+    def _ping_logic(self):
+
+        server = "https://grch37.rest.ensembl.org"
+        ext = "/info/ping?"
+        
+        return EnsemblClient._fetch_response(server+ext)
+        
