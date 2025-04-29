@@ -31,7 +31,7 @@ class BaseClient:
         except Exception as err:
             raise BaseError(f"Error inesperado: {err}")
     
-    staticmethod
+    @staticmethod
     def _fetch_data(url):
         """
         Método privado para devolver la respuesta en json
