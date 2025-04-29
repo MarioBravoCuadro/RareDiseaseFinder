@@ -34,6 +34,6 @@ class EnsemblClient(BaseClient):
         Returns:
             dict: Datos obtenidos de la API de Ensembl.
         """
-        url = self.create_url_string(gen_term)
+        url = self._create_url_string(gen_term)
         data = self._fetch_data(url)
         return data
