@@ -36,21 +36,6 @@ class EnsemblProcessor:
             if not ensembl_id_df.empty and "ID" in ensembl_id_df.columns:
                 return ensembl_id_df["ID"].iloc[0]
         return None
-        
-    def get_ensembl_data(self, genTerm: str) -> pd.DataFrame:
-        """
-        Obtiene todos los datos de Ensembl para un gen en formato DataFrame.
-        
-        Args:
-            genTerm (str): Nombre del gen a consultar.
-            
-        Returns:
-            pd.DataFrame: DataFrame con la información del gen o DataFrame vacío si no se encuentra.
-        """
-        data = self.ensembl_client.get_by_gene(genTerm)
-        if data:
-            return self.ensembl_parser.parse_id(data)
-        return pd.DataFrame()
 
     #TODO implementar consulta al cliente mediante un ping a la url de este
     def getStatus(self) -> str:
