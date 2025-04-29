@@ -106,7 +106,20 @@ if __name__ == "__main__" :
                         "FILTROS_METODO_PARSER": ""
                     }
                 ]
+            },
+            {
+                "PROCESSOR": "EnsemblProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "FANCA"}
+                ],                
+                "METODOS_PARSER": [
+                    {
+                        "NOMBRE_METODO": "ensembl_id",
+                        "FILTROS_METODO_PARSER": ""
+                    }
+                ]
             }
+            
         ]'''
     filters_json = json.loads(filters_json)
     ##Call sellectChem processor
@@ -140,5 +153,5 @@ if __name__ == "__main__" :
     #Call Ensembl processor
     print("\033[91mEnsembl\033[0m")
     processor = EnsemblProcessor()
-    ensembl_id = processor.get_ensembl_id("FANCA")
-    print("ensembl_id: " + ensembl_id)
+    ensembl_id = processor.fetch(filters_json)
+    print(tabulate(ensembl_id, headers='keys', tablefmt='fancy_grid'))
