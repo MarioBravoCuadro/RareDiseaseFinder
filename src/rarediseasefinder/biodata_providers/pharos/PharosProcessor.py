@@ -45,7 +45,7 @@ class PharosProcessor:
                             case "df_omim": 
                                 results[method_name] = self.pharosParser.create_omim_df(data)
                             case "create_protein_protein_relations_df":
-                                results[method_name] = self.pharosParser.create_protein_protein_relations_df(data, filter_params)
+                                  results[method_name] = self.pharosParser.create_protein_protein_relations_df(data, filter_params)
                             case "df_numero_vias_por_fuente": 
                                 results[method_name] = self.pharosParser.create_numero_vias_por_fuente_df(data)
                             case "df_vias": 
