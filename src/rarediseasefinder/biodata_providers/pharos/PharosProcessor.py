@@ -1,26 +1,25 @@
 from pandas import DataFrame
 
+from ...core.BaseProcessor import BaseProcessor
 from .PharosClient import PharosClient
 from .PharosParser import PharosParser
-import pandas as pd
-from typing import Dict, Any, Optional, List
+from typing import Dict, Optional
 
-class PharosProcessor:
+class PharosProcessor(BaseProcessor):
     """
     Clase para procesar datos de Pharos utilizando PharosClient y PharosParser.
     Permite obtener datos de un identificador y filtrarlos según prioridades definidas.
     """
-    pharosClient = None
-    pharosParser = None
 
     def __init__(self):
         """
         Inicializa el procesador creando instancias de PharosClient y PharosParser.
         """
-        self.pharosClient = PharosClient()
-        self.pharosParser = PharosParser()
+        super().__init__()
+        self.client = PharosClient()
+        self.parser = PharosParser()
 
-    def parseFilters(self, data: dict, filters: dict) -> dict:
+    def parse_filters(self, data: dict, filters: dict) -> dict:
         """
         Procesa los datos según los filtros configurados.
         
@@ -54,7 +53,7 @@ class PharosProcessor:
                                 print(f"El procesador {processor['PROCESSOR']} no admite la instrucción {method_name} en el parser.")
         return results
 
-    def clientFilters(self, filters: dict) -> Optional[dict]:
+    def client_filters(self, filters: dict) -> Optional[dict]:
         """
         Extrae los parámetros de búsqueda para el cliente Pharos desde la configuración de filtros.
         
@@ -96,15 +95,5 @@ class PharosProcessor:
         if data:
             return self.parseFilters(data, filters)
         return {}
-
-    #TODO implementar consulta al cliente mediante un ping a la url de este
-    def getStatus(self) -> str:
-        """
-        Verifica el estado de la conexión con Pharos.
-        
-        Returns:
-            str: Estado de la conexión ("OK" si la conexión está activa).
-        """
-        return "OK"
 
 
