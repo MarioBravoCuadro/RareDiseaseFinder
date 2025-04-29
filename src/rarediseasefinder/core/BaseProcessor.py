@@ -29,7 +29,7 @@ class BaseProcessor:
             try:
                 return self.client.check_connection()
             except BaseHTTPError as e:
-                    return "NOT OK"
+                    return f"Connection error: {e}"
         return "OK"
     
     def fetch(self, params: Dict[str, Any]) -> Dict[str, pd.DataFrame]:

@@ -1,9 +1,11 @@
+import pandas as pd
+
+from ...core.BaseProcessor import BaseProcessor
 from .EnsemblClient import EnsemblClient
 from .EnsemblParser import EnsemblParser
-import pandas as pd
 from typing import Optional
 
-class EnsemblProcessor:
+class EnsemblProcessor(BaseProcessor):
     """
     Clase para procesar datos de Ensembl utilizando EnsemblClient y EnsemblParser.
     Permite obtener el identificador Ensembl de un gen dado su nombre.
