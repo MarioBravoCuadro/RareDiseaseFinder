@@ -41,4 +41,13 @@ class UniProtClient(BaseClient):
         reviewed_param = "AND+reviewed:true" if reviewed_only else ""
         url = f"{UNIPROT_BASE_URL}/search?query=gene:{gene_name}+{reviewed_param}&format=json"
         return cls._fetch_data(url)
-    
+
+    def get_target_data(self, target_id):
+        """
+        Obtiene los datos de una proteína por su ID de UniProt.
+        Args:
+            target_id (str): Identificador de UniProt.
+        Returns:
+            dict: Datos crudos de la respuesta de la API.
+        """
+        return self.get_by_id(target_id)

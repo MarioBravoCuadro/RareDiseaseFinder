@@ -16,7 +16,18 @@ class BaseProcessor:
         """
         self.client = None
         self.parser = None
-    
+        self.method_map = self.get_method_map()
+
+    def get_method_map(self) -> Dict[str, str]:
+        """
+        Devuelve un diccionario que mapea nombres de métodos a sus implementaciones.
+        Las clases derivadas pueden sobreescribir este método para proporcionar su propio mapeo.
+        
+        Returns:
+            Dict[str, str]: Mapeo de nombres de métodos.
+        """
+        return {}
+
     def get_status(self) -> str:
         """
         Verifica el estado de la conexión con la fuente de datos.
@@ -29,21 +40,15 @@ class BaseProcessor:
             try:
                 return self.client.check_connection()
             except BaseHTTPError as e:
-                    return f"Connection error: {e}"
+                return f"Connection error: {e}"
         return "OK"
-    
-    def fetch(self, params: Dict[str, Any]) -> Dict[str, pd.DataFrame]:
+
+    def fetch(self, filters: Dict[str, Any]) -> Dict[str, pd.DataFrame]:
         """
-        Método genérico para obtener datos de una fuente.
-        
-        Args:
-            params (Dict[str, Any]): Parámetros para la consulta.
-            
-        Returns:
-            Dict[str, pd.DataFrame]: Datos obtenidos organizados en DataFrames.
+        Método abstracto. Debe ser implementado por cada procesador hijo según el método de su cliente.
         """
-        raise NotImplementedError("El método fetch debe ser implementado por las clases derivadas")
-    
+        raise NotImplementedError("Cada procesador hijo debe implementar fetch según su cliente.")
+
     def parse_filters(self, data: Dict[str, Any], filters: Dict[str, Any]) -> Dict[str, pd.DataFrame]:
         """
         Procesa los datos según los filtros configurados.
@@ -55,8 +60,25 @@ class BaseProcessor:
         Returns:
             Dict[str, pd.DataFrame]: Resultados procesados por los métodos del parser.
         """
-        raise NotImplementedError("El método parse_filters debe ser implementado por las clases derivadas")
-    
+        if not self.parser:
+            raise NotImplementedError("El parser no está definido.")
+        results = {}
+        for processor in filters:
+            if processor.get("PROCESSOR") == self.__class__.__name__:
+                for method_config in processor.get("METODOS_PARSER", []):
+                    method_name = method_config.get("NOMBRE_METODO", "")
+                    filter_params = method_config.get("FILTROS_METODO_PARSER", {})
+                    parser_method = self.method_map.get(method_name)
+                    if parser_method and hasattr(self.parser, parser_method):
+                        method = getattr(self.parser, parser_method)
+                        try:
+                            results[method_name] = method(data, filter_params)
+                        except TypeError:
+                            results[method_name] = method(data)
+                    else:
+                        print(f"El procesador {processor['PROCESSOR']} no admite la instrucción {method_name} en el parser.")
+        return results
+
     def client_filters(self, filters: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """
         Extrae los parámetros de búsqueda para el cliente desde la configuración de filtros.
@@ -67,4 +89,10 @@ class BaseProcessor:
         Returns:
             Optional[Dict[str, Any]]: Parámetros de búsqueda o None si no se encuentra.
         """
-        raise NotImplementedError("El método client_filters debe ser implementado por las clases derivadas")
+        for processor in filters:
+            if processor.get("PROCESSOR") == self.__class__.__name__:
+                search_params = processor.get("CLIENT_SEARCH_PARAMS")
+                if isinstance(search_params, list) and len(search_params) > 0:
+                    return search_params[0]
+                return search_params
+        return None
