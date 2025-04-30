@@ -98,7 +98,7 @@ class BaseClient:
             BaseHTTPError: Si hay un error en la comunicación con la API
         """
         response = self._ping_logic()
-        if not response.status_code.ok:
+        if not response.ok:
             error_code = f"Connection error: {response.status_code}"
             raise BaseHTTPError(error_code)
             

@@ -11,7 +11,7 @@ class UniProtClient(BaseClient):
         pass
 
 
-    def get_by_id(self, cls, uniprot_id):
+    def get_by_id(self, uniprot_id):
         """
         Obtiene información de una proteína por su ID de UniProt
         
@@ -26,10 +26,10 @@ class UniProtClient(BaseClient):
             UniProtParsingError: Si la respuesta no es un JSON válido
         """
         url = f"{UNIPROT_BASE_URL}/{uniprot_id}"
-        return cls._fetch_data(url)
+        return self._fetch_data(url)
     
     
-    def search_by_gene(self, cls, gene_name, reviewed_only=True):
+    def get_target_data(self, gene_name, reviewed_only=True):
         """
         Busca proteínas por nombre de gen
         
@@ -46,7 +46,7 @@ class UniProtClient(BaseClient):
         """
         reviewed_param = "AND+reviewed:true" if reviewed_only else ""
         url = f"{UNIPROT_BASE_URL}/search?query=gene:{gene_name}+{reviewed_param}&format=json"
-        return cls._fetch_data(url)
+        return self._fetch_data(url)
     
     def _ping_logic(self):
         

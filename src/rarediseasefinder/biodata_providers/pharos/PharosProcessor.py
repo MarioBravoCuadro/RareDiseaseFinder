@@ -10,16 +10,14 @@ class PharosProcessor(BaseProcessor):
     Clase para procesar datos de Pharos utilizando PharosClient y PharosParser.
     Permite obtener datos de un identificador y filtrarlos según prioridades definidas.
     """
-    pharosClient = None
-    pharosParser = None
 
     def __init__(self):
         """
         Inicializa el procesador creando instancias de PharosClient y PharosParser.
         """
         super().__init__()
-        self.pharosClient = PharosClient()
-        self.pharosParser = PharosParser()
+        self.client = PharosClient()
+        self.parser = PharosParser()
 
     def parse_filters(self, data: dict, filters: dict) -> dict:
         """
@@ -42,15 +40,15 @@ class PharosProcessor(BaseProcessor):
                         
                         match method_name:
                             case "df_info": 
-                                results[method_name] = self.pharosParser.create_info_df(data)
+                                results[method_name] = self.parser.create_info_df(data)
                             case "df_omim": 
-                                results[method_name] = self.pharosParser.create_omim_df(data)
+                                results[method_name] = self.parser.create_omim_df(data)
                             case "create_protein_protein_relations_df":
-                                  results[method_name] = self.pharosParser.create_protein_protein_relations_df(data, filter_params)
+                                  results[method_name] = self.parser.create_protein_protein_relations_df(data, filter_params)
                             case "df_numero_vias_por_fuente": 
-                                results[method_name] = self.pharosParser.create_numero_vias_por_fuente_df(data)
+                                results[method_name] = self.parser.create_numero_vias_por_fuente_df(data)
                             case "df_vias": 
-                                results[method_name] = self.pharosParser.create_vias_df(data)
+                                results[method_name] = self.parser.create_vias_df(data)
                             case _: 
                                 print(f"El procesador {processor['PROCESSOR']} no admite la instrucción {method_name} en el parser.")
         return results
@@ -93,7 +91,7 @@ class PharosProcessor(BaseProcessor):
             return {}
         
         search_id = search_params["search_id"]
-        data = self.pharosClient.get_target_data(search_id)
+        data = self.client.get_target_data(search_id)
         if data:
             return self.parse_filters(data, filters)
         return {}

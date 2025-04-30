@@ -1,12 +1,12 @@
 from pandas import DataFrame
 
-from ...core.BaseClient import BaseClient
+from ...core.BaseProcessor import BaseProcessor
 from .UniProtClient import UniProtClient
 from .UniProtParser import UniProtParser
 from typing import Dict, Optional
 
 
-class UniprotProcessor(BaseClient):
+class UniprotProcessor(BaseProcessor):
     """
     Clase para procesar datos de Ensembl utilizando UniProtClient y UniProtParser.
     Permite obtener el identificador Ensembl de un gen dado su uniprotID.
@@ -41,17 +41,17 @@ class UniprotProcessor(BaseClient):
 
                         match method_name:
                             case "function":
-                                results[method_name] = self.uniprotParser.parse_function(data)
+                                results[method_name] = self.parser.parse_function(data)
                             case "subcellular_location":
-                                results[method_name] = self.uniprotParser.parse_subcellular_location(data)
+                                results[method_name] = self.parser.parse_subcellular_location(data)
                             case "go_terms":
-                                results[method_name] = self.uniprotParser.parse_go_terms(data)
+                                results[method_name] = self.parser.parse_go_terms(data)
                             case "disease":
-                                results[method_name] = self.uniprotParser.parse_disease(data)
+                                results[method_name] = self.parser.parse_disease(data)
                             case "disease_publications":
-                                results[method_name] = self.uniprotParser.parse_disease_publications(data)
+                                results[method_name] = self.parser.parse_disease_publications(data)
                             case "interactions":
-                                results[method_name] = self.uniprotParser.parse_interactions(data)
+                                results[method_name] = self.parser.parse_interactions(data)
                             case _:
                                 print(
                                     f"El procesador {processor['PROCESSOR']} no admite la instrucción {method_name} en el parser.")
@@ -95,7 +95,7 @@ class UniprotProcessor(BaseClient):
             return {}
 
         search_id = search_params["search_id"]
-        data = self.uniprotClient.get_by_id(search_id)
+        data = self.client.get_target_data(search_id)
         if data:
             return self.parse_filters(data, filters)
         return {}
