@@ -1,6 +1,8 @@
 from selenium.webdriver.chrome.options import Options
+from ..core.BaseRetriever import BaseRetriever
+from abc import ABC
 
-class BaseScraper:
+class BaseScraper(BaseRetriever, ABC):
     def __init__(self):
         pass
     #TODO implementar firefox driver también

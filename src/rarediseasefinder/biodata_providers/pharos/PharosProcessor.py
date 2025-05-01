@@ -1,10 +1,7 @@
-from pandas import DataFrame
-
 from ...core.BaseProcessor import BaseProcessor
 from .PharosClient import PharosClient
 from .PharosParser import PharosParser
-from typing import Dict, Optional
-import pandas as pd
+from typing import Dict
 
 class PharosProcessor(BaseProcessor):
     """

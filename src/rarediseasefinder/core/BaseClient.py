@@ -1,9 +1,11 @@
+from abc import ABC, abstractmethod
 from typing import Optional, Dict, Any
 
 import requests
+from ..core.BaseRetriever import BaseRetriever
 from .errors import BaseHTTPError, BaseParsingError, BaseError
 
-class BaseClient:
+class BaseClient(BaseRetriever, ABC):
     """Cliente base para interactuar con la API """
     
     @staticmethod
@@ -102,6 +104,7 @@ class BaseClient:
             error_code = f"Connection error: {response.status_code}"
             raise BaseHTTPError(error_code)
             
+    @abstractmethod
     def _ping_logic(self) -> requests.Response:
         """
         Establece la lógica de conexión para las clases derivadas.
@@ -111,8 +114,4 @@ class BaseClient:
 
         Returns:
             requests.Response: La respuesta de la conexión establecida.
-
-        Raises:
-            NotImplementedError: Si no se implementa en la clase derivada.
         """
-        raise NotImplementedError("El método connection_logic debe ser implementado por las clases derivadas")

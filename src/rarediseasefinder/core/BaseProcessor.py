@@ -1,8 +1,9 @@
+from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional
 import pandas as pd
 from .errors import BaseHTTPError
 
-class BaseProcessor:
+class BaseProcessor(ABC):
     """
     Clase base para todos los procesadores de datos biológicos.
     Proporciona una estructura común y métodos básicos que pueden ser utilizados
@@ -43,11 +44,11 @@ class BaseProcessor:
                 return f"Connection error: {e}"
         return "OK"
 
+    @abstractmethod
     def fetch(self, filters: Dict[str, Any]) -> Dict[str, pd.DataFrame]:
         """
         Método abstracto. Debe ser implementado por cada procesador hijo según el método de su cliente.
         """
-        raise NotImplementedError("Cada procesador hijo debe implementar fetch según su cliente.")
 
     def parse_filters(self, data: Dict[str, Any], filters: Dict[str, Any]) -> Dict[str, pd.DataFrame]:
         """
