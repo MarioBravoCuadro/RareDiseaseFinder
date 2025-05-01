@@ -4,7 +4,6 @@ UNIPROT_BASE_URL = "https://rest.uniprot.org/uniprotkb"
 class UniProtClient(BaseClient):
     """Cliente para interactuar con la API de UniProt"""
 
-    @classmethod
     def get_by_id(self, uniprot_id) -> dict:
         """
         Obtiene información de una proteína por su ID de UniProt
@@ -21,8 +20,7 @@ class UniProtClient(BaseClient):
         """
         url = f"{UNIPROT_BASE_URL}/{uniprot_id}"
         return self._fetch_data(url).json()
-    
-    @classmethod
+
     def search_by_gene(self, gene_name, reviewed_only=True)->dict:
         """
         Busca proteínas por nombre de gen
