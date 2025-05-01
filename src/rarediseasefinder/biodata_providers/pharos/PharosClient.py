@@ -9,7 +9,7 @@ class PharosClient(BaseClient):
     
     GRAPHQL_URL = "https://pharos-api.ncats.io/graphql"
 
-    def get_uniprot_query(self, target: str) -> str:
+    def _get_uniprot_query(self, target: str) -> str:
         """
         Construye la consulta GraphQL para obtener información de un target por su símbolo.
         
@@ -73,7 +73,7 @@ class PharosClient(BaseClient):
         """
         return query
     
-    def query_graphql(self, query: str) -> dict:
+    def _query_graphql(self, query: str) -> dict:
         """
         Ejecuta una consulta GraphQL en la API de Pharos.
         
@@ -84,9 +84,9 @@ class PharosClient(BaseClient):
             dict: Datos JSON de la respuesta.
         """
         payload = {"query": query}
-    
-        return self._post_data(self.GRAPHQL_URL, json=payload)
-    
+        response = self._post_data(self.GRAPHQL_URL, json=payload)
+        return response.json()
+
     def get_target_data(self, target: str) -> dict:
         """
         Obtiene datos de un objetivo específico de Pharos.
@@ -101,8 +101,8 @@ class PharosClient(BaseClient):
             BaseParsingError: Si la respuesta no contiene los datos esperados.
         """
 
-        query = self.get_uniprot_query(target)
-        response_data = self.query_graphql(query)
+        query = self._get_uniprot_query(target)
+        response_data = self._query_graphql(query)
         
         if "data" in response_data and "target" in response_data["data"]:
             return response_data["data"]["target"]
@@ -111,5 +111,8 @@ class PharosClient(BaseClient):
         
     def _ping_logic(self):
         query = "query { dbVersion }"
-        response = self.query_graphql(query=query)
+        response = self._query_graphql(query=query)
         return response
+
+    def check_data(self):
+        pass

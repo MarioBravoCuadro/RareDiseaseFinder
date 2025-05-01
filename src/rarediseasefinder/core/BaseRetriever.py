@@ -35,12 +35,13 @@ class BaseRetriever(ABC):
             BaseHTTPError: Si hay un error en la comunicación con la API
         """
         response = self._ping_logic()
+        print(response.status_code)
         if not response.ok:
             error_code = f"Connection error: {response.status_code}"
             raise BaseHTTPError(error_code)
 
     @abstractmethod
-    def check_data(data: | ) -> bool:
+    def check_data(data: str|dict ) -> bool:
         """_summary_
 
         Args:

@@ -35,6 +35,7 @@ class EnsemblClient(BaseClient):
         """
         url = self._create_url_string(gen_term)
         data = self._fetch_data(url)
+        data = data.json()
         return data
     
     def _ping_logic(self):
@@ -43,4 +44,6 @@ class EnsemblClient(BaseClient):
         ext = "/info/ping?"
         
         return EnsemblClient._fetch_response(server+ext)
-        
+
+    def check_data(self):
+        pass

@@ -3,9 +3,9 @@ UNIPROT_BASE_URL = "https://rest.uniprot.org/uniprotkb"
 
 class UniProtClient(BaseClient):
     """Cliente para interactuar con la API de UniProt"""
-    
+
     @classmethod
-    def get_by_id(cls, uniprot_id):
+    def get_by_id(self, uniprot_id) -> dict:
         """
         Obtiene información de una proteína por su ID de UniProt
         
@@ -20,10 +20,10 @@ class UniProtClient(BaseClient):
             UniProtParsingError: Si la respuesta no es un JSON válido
         """
         url = f"{UNIPROT_BASE_URL}/{uniprot_id}"
-        return cls._fetch_data(url)
+        return self._fetch_data(url).json()
     
     @classmethod
-    def search_by_gene(cls, gene_name, reviewed_only=True):
+    def search_by_gene(self, gene_name, reviewed_only=True)->dict:
         """
         Busca proteínas por nombre de gen
         
@@ -40,7 +40,7 @@ class UniProtClient(BaseClient):
         """
         reviewed_param = "AND+reviewed:true" if reviewed_only else ""
         url = f"{UNIPROT_BASE_URL}/search?query=gene:{gene_name}+{reviewed_param}&format=json"
-        return cls._fetch_data(url)
+        return self._fetch_data(url).json()
 
     def get_target_data(self, target_id):
         """
@@ -51,3 +51,8 @@ class UniProtClient(BaseClient):
             dict: Datos crudos de la respuesta de la API.
         """
         return self.get_by_id(target_id)
+
+    def _ping_logic(self):
+        pass
+    def check_data(self):
+        pass

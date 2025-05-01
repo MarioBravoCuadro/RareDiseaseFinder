@@ -9,7 +9,7 @@ class BaseClient(BaseRetriever, ABC):
     """Cliente base para interactuar con la API """
     
     @staticmethod
-    def _fetch_response(url):
+    def _fetch_response(url) -> requests.Response:
         """
         Método privado para realizar solicitudes HTTP
         
@@ -34,7 +34,7 @@ class BaseClient(BaseRetriever, ABC):
             raise BaseError(f"Error inesperado: {err}")
     
     @staticmethod
-    def _fetch_data(url):
+    def _fetch_data(url) -> requests.Response:
         """
         Método privado para devolver la respuesta en json
         
@@ -51,7 +51,7 @@ class BaseClient(BaseRetriever, ABC):
         """
         try:
             response = BaseClient._fetch_response(url)
-            return response.json()
+            return response
         except ValueError as json_err:
             raise BaseParsingError(f"JSON inválido: {json_err}")
         except Exception as err:
@@ -60,7 +60,7 @@ class BaseClient(BaseRetriever, ABC):
     @staticmethod
     def _post_data(url: str, json: Optional[Dict[str, Any]] = None,
                   data: Optional[Dict[str, Any]] = None,
-                  headers: Optional[Dict[str, str]] = None) -> Dict:
+                  headers: Optional[Dict[str, str]] = None) -> requests.Response:
         """
         Método para realizar solicitudes HTTP POST
         
@@ -81,7 +81,7 @@ class BaseClient(BaseRetriever, ABC):
         try:
             response = requests.post(url, json=json, data=data, headers=headers)
             response.raise_for_status()
-            return response.json()
+            return response
         except requests.exceptions.HTTPError as http_err:
             raise BaseHTTPError(f"HTTP error: {http_err}")
         except ValueError as json_err:
@@ -100,7 +100,7 @@ class BaseClient(BaseRetriever, ABC):
             BaseHTTPError: Si hay un error en la comunicación con la API
         """
         response = self._ping_logic()
-        if not response.status_code.ok:
+        if not response.ok:
             error_code = f"Connection error: {response.status_code}"
             raise BaseHTTPError(error_code)
             
@@ -115,3 +115,4 @@ class BaseClient(BaseRetriever, ABC):
         Returns:
             requests.Response: La respuesta de la conexión establecida.
         """
+        pass

@@ -63,3 +63,8 @@ class SelleckchemScrapper(BaseScraper):
             print("❌ Error:", e)
             self.driver.quit()
             return None
+
+    def _ping_logic(self):
+        pass
+    def check_data(self):
+        pass
