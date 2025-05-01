@@ -133,25 +133,31 @@ if __name__ == "__main__" :
     ##Call pharos processor
     print("\033[91mpharos\033[0m")
     processor = PharosProcessor()
-    pharos_df_dict = processor.fetch(filters_json) #devuelve una lista de dataframes.
-    #print(pharos_df_dict.keys())
-    #print(tabulate(pharos_df_dict, headers='keys', tablefmt='fancy_grid'))
+    print("Status code " + str(processor.get_status_code()))
+    if processor.get_status_code() == 200:
+        pharos_df_dict = processor.fetch(filters_json) #devuelve una lista de dataframes.
+        #print(pharos_df_dict.keys())
+        #print(tabulate(pharos_df_dict, headers='keys', tablefmt='fancy_grid'))
 
-    for dataFrame in pharos_df_dict:
-        print(dataFrame)
-        print(tabulate(pharos_df_dict[dataFrame], headers='keys', tablefmt='fancy_grid'))
+        for dataFrame in pharos_df_dict:
+            print(dataFrame)
+            print(tabulate(pharos_df_dict[dataFrame], headers='keys', tablefmt='fancy_grid'))
 
     ##Call Uniprot processor
     print("\033[91mUniProt\033[0m")
     processor = UniprotProcessor()
-    uniprot_dict = processor.fetch(filters_json) #Fanca
-    print(uniprot_dict.keys())
-    for key in uniprot_dict.keys():
-        print(key)
-        print(tabulate(uniprot_dict[key], headers='keys', tablefmt='fancy_grid'))
+    print("Status code " + str(processor.get_status_code()))
+    if processor.get_status_code() == 200:
+        uniprot_dict = processor.fetch(filters_json) #Fanca
+        print(uniprot_dict.keys())
+        for key in uniprot_dict.keys():
+            print(key)
+            print(tabulate(uniprot_dict[key], headers='keys', tablefmt='fancy_grid'))
 
     #Call Ensembl processor
     print("\033[91mEnsembl\033[0m")
     processor = EnsemblProcessor()
-    ensembl_id = processor.fetch(filters_json)
-    print(tabulate(ensembl_id, headers='keys', tablefmt='fancy_grid'))
+    print("Status code " + str(processor.get_status_code()))
+    if processor.get_status_code() == 200:
+        ensembl_id = processor.fetch(filters_json)
+        print(tabulate(ensembl_id, headers='keys', tablefmt='fancy_grid'))

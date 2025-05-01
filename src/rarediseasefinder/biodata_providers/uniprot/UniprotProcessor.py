@@ -9,9 +9,9 @@ import pandas as pd
 
 class UniprotProcessor(BaseProcessor):
     def __init__(self):
-        super().__init__()
         self.client = UniProtClient()
         self.parser = UniProtParser()
+        super().__init__(self.client,self.parser)
         self.method_map = self.get_method_map()
 
     def get_method_map(self) -> Dict[str, str]:

@@ -7,7 +7,16 @@ from .errors import BaseHTTPError, BaseParsingError, BaseError
 
 class BaseClient(BaseRetriever, ABC):
     """Cliente base para interactuar con la API """
-    
+    @staticmethod
+    def _try_connection(url:str) -> bool:
+        try:
+            requests.get(url,timeout=15)
+            return True
+        except requests.exceptions.ConnectionError:
+            return False
+        except Exception as err:
+            raise BaseError(f"Error inesperado: {err}")
+
     @staticmethod
     def _fetch_response(url) -> requests.Response:
         """
@@ -26,15 +35,15 @@ class BaseClient(BaseRetriever, ABC):
         """
         try:
             response = requests.get(url)
-            response.raise_for_status()
+            #response.raise_for_status() check the status code
             return response
         except requests.exceptions.HTTPError as http_err:
             raise BaseHTTPError(f"HTTP error: {http_err}")
         except Exception as err:
             raise BaseError(f"Error inesperado: {err}")
-    
+
     @staticmethod
-    def _fetch_data(url) -> requests.Response:
+    def _fetch_data(url) -> dict:
         """
         Método privado para devolver la respuesta en json
         
@@ -51,7 +60,7 @@ class BaseClient(BaseRetriever, ABC):
         """
         try:
             response = BaseClient._fetch_response(url)
-            return response
+            return response.json()
         except ValueError as json_err:
             raise BaseParsingError(f"JSON inválido: {json_err}")
         except Exception as err:
@@ -89,23 +98,13 @@ class BaseClient(BaseRetriever, ABC):
         except Exception as err:
             raise BaseError(f"Error inesperado: {err}")
     
-    def check_connection(self):
-        """
-        Verifica la disponibilidad de la API o servicio asociado al cliente.
-        
-        Este método debe ser implementado por las clases derivadas para proporcionar
-        una verificación específica de la conexión con su respectivo servicio.
-        
-        Raises:
-            BaseHTTPError: Si hay un error en la comunicación con la API
-        """
+    def get_connection_code(self)->int:
+
         response = self._ping_logic()
-        if not response.ok:
-            error_code = f"Connection error: {response.status_code}"
-            raise BaseHTTPError(error_code)
+        return response
             
     @abstractmethod
-    def _ping_logic(self) -> requests.Response:
+    def _ping_logic(self) -> int:
         """
         Establece la lógica de conexión para las clases derivadas.
 

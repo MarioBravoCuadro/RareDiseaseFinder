@@ -1,4 +1,8 @@
+from http.client import responses
+
 from ...core.BaseClient import BaseClient
+from ...core.errors import BaseError
+
 
 class EnsemblClient(BaseClient):
     """
@@ -35,15 +39,19 @@ class EnsemblClient(BaseClient):
         """
         url = self._create_url_string(gen_term)
         data = self._fetch_data(url)
-        data = data.json()
+        data = data
         return data
     
-    def _ping_logic(self):
+    def _ping_logic(self) -> int:
 
         server = "https://grch37.rest.ensembl.org"
         ext = "/info/ping?"
-        
-        return EnsemblClient._fetch_response(server+ext)
+        url = server+ext
+        if self._try_connection(url):
+            response = EnsemblClient._fetch_response(url)
+            return response.status_code
+        else:
+            return 999
 
     def check_data(self):
         pass

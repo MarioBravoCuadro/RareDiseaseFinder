@@ -7,9 +7,9 @@ from typing import Optional, Dict
 class SelleckchemProcessor(BaseProcessor):
     """Clase processor para interactuar con la API de Selleckchem."""
     def __init__(self):
-        super().__init__()
         self.client = SelleckchemScrapper.SelleckchemScrapper()
         self.parser = SelleckchemParser.SelleckchemParser()
+        super().__init__(self.client,self.parser)
         self.method_map = self.get_method_map()
 
     def get_method_map(self) -> Dict[str, str]:
@@ -28,6 +28,3 @@ class SelleckchemProcessor(BaseProcessor):
         if data:
             return self.parse_filters(data, filters)
         return {}
-
-    def get_status(self) -> str:
-        return "OK"

@@ -1,6 +1,10 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional
 import pandas as pd
+
+from .BaseClient import BaseClient
+from .BaseParser import BaseParser
+from .BaseScraper import BaseScraper
 from .errors import BaseHTTPError
 
 class BaseProcessor(ABC):
@@ -10,13 +14,13 @@ class BaseProcessor(ABC):
     o sobreescritos por las clases derivadas.
     """
     
-    def __init__(self):
+    def __init__(self, retriever : BaseScraper | BaseClient, parser: BaseParser):
         """
         Inicializa el procesador base.
         Las clases derivadas deben inicializar sus clientes y parsers específicos.
         """
-        self.client = None
-        self.parser = None
+        self.retriever = retriever
+        self.parser = parser
         self.method_map = self.get_method_map()
 
     def get_method_map(self) -> Dict[str, str]:
@@ -29,20 +33,9 @@ class BaseProcessor(ABC):
         """
         return {}
 
-    def get_status(self) -> str:
-        """
-        Verifica el estado de la conexión con la fuente de datos.
-        
-        Returns:
-            str: "OK" si la fuente de datos está disponible, 
-                 otro mensaje si hay problemas.
-        """
-        if hasattr(self.client, 'check_connection') and callable(self.client.check_connection):
-            try:
-                return self.client.check_connection()
-            except BaseHTTPError as e:
-                return f"Connection error: {e}"
-        return "OK"
+    def get_status_code(self) -> int:
+        status = self.retriever.get_connection_code()
+        return status
 
     @abstractmethod
     def fetch(self, filters: Dict[str, Any]) -> Dict[str, pd.DataFrame]:

@@ -9,9 +9,9 @@ class PharosProcessor(BaseProcessor):
     Permite obtener datos de un identificador y filtrarlos según prioridades definidas.
     """
     def __init__(self):
-        super().__init__()
         self.client = PharosClient()
         self.parser = PharosParser()
+        super().__init__(self.client,self.parser)
         self.method_map = self.get_method_map()
 
     def get_method_map(self) -> Dict[str, str]:
@@ -37,5 +37,3 @@ class PharosProcessor(BaseProcessor):
         target_id = search_params['search_id']
         data = self.client.get_target_data(target_id)
         return self.parse_filters(data, filters)
-
-

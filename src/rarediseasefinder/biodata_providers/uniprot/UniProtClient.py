@@ -19,7 +19,7 @@ class UniProtClient(BaseClient):
             UniProtParsingError: Si la respuesta no es un JSON válido
         """
         url = f"{UNIPROT_BASE_URL}/{uniprot_id}"
-        return self._fetch_data(url).json()
+        return self._fetch_data(url)
 
     def search_by_gene(self, gene_name, reviewed_only=True)->dict:
         """
@@ -38,7 +38,7 @@ class UniProtClient(BaseClient):
         """
         reviewed_param = "AND+reviewed:true" if reviewed_only else ""
         url = f"{UNIPROT_BASE_URL}/search?query=gene:{gene_name}+{reviewed_param}&format=json"
-        return self._fetch_data(url).json()
+        return self._fetch_data(url)
 
     def get_target_data(self, target_id):
         """
@@ -50,7 +50,16 @@ class UniProtClient(BaseClient):
         """
         return self.get_by_id(target_id)
 
-    def _ping_logic(self):
-        pass
+    def _ping_logic(self) -> int:
+
+        server = "https://grch37.rest.ensembl.org"
+        ext = "/info/ping?"
+        url = server+ext
+        if self._try_connection(url):
+            response = UniProtClient._fetch_response(url)
+            return response.status_code
+        else:
+            return 999
+
     def check_data(self):
         pass

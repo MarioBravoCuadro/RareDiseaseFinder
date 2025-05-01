@@ -10,9 +10,9 @@ class EnsemblProcessor(BaseProcessor):
     Permite obtener el identificador Ensembl de un gen dado su nombre.
     """
     def __init__(self):
-        super().__init__()
         self.client = EnsemblClient()
         self.parser = EnsemblParser()
+        super().__init__(self.client,self.parser)
         self.method_map = self.get_method_map()
 
     def get_method_map(self) -> Dict[str, str]:
@@ -30,6 +30,3 @@ class EnsemblProcessor(BaseProcessor):
         if data:
             return self.parse_filters(data, filters)
         return {}
-
-    def get_status(self) -> str:
-        return "OK"
