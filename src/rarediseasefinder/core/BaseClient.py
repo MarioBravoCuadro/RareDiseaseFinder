@@ -42,8 +42,7 @@ class BaseClient(BaseRetriever, ABC):
         except Exception as err:
             raise BaseError(f"Error inesperado: {err}")
 
-    @staticmethod
-    def _fetch_data(url) -> dict:
+    def _fetch_data(self, url) -> dict:
         """
         Método privado para devolver la respuesta en json
         
@@ -59,7 +58,7 @@ class BaseClient(BaseRetriever, ABC):
             BaseError: Para cualquier otro error inesperado
         """
         try:
-            response = BaseClient._fetch_response(url)
+            response = self._fetch_response(url)
             return response.json()
         except ValueError as json_err:
             raise BaseParsingError(f"JSON inválido: {json_err}")
