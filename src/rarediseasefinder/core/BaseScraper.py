@@ -1,6 +1,8 @@
+from abc import ABC
+
 from selenium.webdriver.chrome.options import Options
+
 from ..core.BaseRetriever import BaseRetriever
-from abc import ABC, abstractmethod
 
 
 class BaseScraper(BaseRetriever, ABC):

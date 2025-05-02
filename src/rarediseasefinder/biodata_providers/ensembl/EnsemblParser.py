@@ -1,5 +1,7 @@
-import pandas as pd
 from typing import Dict, Any
+
+import pandas as pd
+
 from ...core.BaseParser import BaseParser
 
 

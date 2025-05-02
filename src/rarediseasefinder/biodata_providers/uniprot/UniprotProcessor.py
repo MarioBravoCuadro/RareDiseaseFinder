@@ -1,10 +1,8 @@
-from pandas import DataFrame
+from typing import Dict
 
-from ...core.BaseProcessor import BaseProcessor
 from .UniProtClient import UniProtClient
 from .UniProtParser import UniProtParser
-from typing import Dict
-import pandas as pd
+from ...core.BaseProcessor import BaseProcessor
 
 
 class UniprotProcessor(BaseProcessor):

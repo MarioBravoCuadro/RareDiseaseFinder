@@ -1,13 +1,15 @@
+from typing import Dict, Any
+
 import pandas as pd
-from typing import Dict, List, Any, Optional, Union
+
 from src.rarediseasefinder.core.constants import (
     QUICKGO_URL_TEMPLATE,
     PUBMED_URL_TEMPLATE,
     OMIM_URL_TEMPLATE,
     NOT_FOUND_MESSAGE
 )
-
 from ...core.BaseParser import BaseParser
+
 
 class UniProtParser(BaseParser):
     """Clase para transformar datos de UniProt en DataFrames estructurados"""

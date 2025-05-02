@@ -1,8 +1,10 @@
-import pandas as pd
-from bs4 import BeautifulSoup
 from typing import List, Dict
 
+import pandas as pd
+from bs4 import BeautifulSoup
+
 from ...core.BaseParser import BaseParser
+
 
 class SelleckchemParser(BaseParser):
     """

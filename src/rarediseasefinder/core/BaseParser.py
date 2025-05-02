@@ -1,7 +1,10 @@
-import pandas as pd
-from typing import Any, Dict, List, Union
-from .errors import BaseError, BaseParsingError
 import json
+from typing import Union
+
+import pandas as pd
+
+from .errors import BaseError, BaseParsingError
+
 
 class BaseParser:
     def __init__(self):

@@ -1,7 +1,9 @@
-from ...core.BaseProcessor import BaseProcessor
+from typing import Dict
+
 from .PharosClient import PharosClient
 from .PharosParser import PharosParser
-from typing import Dict
+from ...core.BaseProcessor import BaseProcessor
+
 
 class PharosProcessor(BaseProcessor):
     """

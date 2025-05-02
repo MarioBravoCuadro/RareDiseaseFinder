@@ -1,6 +1,9 @@
-import requests
-from ..core.errors import BaseError, BaseHTTPError
 from abc import ABC, abstractmethod
+
+import requests
+
+from ..core.errors import BaseError, BaseHTTPError
+
 
 class BaseRetriever(ABC):
     """

@@ -1,7 +1,4 @@
-from http.client import responses
-
 from ...core.BaseClient import BaseClient
-from ...core.errors import BaseError
 
 
 class EnsemblClient(BaseClient):

@@ -1,8 +1,11 @@
-from ...core.BaseProcessor import BaseProcessor
+from typing import Dict
+
+import pandas as pd
+
 from .EnsemblClient import EnsemblClient
 from .EnsemblParser import EnsemblParser
-import pandas as pd
-from typing import Optional, Dict
+from ...core.BaseProcessor import BaseProcessor
+
 
 class EnsemblProcessor(BaseProcessor):
     """

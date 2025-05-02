@@ -2,8 +2,10 @@ from abc import ABC
 from typing import Optional, Dict, Any
 
 import requests
-from ..core.BaseRetriever import BaseRetriever
+
 from .errors import BaseHTTPError, BaseParsingError, BaseError
+from ..core.BaseRetriever import BaseRetriever
+
 
 class BaseClient(BaseRetriever, ABC):
     """Cliente base para interactuar con la API """

@@ -1,7 +1,8 @@
 import pandas as pd
 
-from ...orchestrator.IWorkflowStep import IWorkflowStep
 from ...biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
+from ...orchestrator.IWorkflowStep import IWorkflowStep
+
 
 class SelleckchemWorkflowStep(IWorkflowStep):
     name = None

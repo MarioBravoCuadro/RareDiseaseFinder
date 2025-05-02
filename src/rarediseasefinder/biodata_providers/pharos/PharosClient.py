@@ -1,7 +1,11 @@
-import requests
-from ...core.errors import BaseParsingError
-from ...core.BaseClient import BaseClient
 from typing import Dict, Tuple
+
+import requests
+
+from ...core.BaseClient import BaseClient
+from ...core.errors import BaseParsingError
+
+
 class PharosClient(BaseClient):
     """
     Cliente para interactuar con la API GraphQL de Pharos.

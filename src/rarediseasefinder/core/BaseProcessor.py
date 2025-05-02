@@ -1,11 +1,12 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Any, Optional
+
 import pandas as pd
 
 from .BaseClient import BaseClient
 from .BaseParser import BaseParser
 from .BaseScraper import BaseScraper
-from .errors import BaseHTTPError
+
 
 class BaseProcessor(ABC):
     """

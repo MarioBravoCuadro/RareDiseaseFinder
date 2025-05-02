@@ -1,8 +1,11 @@
-from ...core.BaseProcessor import BaseProcessor
-from ..selleckchem import SelleckchemScrapper
-from ..selleckchem import SelleckchemParser
+from typing import Dict
+
 import pandas as pd
-from typing import Optional, Dict
+
+from ..selleckchem import SelleckchemParser
+from ..selleckchem import SelleckchemScrapper
+from ...core.BaseProcessor import BaseProcessor
+
 
 class SelleckchemProcessor(BaseProcessor):
     """Clase processor para interactuar con la API de Selleckchem."""

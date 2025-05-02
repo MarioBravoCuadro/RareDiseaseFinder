@@ -1,7 +1,8 @@
-from ...core.BaseParser import BaseParser
-from typing import Union, Dict, List, Any, Optional
+from typing import Dict, List, Any
 
 import pandas as pd
+
+from ...core.BaseParser import BaseParser
 
 
 class PharosParser(BaseParser):

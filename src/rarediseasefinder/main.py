@@ -1,11 +1,11 @@
 import json
 
+from tabulate import tabulate
+
 from src.rarediseasefinder.biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
 from src.rarediseasefinder.biodata_providers.pharos.PharosProcessor import PharosProcessor
 from src.rarediseasefinder.biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
 from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
-
-from tabulate import tabulate
 
 if __name__ == "__main__" :
     filters_json = '''[
