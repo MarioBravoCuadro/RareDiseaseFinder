@@ -1,7 +1,7 @@
+import requests
 from ...core.errors import BaseParsingError
 from ...core.BaseClient import BaseClient
-import requests
-
+from typing import Dict, Tuple
 class PharosClient(BaseClient):
     """
     Cliente para interactuar con la API GraphQL de Pharos.
@@ -10,7 +10,7 @@ class PharosClient(BaseClient):
     
     GRAPHQL_URL = "https://pharos-api.ncats.io/graphql"
 
-    def _get_uniprot_query(self, target: str) -> str:
+    def _get_pharos_query(self, target: str) -> Tuple[str, Dict[str, str]]:
         """
         Construye la consulta GraphQL para obtener información de un target por su símbolo.
         
@@ -18,73 +18,78 @@ class PharosClient(BaseClient):
             target (str): Símbolo del target a consultar.
             
         Returns:
-            str: Consulta GraphQL lista para enviar.
+            Tuple[str, Dict[str, str]]: Consulta GraphQL lista para enviar y las variables.
         """
-        query = f"""
-            query ObtenerInfoVariante {{
-            target(q: {{ sym: "{target}" }}) {{
-                nombre: name
-                uniprot_ID: uniprot
-                descripcion: description
-                claseDiana: tdl
-                secuencia: seq
-
-                referenciaOMIM: mim {{
-                OMIM_ID: mimid
-                nombre: term
-                }}
-
-                ligandosConocidos: ligands {{
-                nombre: name
-                ligando_ID: ligid
-                }}
-
-                deLosCualesSonFarmacosAprobados: ligands(isdrug: true) {{
-                nombre: name
-                ligando_ID: ligid
-                }}
-
-                relacionProteinaProteina: ppis{{
-                target {{
+        query = """
+            query GetGeneInfo($target: String!) {
+                target(q: { sym: $target }) {
                     nombre: name
-                    proteina_ID: sym
-                    secuencia: seq
+                    uniprot_ID: uniprot
+                    descripcion: description
                     claseDiana: tdl
-                }}
-                propiedadesRelacion: props {{
-                    name
-                    value
-                }}
-                }}
+                    secuencia: seq
 
-                numeroDeViasPorFuente: pathwayCounts {{
-                fuente: name
-                numVias: value
-                }}
+                    referenciaOMIM: mim {
+                        OMIM_ID: mimid
+                        nombre: term
+                    }
 
-                vias: pathways {{
-                viaPharos_ID: pwid
-                nombre: name
-                fuente: type
-                fuente_ID: sourceID
-                url
-                }}
-            }}
-            }}
+                    ligandosConocidos: ligands {
+                        nombre: name
+                        ligando_ID: ligid
+                    }
+
+                    deLosCualesSonFarmacosAprobados: ligands(isdrug: true) {
+                        nombre: name
+                        ligando_ID: ligid
+                    }
+
+                    relacionProteinaProteina: ppis {
+                        target {
+                            nombre: name
+                            proteina_ID: sym
+                            secuencia: seq
+                            claseDiana: tdl
+                        }
+                        propiedadesRelacion: props {
+                            name
+                            value
+                        }
+                    }
+
+                    numeroDeViasPorFuente: pathwayCounts {
+                        fuente: name
+                        numVias: value
+                    }
+
+                    vias: pathways {
+                        viaPharos_ID: pwid
+                        nombre: name
+                        fuente: type
+                        fuente_ID: sourceID
+                        url
+                    }
+                }
+            }
         """
-        return query
+        variables = {"target": target}
+        
+        return query, variables
     
-    def _query_graphql(self, query: str) -> requests.Response:
+    def _query_graphql(self, query: str, variables: Dict[str, str]=None) -> requests.Response:
         """
         Ejecuta una consulta GraphQL en la API de Pharos.
         
         Args:
             query (str): Consulta GraphQL a ejecutar.
+            variables (Dict[str, str]): Variables para la consulta GraphQL.
             
         Returns:
-            dict: Datos JSON de la respuesta.
+            Dict[str, Any]: Datos JSON de la respuesta.
         """
         payload = {"query": query}
+        if variables is not None:
+            payload["variables"] = variables
         response = self._post_data(self.GRAPHQL_URL, json=payload)
         return response
 
@@ -102,8 +107,8 @@ class PharosClient(BaseClient):
             BaseParsingError: Si la respuesta no contiene los datos esperados.
         """
 
-        query = self._get_uniprot_query(target)
-        response_data = self._query_graphql(query).json()
+        query,variables = self._get_pharos_query(target)
+        response_data = self._query_graphql(query,variables).json()
         
         if "data" in response_data and "target" in response_data["data"]:
             return response_data["data"]["target"]
