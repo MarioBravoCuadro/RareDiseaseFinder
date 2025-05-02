@@ -111,8 +111,12 @@ class PharosClient(BaseClient):
         
     def _ping_logic(self):
         query = "query { dbVersion }"
-        response = self._query_graphql(query=query)
-        return response
 
+        if self._try_connection(self.GRAPHQL_URL):
+            response = self._query_graphql(query=query)
+            return response.status_code
+        else:
+            return 999
+        
     def check_data(self):
-        pass
+        raise NotImplementedError("Método check_data no implementado en PharosClient.")
