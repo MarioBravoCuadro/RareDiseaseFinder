@@ -1,4 +1,4 @@
-from abc import ABC, abstractmethod
+from abc import ABC
 from typing import Optional, Dict, Any
 
 import requests
@@ -7,15 +7,6 @@ from .errors import BaseHTTPError, BaseParsingError, BaseError
 
 class BaseClient(BaseRetriever, ABC):
     """Cliente base para interactuar con la API """
-    @staticmethod
-    def _try_connection(url:str) -> bool:
-        try:
-            requests.get(url,timeout=15)
-            return True
-        except requests.exceptions.ConnectionError:
-            return False
-        except Exception as err:
-            raise BaseError(f"Error inesperado: {err}")
 
     @staticmethod
     def _fetch_response(url) -> requests.Response:
@@ -96,21 +87,3 @@ class BaseClient(BaseRetriever, ABC):
             raise BaseParsingError(f"JSON inválido: {json_err}")
         except Exception as err:
             raise BaseError(f"Error inesperado: {err}")
-    
-    def get_connection_code(self)->int:
-
-        response = self._ping_logic()
-        return response
-            
-    @abstractmethod
-    def _ping_logic(self) -> int:
-        """
-        Establece la lógica de conexión para las clases derivadas.
-
-        Este método debe ser implementado por las clases derivadas para proporcionar
-        una implementación específica de la lógica de conexión con el servicio correspondiente.
-
-        Returns:
-            requests.Response: La respuesta de la conexión establecida.
-        """
-        pass

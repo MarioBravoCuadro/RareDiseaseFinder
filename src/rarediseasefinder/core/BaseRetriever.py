@@ -1,6 +1,6 @@
 import requests
+from ..core.errors import BaseError
 from abc import ABC, abstractmethod
-from ..core.errors import BaseHTTPError
 
 class BaseRetriever(ABC):
     """
@@ -10,9 +10,18 @@ class BaseRetriever(ABC):
     con un servicio o API. Las clases derivadas deben implementar la lógica
     específica de conexión.
     """
+    @staticmethod
+    def _try_connection(url:str) -> bool:
+        try:
+            requests.get(url,timeout=15)
+            return True
+        except requests.exceptions.ConnectionError:
+            return False
+        except Exception as err:
+            raise BaseError(f"Error inesperado: {err}")
 
     @abstractmethod
-    def _ping_logic(self) -> requests.Response:
+    def _ping_logic(self) -> int:
         """
         Establece la lógica de conexión para las clases derivadas.
 
@@ -24,23 +33,18 @@ class BaseRetriever(ABC):
         """
         pass
 
-    def get_connection_code(self):
+    def get_connection_code(self) -> int:
         """
-        Verifica la disponibilidad de la API o servicio asociado al recuperador de información.
+        Devuelve el código asociado a una conexión. Este código puede ser HTTP o un código de error.
         
-        Este método debe ser implementado por las clases derivadas para proporcionar
-        una verificación específica de la conexión con su respectivo servicio.
-        
-        Raises:
-            BaseHTTPError: Si hay un error en la comunicación con la API
+        Returns:
+            int: Código de estado HTTP de la conexión o código de error.
         """
         response = self._ping_logic()
-        if not response.ok:
-            error_code = f"Connection error: {response.status_code}"
-            raise BaseHTTPError(error_code)
+        return response
 
     @abstractmethod
-    def check_data(data: str|dict ) -> bool:
+    def check_data(data: str | dict) -> bool:
         """_summary_
 
         Args:
@@ -49,4 +53,4 @@ class BaseRetriever(ABC):
         Returns:
             bool: _description_
         """
-    pass
+        raise NotImplementedError("Método check_data no implementado en BaseRetriever.")

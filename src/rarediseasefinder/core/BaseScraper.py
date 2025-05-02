@@ -21,21 +21,3 @@ class BaseScraper(BaseRetriever, ABC):
         options.add_argument("--verbose")
 
         return options
-
-    def get_connection_code(self)->int:
-
-        response = self._ping_logic()
-        return response
-
-    @abstractmethod
-    def _ping_logic(self) -> int:
-        """
-        Establece la lógica de conexión para las clases derivadas.
-
-        Este método debe ser implementado por las clases derivadas para proporcionar
-        una implementación específica de la lógica de conexión con el servicio correspondiente.
-
-        Returns:
-            requests.Response: La respuesta de la conexión establecida.
-        """
-        pass

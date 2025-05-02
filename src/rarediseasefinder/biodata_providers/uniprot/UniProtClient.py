@@ -19,7 +19,7 @@ class UniProtClient(BaseClient):
             UniProtParsingError: Si la respuesta no es un JSON válido
         """
         url = f"{UNIPROT_BASE_URL}/{uniprot_id}"
-        return self._fetch_data(url)
+        return self._get_data(url)
 
     def search_by_gene(self, gene_name, reviewed_only=True)->dict:
         """
@@ -38,7 +38,7 @@ class UniProtClient(BaseClient):
         """
         reviewed_param = "AND+reviewed:true" if reviewed_only else ""
         url = f"{UNIPROT_BASE_URL}/search?query=gene:{gene_name}+{reviewed_param}&format=json"
-        return self._fetch_data(url)
+        return self._get_data(url)
 
     def get_target_data(self, target_id):
         """
