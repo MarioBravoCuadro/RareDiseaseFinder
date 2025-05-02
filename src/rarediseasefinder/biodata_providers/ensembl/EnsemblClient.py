@@ -38,9 +38,7 @@ class EnsemblClient(BaseClient):
             dict: Datos obtenidos de la API de Ensembl.
         """
         url = self._create_url_string(gen_term)
-        data = self._get_data(url)
-        data = data
-        return data
+        return self._fetch_data(url)
     
     def _ping_logic(self) -> int:
 

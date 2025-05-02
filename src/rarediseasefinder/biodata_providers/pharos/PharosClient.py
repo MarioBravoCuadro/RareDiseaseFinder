@@ -1,5 +1,6 @@
 from ...core.errors import BaseParsingError
 from ...core.BaseClient import BaseClient
+import requests
 
 class PharosClient(BaseClient):
     """
@@ -73,7 +74,7 @@ class PharosClient(BaseClient):
         """
         return query
     
-    def _query_graphql(self, query: str) -> dict:
+    def _query_graphql(self, query: str) -> requests.Response:
         """
         Ejecuta una consulta GraphQL en la API de Pharos.
         
@@ -85,7 +86,7 @@ class PharosClient(BaseClient):
         """
         payload = {"query": query}
         response = self._post_data(self.GRAPHQL_URL, json=payload)
-        return response.json()
+        return response
 
     def get_target_data(self, target: str) -> dict:
         """
@@ -102,14 +103,14 @@ class PharosClient(BaseClient):
         """
 
         query = self._get_uniprot_query(target)
-        response_data = self._query_graphql(query)
+        response_data = self._query_graphql(query).json()
         
         if "data" in response_data and "target" in response_data["data"]:
             return response_data["data"]["target"]
         else:
             raise BaseParsingError(f"No se encontraron datos para el objetivo: {target}")
         
-    def _ping_logic(self):
+    def _ping_logic(self) -> int:
         query = "query { dbVersion }"
 
         if self._try_connection(self.GRAPHQL_URL):

@@ -8,7 +8,7 @@ class BaseScraper(BaseRetriever, ABC):
         pass
     #TODO implementar firefox driver también
 
-    def getOptionsChromeDriver(self):
+    def getOptionsChromeDriver(self) -> Options:
         # Configuración de Chrome
         options = Options()
         options.add_argument("--window-size=1920,1080")
@@ -21,3 +21,6 @@ class BaseScraper(BaseRetriever, ABC):
         options.add_argument("--verbose")
 
         return options
+    
+    def ok(self) -> bool:
+        return True

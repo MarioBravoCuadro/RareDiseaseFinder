@@ -1,5 +1,5 @@
 import requests
-from ..core.errors import BaseError
+from ..core.errors import BaseError, BaseHTTPError
 from abc import ABC, abstractmethod
 
 class BaseRetriever(ABC):
@@ -10,6 +10,32 @@ class BaseRetriever(ABC):
     con un servicio o API. Las clases derivadas deben implementar la lógica
     específica de conexión.
     """
+
+    @staticmethod
+    def _fetch_response(url) -> requests.Response:
+        """
+        Método privado para realizar solicitudes HTTP
+        
+        Args:
+            url (str): URL a consultar
+            
+        Returns:
+            dict: Datos JSON de la respuesta
+            
+        Raises:
+            BaseHTTPError: Si hay un error en la comunicación con la API
+            BaseParsingError: Si la respuesta no es un JSON válido
+            BaseError: Para cualquier otro error inesperado
+        """
+        try:
+            response = requests.get(url)
+            #response.raise_for_status() check the status code
+            return response
+        except requests.exceptions.HTTPError as http_err:
+            raise BaseHTTPError(f"HTTP error: {http_err}")
+        except Exception as err:
+            raise BaseError(f"Error inesperado: {err}")
+        
     @staticmethod
     def _try_connection(url:str) -> bool:
         try:

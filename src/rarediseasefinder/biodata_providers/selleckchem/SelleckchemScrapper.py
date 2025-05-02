@@ -18,6 +18,7 @@ class SelleckchemScrapper(BaseScraper):
     unique_dir = None
     driver = None
 
+    SELLECKCHEM_URL = "https://www.selleckchem.com/search.html"
 
     def __init__(self):
         """
@@ -47,7 +48,7 @@ class SelleckchemScrapper(BaseScraper):
             str or None: HTML de la página de resultados o None si ocurre un error.
         """
         try:
-            self.driver.get("https://www.selleckchem.com/search.html")
+            self.driver.get(self.SELLECKCHEM_URL)
             search_box = WebDriverWait(self.driver, 5).until(
                 EC.presence_of_element_located((By.NAME, "searchDTO.searchParam"))
             )
@@ -64,7 +65,14 @@ class SelleckchemScrapper(BaseScraper):
             self.driver.quit()
             return None
 
-    def _ping_logic(self):
-        pass
+    def _ping_logic(self) -> int:
+        if not self.ok:
+            return 1001 # Error del scrapper al iniciar el driver 
+        if self._try_connection(self.SELLECKCHEM_URL):
+            response = SelleckchemScrapper._fetch_response(self.SELLECKCHEM_URL)
+            return response.status_code
+        else:
+            return 999
+        
     def check_data(self):
-        pass
+        pass  

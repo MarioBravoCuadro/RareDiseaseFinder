@@ -125,6 +125,7 @@ if __name__ == "__main__" :
     ##Call sellectChem processor
     print("\033[91msellectChem\033[0m")
     processor = SelleckchemProcessor()
+    print("Status code " + str(processor.get_status_code()))
     dataframeLinksSellectChem = processor.fetch(filters_json)
     for dataFrame in dataframeLinksSellectChem:
         print(dataFrame)
