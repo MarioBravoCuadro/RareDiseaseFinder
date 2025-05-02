@@ -1,3 +1,7 @@
+"""
+Módulo de parser para extraer información de medicamentos de la web de Selleckchem.
+Proporciona métodos para obtener listas y enlaces de productos como DataFrames de pandas.
+"""
 from typing import List, Dict
 
 import pandas as pd
@@ -14,13 +18,14 @@ class SelleckchemParser(BaseParser):
     def __init__(self):
         super().__init__()
 
-    def extraer_medicamentos(self,html) -> pd.DataFrame:
+    def extraer_medicamentos(self, html: str) -> pd.DataFrame:
         """
         Extrae información de medicamentos de un HTML dado.
+
         Args:
-            html (str): HTML de la página web que contiene la información de los medicamentos.
+            html (str): Contenido HTML de la página con la lista de medicamentos.
         Returns:
-            List[Dict]: Lista de diccionarios con la información de los medicamentos.
+            pd.DataFrame: DataFrame con los datos de los medicamentos extraídos.
         """
         soup = BeautifulSoup(html, 'html.parser')
         medicamentos = []
@@ -42,7 +47,15 @@ class SelleckchemParser(BaseParser):
         medicamentos_df = self.parse_to_dataframe(medicamentos)
         return medicamentos_df
 
-    def obtener_link_selleckchem(self,html: str)-> pd.DataFrame:
+    def obtener_link_selleckchem(self, html: str) -> pd.DataFrame:
+        """
+        Obtiene el primer enlace de producto de la lista de medicamentos.
+
+        Args:
+            html (str): Contenido HTML de la página con la lista de medicamentos.
+        Returns:
+            pd.DataFrame: DataFrame con el primer enlace completo o vacío si no hay productos.
+        """
         productos = self.extraer_medicamentos(html)
         if not productos.empty:
             primer_link = f"www.selleckchem.com{productos.loc[0]['Link']}"
@@ -50,6 +63,14 @@ class SelleckchemParser(BaseParser):
         return self.parse_to_dataframe([])
 
     def obtener_links_selleckchem(self, html: str) -> pd.DataFrame:
+        """
+        Obtiene todos los enlaces de productos de la lista de medicamentos.
+
+        Args:
+            html (str): Contenido HTML de la página con la lista de medicamentos.
+        Returns:
+            pd.DataFrame: DataFrame con los enlaces completos de todos los productos.
+        """
         productos = self.extraer_medicamentos(html)
         links = []
         rango = range(len(productos))

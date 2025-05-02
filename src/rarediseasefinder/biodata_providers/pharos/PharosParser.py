@@ -70,7 +70,7 @@ class PharosParser(BaseParser):
             
         Returns:
             Dict[str, Dict]: Diccionario con prioridades de clases y propiedades.
-                            Si no se encuentra, devuelve un diccionario vacío.
+                            En caso de no encontrarse, devuelve un diccionario vacío.
         """
         for processor in filters:
             if processor["procesador"] == "Pharos":
@@ -81,7 +81,7 @@ class PharosParser(BaseParser):
                     "prioridad_propiedades": prioridad_propiedades
                 }
                 return filtros
-        # Si no se encuentra, devolver un diccionario vacío en lugar de None
+        # En caso de no encontrarse, devuelve un diccionario vacío.
         return {"prioridad_clases": {}, "prioridad_propiedades": {}}
 
     def _get_protein_to_protein_ordered(self, data: dict, filtros: list) -> List[Dict[str, Any]]:

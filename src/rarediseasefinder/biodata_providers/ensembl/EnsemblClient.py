@@ -1,3 +1,8 @@
+"""
+Módulo de cliente para la API de Ensembl.
+Proporciona clases y métodos para consultar datos de genes vía REST.
+"""
+
 from ...core.BaseClient import BaseClient
 
 
@@ -38,6 +43,11 @@ class EnsemblClient(BaseClient):
         return self._fetch_data(url)
     
     def _ping_logic(self) -> int:
+        """
+        Comprueba la conexión con el servidor de Ensembl.
+        Returns:
+            int: Código de estado HTTP de la respuesta o 999 si falla la conexión.
+        """
 
         server = "https://grch37.rest.ensembl.org"
         ext = "/info/ping?"
@@ -49,4 +59,7 @@ class EnsemblClient(BaseClient):
             return 999
 
     def check_data(self):
+        """
+        Placeholder para lógica de validación de los datos obtenidos de Ensembl.
+        """
         pass

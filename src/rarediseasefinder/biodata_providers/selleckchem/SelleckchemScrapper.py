@@ -1,3 +1,7 @@
+"""
+Módulo de scrapper para automatizar búsquedas en Selleckchem usando Selenium.
+Proporciona una clase para buscar medicamentos y obtener el HTML de resultados.
+"""
 
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -67,6 +71,12 @@ class SelleckchemScrapper(BaseScraper):
             return None
 
     def _ping_logic(self) -> int:
+        """
+        Comprueba la accesibilidad de la web de Selleckchem.
+
+        Returns:
+            int: Código de estado HTTP de la página, 1001 si falla el driver o 999 si no hay conexión.
+        """
         if not self.ok:
             return 1001 # Error del scrapper al iniciar el driver 
         if self._try_connection(self.SELLECKCHEM_URL):
@@ -76,4 +86,10 @@ class SelleckchemScrapper(BaseScraper):
             return 999
         
     def check_data(self):
-        pass  
+        """
+        Placeholder para lógica de validación de los datos obtenidos con Selenium.
+
+        Raises:
+            NotImplementedError: Indica que el método no está implementado.
+        """
+        pass

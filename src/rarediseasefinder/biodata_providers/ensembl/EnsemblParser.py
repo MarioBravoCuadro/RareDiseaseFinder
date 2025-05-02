@@ -1,3 +1,9 @@
+"""
+EnsemblParser.py
+
+Módulo para parsear datos obtenidos de Ensembl.
+"""
+
 from typing import Dict, Any
 
 import pandas as pd

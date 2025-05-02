@@ -1,3 +1,9 @@
+"""
+BaseScraper.py
+
+Clase base para scrapers utilizando Selenium con ChromeDriver.
+"""
+
 from abc import ABC
 
 from selenium.webdriver.chrome.options import Options
@@ -6,11 +12,23 @@ from ..core.BaseRetriever import BaseRetriever
 
 
 class BaseScraper(BaseRetriever, ABC):
+    """
+    Clase abstracta que extiende BaseRetriever y define la configuración básica de un scraper.
+    """
     def __init__(self):
+        """
+        Inicializa la instancia de BaseScraper.
+        """
         pass
     #TODO implementar firefox driver también
 
     def getOptionsChromeDriver(self) -> Options:
+        """
+        Configura y devuelve las opciones para instanciar ChromeDriver con Selenium.
+
+        Returns:
+            Options: Configuración de opciones de ChromeDriver.
+        """
         # Configuración de Chrome
         options = Options()
         options.add_argument("--window-size=1920,1080")
@@ -25,4 +43,10 @@ class BaseScraper(BaseRetriever, ABC):
         return options
     
     def ok(self) -> bool:
+        """
+        Indica si el scraper está listo para operar.
+
+        Returns:
+            bool: True si está listo, False en caso contrario.
+        """
         return True

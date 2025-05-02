@@ -1,4 +1,6 @@
 from ...core.BaseClient import BaseClient
+"""Módulo para interactuar con la API de UniProt y proporcionar métodos para obtener y validar datos de proteínas."""
+
 UNIPROT_BASE_URL = "https://rest.uniprot.org/uniprotkb"
 
 class UniProtClient(BaseClient):
@@ -51,7 +53,11 @@ class UniProtClient(BaseClient):
         return self.get_by_id(target_id)
 
     def _ping_logic(self) -> int:
-
+        """Realiza una petición de ping al servidor de Ensembl para comprobar disponibilidad.
+        
+        Returns:
+            int: Código de estado HTTP de la respuesta o 999 si no es posible conectar.
+        """
         server = "https://grch37.rest.ensembl.org"
         ext = "/info/ping?"
         url = server+ext
@@ -62,4 +68,8 @@ class UniProtClient(BaseClient):
             return 999
 
     def check_data(self):
+        """Valida o comprueba los datos obtenidos de UniProt.
+        
+        Este método puede ser sobrescrito para implementar validaciones específicas.
+        """
         pass

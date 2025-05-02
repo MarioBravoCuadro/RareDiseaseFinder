@@ -7,16 +7,26 @@ from ...core.BaseProcessor import BaseProcessor
 
 class PharosProcessor(BaseProcessor):
     """
-    Clase para procesar datos de Pharos utilizando PharosClient y PharosParser.
-    Permite obtener datos de un identificador y filtrarlos según prioridades definidas.
+    Procesa datos de Pharos mediante PharosClient y PharosParser.
+    Obtiene datos de un objetivo y los convierte en DataFrames según filtros proporcionados.
     """
     def __init__(self):
+        """
+        Inicializa el procesador de Pharos.
+        Configura el cliente, el parser y el mapeo de métodos.
+        """
         self.client = PharosClient()
         self.parser = PharosParser()
         super().__init__(self.client,self.parser)
         self.method_map = self.get_method_map()
 
     def get_method_map(self) -> Dict[str, str]:
+        """
+        Obtiene un diccionario que mapea claves de filtros a nombres de métodos del parser.
+
+        Returns:
+            Dict[str, str]: Mapeo de filtros a métodos.
+        """
         return {
             "df_info": "create_info_df",
             "df_omim": "create_omim_df",

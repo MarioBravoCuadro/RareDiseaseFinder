@@ -1,3 +1,5 @@
+"""Módulo para procesar datos de UniProt combinando cliente y parser."""
+
 from typing import Dict
 
 from .UniProtClient import UniProtClient
@@ -6,13 +8,17 @@ from ...core.BaseProcessor import BaseProcessor
 
 
 class UniprotProcessor(BaseProcessor):
+    """Procesa datos de UniProt usando UniProtClient y UniProtParser."""
+
     def __init__(self):
+        """Inicializa el cliente y el parser, y configura la clase base de procesamiento."""
         self.client = UniProtClient()
         self.parser = UniProtParser()
         super().__init__(self.client,self.parser)
         self.method_map = self.get_method_map()
 
     def get_method_map(self) -> Dict[str, str]:
+        """Devuelve el mapeo de filtros a nombres de métodos de parseo."""
         return {
             "function": "parse_function",
             "subcellular_location": "parse_subcellular_location",

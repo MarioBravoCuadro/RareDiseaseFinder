@@ -1,3 +1,7 @@
+"""
+Módulo de cliente para la API GraphQL de Pharos.
+Proporciona clases y métodos para construir y ejecutar consultas GraphQL y obtener datos de targets.
+"""
 from typing import Dict, Tuple
 
 import requests
@@ -120,6 +124,11 @@ class PharosClient(BaseClient):
             raise BaseParsingError(f"No se encontraron datos para el objetivo: {target}")
         
     def _ping_logic(self) -> int:
+        """
+        Comprueba la versión de la base de datos de Pharos para verificar conectividad.
+        Returns:
+            int: Código de estado HTTP de la respuesta o 999 si falla la conexión.
+        """
         query = "query { dbVersion }"
 
         if self._try_connection(self.GRAPHQL_URL):
@@ -129,4 +138,7 @@ class PharosClient(BaseClient):
             return 999
         
     def check_data(self):
+        """
+        Placeholder para lógica de validación de los datos obtenidos de Pharos.
+        """
         raise NotImplementedError("Método check_data no implementado en PharosClient.")
