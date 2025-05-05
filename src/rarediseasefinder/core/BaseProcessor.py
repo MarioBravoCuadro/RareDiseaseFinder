@@ -44,7 +44,7 @@ class BaseProcessor(ABC):
         Método abstracto. Debe ser implementado por cada procesador hijo según el método de su cliente.
         """
 
-    def parse_filters(self, data: Dict[str, Any], filters: Dict[str, Any]) -> Dict[str, pd.DataFrame]:
+    def parse_filters(self, data: Dict[str, Any], filters: list[str, Any]) -> Dict[str, pd.DataFrame]:
         """
         Procesa los datos según los filtros configurados.
         
@@ -58,6 +58,9 @@ class BaseProcessor(ABC):
         if not self.parser:
             raise NotImplementedError("El parser no está definido.")
         results = {}
+        print(type(filters))
+        print(type(data))
+
         for processor in filters:
             if processor.get("PROCESSOR") == self.__class__.__name__:
                 for method_config in processor.get("METODOS_PARSER", []):
