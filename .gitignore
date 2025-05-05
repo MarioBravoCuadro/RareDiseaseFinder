@@ -90,3 +90,6 @@ htmlcov/
 ### Documentación ###
 /site/
 /docs/_build/
+
+### Scraper driver ###
+ChromeProfileUnique/
