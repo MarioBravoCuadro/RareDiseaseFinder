@@ -28,7 +28,7 @@ class Workflow(IWorkflow):
     def get_steps(self)->dict:
         return self.listOfSteps
 
-    def get_available_steps(self):
+    def check_if_all_steps_available(self):
         return self.check_available_steps()
 
     def check_available_steps(self)->bool:

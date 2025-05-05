@@ -5,5 +5,5 @@ class IWorkflow(metaclass=ABCMeta):
     def get_steps(self):
         pass
     @abstractmethod
-    def get_available_steps(self):
+    def check_if_all_steps_available(self):
         pass
