@@ -16,11 +16,11 @@ class SelleckchemWorkflowStep(IWorkflowStep):
         self.processor = SelleckchemProcessor()
         self.params = params
 
-    def getStatus(self)->str:
-        return self.processor.getStatus()
+    def get_status_code(self)->int:
+        return self.processor.get_status_code()
 
-    def process(self)->pd.DataFrame:
-        return self.processor.obtener_links_selleckchem(self.params)
+    def process(self)->dict:
+        return self.processor.fetch(self.params)
 
     def revert(self):
         pass
