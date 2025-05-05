@@ -1,6 +1,6 @@
 import pandas as pd
 
-from ...biodata_providers.pharos import PharosProcessor
+from ...biodata_providers.pharos.PharosProcessor import PharosProcessor
 from ...orchestrator.IWorkflowStep import IWorkflowStep
 
 
@@ -16,10 +16,10 @@ class PharosWorkflowStep(IWorkflowStep):
         self.processor = PharosProcessor()
         self.params = params
 
-    def getStatus(self)->str:
-        return self.processor.getStatus()
+    def get_status_code(self)->int:
+        return self.processor.get_status_code()
 
-    def process(self)->pd.DataFrame:
+    def process(self)-> dict:
         return self.processor.fetch(self.params)
 
     def revert(self):

@@ -3,7 +3,7 @@ from abc import abstractmethod
 class IWorkflowStep(metaclass=ABCMeta):
 
     @abstractmethod
-    def getStatus(self):
+    def get_status_code(self):
         pass
     @abstractmethod
     def process(self):

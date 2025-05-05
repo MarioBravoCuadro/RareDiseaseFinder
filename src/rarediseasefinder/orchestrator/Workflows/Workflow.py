@@ -25,19 +25,19 @@ class Workflow(IWorkflow):
         }
         pass
 
-    def getSteps(self)->dict:
+    def get_steps(self)->dict:
         return self.listOfSteps
 
-    def getAvaliableSteps(self):
-        return self.checkAvailableSteps()
+    def get_available_steps(self):
+        return self.check_available_steps()
 
-    def checkAvailableSteps(self)->bool:
+    def check_available_steps(self)->bool:
         for step in self.listOfSteps.values():
-            if step["Object"].getStatus() != "OK":
+            if step["Object"].get_status_code() != 200:
                 return False
         return True
 
-    def stepsExecution(self)-> list[pd.DataFrame]:
+    def steps_execution(self)-> list[pd.DataFrame]:
         pharos_data = self.listOfSteps.get("Pharos data")["Object"].process()
         selleckchem_data = self.listOfSteps.get("Selleckchem data")["Object"].process()
 
