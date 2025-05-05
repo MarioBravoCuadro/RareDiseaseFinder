@@ -31,6 +31,7 @@ def procesar_uniprot(uniProtID):
         "Source": ev.get("source","⚠️ No se han encontrado datos."),
         "PublicationID": ev.get("id","⚠️ No se han encontrado datos."),
         "PubMed": f"https://pubmed.ncbi.nlm.nih.gov/{ev['id']}" if ev.get("id") else "⚠️ No se han encontrado datos.",
+        "Secuence": ev.get("sequence").get("value","⚠️ No se han encontrado datos.")
 
     } for comment in data.get("comments", []) if comment.get("commentType") == "FUNCTION"
       for txt in comment.get("texts", [])
