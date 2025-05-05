@@ -29,13 +29,14 @@ class Workflow(IWorkflow):
         return self.listOfSteps
 
     def check_if_all_steps_available(self):
-        return self.check_available_steps()
+        return self._check_available_steps()
 
-    def check_available_steps(self)->bool:
+    def _check_available_steps(self)->bool:
         for step in self.listOfSteps.values():
             if step["Object"].get_status_code() != 200:
                 return False
         return True
+
 
     def steps_execution(self)-> list[pd.DataFrame]:
         pharos_data = self.listOfSteps.get("Pharos data")["Object"].process()
