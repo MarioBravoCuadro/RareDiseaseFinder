@@ -1,6 +1,7 @@
 import pandas as pd
 import requests
 from .ncbi_fetch import crear_dataframe_abstracts
+from .panther_fetch import obtener_panther_class
 
 def fetch_data(url):
     try:
@@ -22,15 +23,26 @@ def fetch_uniprot_data(uniprot_id):
 
 def procesar_uniprot(uniProtID):
     data = fetch_uniprot_data(uniProtID)
+    #Para el nombre de la proteina
+    protein_description = data.get("proteinDescription", {})
+    recommended_name = protein_description.get("recommendedName", {})
+    full_name = recommended_name.get("fullName", {}).get("value", "⚠️ No se han encontrado datos.")
+
+    #Para la panther class
+    panther_class = obtener_panther_class(uniProtID)
+
+
 
     # 1. Función
     df_function = pd.DataFrame([{
-        "Function": txt.get("value", ""),
+        "Nombre": full_name,
+        "Función": txt.get("value", ""),
+        "PantherClass": panther_class,
         "UniProtID": uniProtID,
         "QuickGO": f"https://www.ebi.ac.uk/QuickGO/term/{ev['evidenceCode']}" if ev.get("evidenceCode") else "⚠️ No se han encontrado datos.",
         "PubMed": f"https://pubmed.ncbi.nlm.nih.gov/{ev['id']}" if ev.get("id") else "⚠️ No se han encontrado datos.",
         "Alphafold": f"https://alphafold.ebi.ac.uk/entry/{uniProtID}",
-        "Secuence": data.get("sequence", {}).get("value","⚠️ No se han encontrado datos."),   
+        "Secuencia": data.get("sequence", {}).get("value","⚠️ No se han encontrado datos."),   
     } for comment in data.get("comments", []) if comment.get("commentType") == "FUNCTION"
       for txt in comment.get("texts", [])
       for ev in txt.get("evidences", [{}])
