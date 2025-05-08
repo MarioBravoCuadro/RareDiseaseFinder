@@ -1,5 +1,6 @@
-import pandas as pd
+import json
 
+from src.rarediseasefinder.biodata_providers.pharos.PharosProcessor import PharosProcessor
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PharosWorkflowStep import PharosWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.SelleckchemWorkflowStep import SelleckchemWorkflowStep
@@ -13,17 +14,10 @@ class Workflow(IWorkflow):
     def __init__(self,gen_param):
         self.name = "Workflow for TFG"
         self.description = "Fetches x data from Pharos API x data from selleckchem"
-        self.listOfSteps = {
-            "Pharos data": {
-                "Description": "Fetches x data from Pharos",
-                "Object": PharosWorkflowStep(gen_param)
-            },
-            "Selleckchem data": {
-                "Description": "Gets links from selleckchem for x term",
-                "Object": SelleckchemWorkflowStep(gen_param)
-            }
-        }
         pass
+
+    def read_steps_from_filters(self):
+        return
 
     def get_steps(self)->dict:
         return self.listOfSteps
@@ -37,11 +31,15 @@ class Workflow(IWorkflow):
                 return False
         return True
 
+    def steps_execution(self)-> list[dict]:
+        instrucciones_procesador_pharos_json = self.add_search_id_to_json(self.get_json_from_route('Processors_JSONs/pharos.json'),"FANCA")
+        pharos_step = PharosWorkflowStep(instrucciones_procesador_pharos_json)
+        pharos_step.get_status_code()
+        pharos_step.process()
 
-    def steps_execution(self)-> list[pd.DataFrame]:
-        pharos_data = self.listOfSteps.get("Pharos data")["Object"].process()
-        selleckchem_data = self.listOfSteps.get("Selleckchem data")["Object"].process()
 
-        workflow_result = [pharos_data,selleckchem_data]
+        instrucciones_procesador_uniprot_json = self.add_search_id_to_json(self.get_json_from_route('Processors_JSONs/uniprot.json'),"FANCA")
+
+
 
         return workflow_result

@@ -1,0 +1,41 @@
+{
+  "PROCESSOR": "PharosProcessor",
+  "CLIENT_SEARCH_PARAMS": [
+    {
+      "search_id": "FANCA"
+    }
+  ],
+  "METODOS_PARSER": [
+    {
+      "NOMBRE_METODO": "df_info",
+      "FILTROS_METODO_PARSER": {}
+    },
+    {
+      "NOMBRE_METODO": "df_omim",
+      "FILTROS_METODO_PARSER": {}
+    },
+    {
+      "NOMBRE_METODO": "create_protein_protein_relations_df",
+      "FILTROS_METODO_PARSER": {
+        "PRIORIDAD_CLASES": {
+          "Tclin": 1,
+          "Tchem": 2,
+          "Tbio": 3,
+          "Tdark": 4
+        },
+        "PRIORIDAD_PROPIEDADES": {
+          "p_wrong": 1,
+          "p_ni": 2
+        }
+      }
+    },
+    {
+      "NOMBRE_METODO": "df_vias",
+      "FILTROS_METODO_PARSER": {}
+    },
+    {
+      "NOMBRE_METODO": "df_numero_vias_por_fuente",
+      "FILTROS_METODO_PARSER": {}
+    }
+  ]
+}
