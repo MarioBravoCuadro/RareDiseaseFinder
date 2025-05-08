@@ -73,7 +73,7 @@ class BaseRetriever(ABC):
         return response
 
     @abstractmethod
-    def check_data(data: str | dict) -> bool:
+    def check_data(self, data: str | dict) -> bool:
         """_summary_
 
         Args:
