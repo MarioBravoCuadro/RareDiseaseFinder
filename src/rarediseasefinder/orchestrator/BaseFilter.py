@@ -6,9 +6,9 @@ class BaseFilter:
     Base class for creating JSON filters for the orchestrator.
 
     Attributes:
-        minium_methods (list): A list of minimum methods to be included in the filter.
+        minium_methods (List[Dict[str, Any]]): A list of minimum methods to be included in the filter.
         processor_id (str): The ID of the processor.
-        json_filter (dict): The dictionary representing the JSON filter.
+        json_filter (List[Dict[str, Any]]): The list representing the JSON filter.
     """
 
     def __init__(self, minium_methods: List[Dict[str, Any]], processor_id: str) -> None:
@@ -16,9 +16,10 @@ class BaseFilter:
         Initializes the BaseFilter with minimum methods and processor ID.
 
         Args:
-            minium_methods (list): A list of minimum methods.
+            minium_methods (List[Dict[str, Any]]): A list of minimum methods.
             processor_id (str): The ID of the processor.
         """
+        self.json_filter = None
         self.minium_methods = minium_methods
         self.processor_id = processor_id
         self.create_base_tree()
@@ -27,11 +28,11 @@ class BaseFilter:
 
     def create_base_tree(self) -> None:
         """Creates the basic structure of the JSON filter."""
-        self.json_filter = {
+        self.json_filter = [{
             "PROCESSOR": None,
             "CLIENT_SEARCH_PARAMS": [],
             "METODOS_PARSER": []
-        }
+        }]
 
     def add_processor_to_filter(self, processor_id: str) -> None:
         """
@@ -40,7 +41,7 @@ class BaseFilter:
         Args:
             processor_id (str): The ID of the processor.
         """
-        self.json_filter["PROCESSOR"] = processor_id
+        self.json_filter[0]["PROCESSOR"] = processor_id
 
     def add_client_search_params(self, search_id: str) -> None:
         """
@@ -49,7 +50,7 @@ class BaseFilter:
         Args:
             search_id (str): The search ID.
         """
-        self.json_filter["CLIENT_SEARCH_PARAMS"] = [{"search_id": search_id}]
+        self.json_filter[0]["CLIENT_SEARCH_PARAMS"] = [{"search_id": search_id}]
 
     def add_parser_method(self, method_id: str, parser_method_filters: List[Any]) -> None:
         """
@@ -57,9 +58,9 @@ class BaseFilter:
 
         Args:
             method_id (str): The ID of the method.
-            parser_method_filters (list): A list of filters for the parser method.
+            parser_method_filters (List[Any]): A list of filters for the parser method.
         """
-        self.json_filter["METODOS_PARSER"].append({
+        self.json_filter[0]["METODOS_PARSER"].append({
             "NOMBRE_METODO": method_id,
             "FILTROS_METODO_PARSER": parser_method_filters
         })
@@ -72,8 +73,10 @@ class BaseFilter:
     def get_json_str(self) -> str:
         """
         Returns the JSON filter as a JSON formatted string.
+        The root of the JSON will be a list containing one object,
+        as self.json_filter is structured as [{...}].
 
         Returns:
-            str: The JSON filter formatted as a string.
+            str: The JSON filter formatted as a string (e.g., '[{...}]').
         """
         return json.dumps(self.json_filter, indent=4)
