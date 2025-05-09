@@ -37,7 +37,8 @@ class Workflow(IWorkflow):
     minium_methods_selleckchem=''
     minium_methods_ensembl=''
 
-    filtros_parser_pharos_front = {
+    filtros_parser_pharos_front = [
+        {
         "PRIORIDAD_CLASES": {
             "Tclin": 1,
             "Tchem": 2,
@@ -48,26 +49,33 @@ class Workflow(IWorkflow):
             "p_wrong": 1,
             "p_ni": 2
         }
-    }
+        }
+    ]
 
     minium_methods_pharos = [
         {
             "METHOD_ID": "create_protein_protein_relations_df",
-            "METHOD_PARSER_FILTERS": filtros_parser_pharos_front
+            "METHOD_PARSER_FILTERS": filtros_parser_pharos_front[0]
+        },
+        {
+            "METHOD_ID": "create_protein_protein_relations_df",
+            "METHOD_PARSER_FILTERS": filtros_parser_pharos_front[0]
         }
     ]
 
     def steps_execution(self)-> list[dict]:
         #Crear Filtro es un BaseFilter
         pharos_filters = BaseFilter(self.minium_methods_pharos,"PharosProcessor")
+
         #Añadir termino de busqueda al filtro
         pharos_filters.add_client_search_params("FANCA")
 
         #Añadir parser method
-        pharos_filters.add_parser_method("secuenciasADN","")
+        pharos_filters.add_parser_method("secuenciasADN",self.filtros_parser_pharos_front)
 
         #traer el filtro formato json comom string
         pharos_filters_json_string = pharos_filters.get_json_str()
+
         #convertir el str a objeto json (objeto != archivo)
         pharos_filters_json_object = json.loads(pharos_filters_json_string)
 
@@ -75,6 +83,7 @@ class Workflow(IWorkflow):
         status_code = pharos_step.get_status_code()
         result = pharos_step.process()
 
+        print(result)
         return result
 
 
