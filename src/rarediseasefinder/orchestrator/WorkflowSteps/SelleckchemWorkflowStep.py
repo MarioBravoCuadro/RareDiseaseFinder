@@ -8,19 +8,21 @@ class SelleckchemWorkflowStep(IWorkflowStep):
     name = None
     description = None
     processor = None
-    params = None
+    filters = None
 
-    def __init__(self,params):
+    def __init__(self):
         self.name = "Selleckchem step"
         self.description = "Gets links from selleckchem for x term"
         self.processor = SelleckchemProcessor()
-        self.params = params
+
+    def set_filters(self, filters):
+        self.filters = filters
 
     def get_status_code(self)->int:
         return self.processor.get_status_code()
 
     def process(self)->dict:
-        return self.processor.fetch(self.params)
+        return self.processor.fetch(self.filters)
 
     def revert(self):
         pass

@@ -8,19 +8,21 @@ class PharosWorkflowStep(IWorkflowStep):
     name = None
     description = None
     processor = None
-    params = None
+    filters = None
 
-    def __init__(self,params):
+    def __init__(self):
         self.name = "Pharos step"
         self.description = "Fetches x data from Pharos API"
         self.processor = PharosProcessor()
-        self.params = params
+
+    def set_filters(self, filters):
+        self.filters = filters
 
     def get_status_code(self)->int:
         return self.processor.get_status_code()
 
     def process(self)-> dict:
-        return self.processor.fetch(self.params)
+        return self.processor.fetch(self.filters)
 
     def revert(self):
         pass

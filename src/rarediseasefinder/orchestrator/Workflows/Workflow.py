@@ -1,6 +1,5 @@
 import json
 
-from src.rarediseasefinder.biodata_providers.pharos.PharosProcessor import PharosProcessor
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PharosWorkflowStep import PharosWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.SelleckchemWorkflowStep import SelleckchemWorkflowStep
@@ -8,62 +7,71 @@ from src.rarediseasefinder.orchestrator.BaseFilter import BaseFilter
 
 
 class Workflow(IWorkflow):
-    name = None
-    description = None
-    listOfSteps=None
-
     def __init__(self):
         self.name = "Workflow for TFG"
         self.description = "Fetches x data from Pharos API x data from selleckchem"
-        pass
+        self.listOfSteps = []
 
-    def read_steps_from_filters(self):
-        return
+        self.add_step_to_list_of_steps({"Pharos": PharosWorkflowStep})
+        self.add_step_to_list_of_steps({"Selleckchem": SelleckchemWorkflowStep})
+        self.instantiate_steps()
 
-    def get_steps(self)->dict:
+        self.filtros_parser_pharos_front = [
+            {
+                "PRIORIDAD_CLASES": {
+                    "Tclin": 1,
+                    "Tchem": 2,
+                    "Tbio": 3,
+                    "Tdark": 4
+                },
+                "PRIORIDAD_PROPIEDADES": {
+                    "p_wrong": 1,
+                    "p_ni": 2
+                }
+            }
+        ]
+
+        self.minium_methods_uniprot=[]
+        self.minium_methods_selleckchem=[]
+        self.minium_methods_ensembl=[]
+        self.minium_methods_pharos = [
+            {
+                "METHOD_ID": "create_protein_protein_relations_df",
+                "METHOD_PARSER_FILTERS": self.filtros_parser_pharos_front[0]
+            },
+            {
+                "METHOD_ID": "create_protein_protein_relations_df",
+                "METHOD_PARSER_FILTERS": self.filtros_parser_pharos_front[0]
+            }
+        ]
+
+
+    def instantiate_steps(self):
+        for step in self.listOfSteps:
+            for key, step_instance in step.items():
+                if isinstance(step_instance, type):
+                    step[key] = step_instance()
+
+    def get_steps(self)-> list[dict]:
         return self.listOfSteps
 
     def check_if_all_steps_available(self):
-        return self._check_available_steps()
-
-    def _check_available_steps(self)->bool:
-        for step in self.listOfSteps.values():
-            if step["Object"].get_status_code() != 200:
-                return False
+        for step in self.listOfSteps:
+            for step_instance in step.values():
+                if step_instance.get_status_code() != 200:
+                    return False
         return True
 
+    def add_step_to_list_of_steps(self, step):
+        self.listOfSteps.append(step)
 
-    minium_methods_uniprot=''
-    minium_methods_selleckchem=''
-    minium_methods_ensembl=''
+    def get_step(self, step_name: str):
+        for step in self.listOfSteps:
+            if step_name in step:
+                return step[step_name]
+        return None
 
-    filtros_parser_pharos_front = [
-        {
-        "PRIORIDAD_CLASES": {
-            "Tclin": 1,
-            "Tchem": 2,
-            "Tbio": 3,
-            "Tdark": 4
-        },
-        "PRIORIDAD_PROPIEDADES": {
-            "p_wrong": 1,
-            "p_ni": 2
-        }
-        }
-    ]
-
-    minium_methods_pharos = [
-        {
-            "METHOD_ID": "create_protein_protein_relations_df",
-            "METHOD_PARSER_FILTERS": filtros_parser_pharos_front[0]
-        },
-        {
-            "METHOD_ID": "create_protein_protein_relations_df",
-            "METHOD_PARSER_FILTERS": filtros_parser_pharos_front[0]
-        }
-    ]
-
-    def steps_execution(self)-> list[dict]:
+    def step_pipeline(self):
         #Crear Filtro es un BaseFilter
         pharos_filters = BaseFilter(self.minium_methods_pharos,"PharosProcessor")
 
@@ -79,13 +87,17 @@ class Workflow(IWorkflow):
         #convertir el str a objeto json (objeto != archivo)
         pharos_filters_json_object = json.loads(pharos_filters_json_string)
 
-        pharos_step = PharosWorkflowStep(pharos_filters_json_object)
+        pharos_step = self.get_step("Pharos")
+
+        pharos_step.set_filters(pharos_filters_json_object)
         status_code = pharos_step.get_status_code()
         result = pharos_step.process()
 
-        print(result)
         return result
 
+    def steps_execution(self)-> list[dict]:
+        return self.step_pipeline()
 
 if __name__ == "__main__":
-    Workflow().steps_execution()
+    print (Workflow().check_if_all_steps_available())
+    print(Workflow().steps_execution())
