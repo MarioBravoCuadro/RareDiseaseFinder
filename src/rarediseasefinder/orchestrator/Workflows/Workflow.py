@@ -45,32 +45,6 @@ class Workflow(IWorkflow):
             }
         ]
 
-
-    def instantiate_steps(self):
-        for step in self.listOfSteps:
-            for key, step_instance in step.items():
-                if isinstance(step_instance, type):
-                    step[key] = step_instance()
-
-    def get_steps(self)-> list[dict]:
-        return self.listOfSteps
-
-    def check_if_all_steps_available(self):
-        for step in self.listOfSteps:
-            for step_instance in step.values():
-                if step_instance.get_status_code() != 200:
-                    return False
-        return True
-
-    def add_step_to_list_of_steps(self, step):
-        self.listOfSteps.append(step)
-
-    def get_step(self, step_name: str):
-        for step in self.listOfSteps:
-            if step_name in step:
-                return step[step_name]
-        return None
-
     def step_pipeline(self):
         #Crear Filtro es un BaseFilter
         pharos_filters = BaseFilter(self.minium_methods_pharos,"PharosProcessor")
