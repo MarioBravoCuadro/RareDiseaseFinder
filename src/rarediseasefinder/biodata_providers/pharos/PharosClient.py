@@ -2,7 +2,7 @@
 Módulo de cliente para la API GraphQL de Pharos.
 Proporciona clases y métodos para construir y ejecutar consultas GraphQL y obtener datos de targets.
 """
-from typing import Dict, Tuple
+from typing import Dict
 
 import requests
 
@@ -18,7 +18,7 @@ class PharosClient(BaseClient):
     
     GRAPHQL_URL = "https://pharos-api.ncats.io/graphql"
 
-    def _get_pharos_query(self, target: str) -> Tuple[str, Dict[str, str]]:
+    def _get_pharos_query(self, target: str) -> Dict[str, str]:
         """
         Construye la consulta GraphQL para obtener información de un target por su símbolo.
         
@@ -26,7 +26,7 @@ class PharosClient(BaseClient):
             target (str): Símbolo del target a consultar.
             
         Returns:
-            Tuple[str, Dict[str, str]]: Consulta GraphQL lista para enviar y las variables.
+            Dict[str, str]: Consulta GraphQL y variables.
         """
         query = """
             query GetGeneInfo($target: String!) {
@@ -82,24 +82,24 @@ class PharosClient(BaseClient):
         """
         variables = {"target": target}
         
-        return query, variables
+        return {"query": query, "variables": variables}
     
-    def _query_graphql(self, query: str, variables: Dict[str, str]=None) -> requests.Response:
+    def _query_graphql(self, query_data: Dict) -> requests.Response:
         """
         Ejecuta una consulta GraphQL en la API de Pharos.
         
         Args:
-            query (str): Consulta GraphQL a ejecutar.
-            variables (Dict[str, str]): Variables para la consulta GraphQL.
-            
+            Dict: Datos de la consulta GraphQL.
+                Query: Consulta GraphQL.
+                Variables: Variables para la consulta.
+
         Returns:
             Dict[str, Any]: Datos JSON de la respuesta.
+
+        Raises:
+            BaseHTTPError: Si hay problemas en la comunicación HTTP.
         """
-        payload = {"query": query}
-        if variables is not None:
-            payload["variables"] = variables
-        response = self._post_data(self.GRAPHQL_URL, json=payload)
-        return response
+        return self._post_data(self.GRAPHQL_URL, json=query_data)
 
     def get_target_data(self, target: str) -> dict:
         """
@@ -115,13 +115,18 @@ class PharosClient(BaseClient):
             BaseParsingError: Si la respuesta no contiene los datos esperados.
         """
 
-        query,variables = self._get_pharos_query(target)
-        response_data = self._query_graphql(query,variables).json()
+        query_data = self._get_pharos_query(target)
+        response = self._query_graphql(query_data)
+        
+        try:
+            response_data = response.json()
+        except ValueError as e:
+            raise BaseParsingError(f"Error al decodificar JSON: {str(e)}")
         
         if "data" in response_data and "target" in response_data["data"]:
             return response_data["data"]["target"]
         else:
-            raise BaseParsingError(f"No se encontraron datos para el objetivo: {target}")
+            raise BaseParsingError(f"No se encontraron datos para el gen con ID Ensembl: {target}")
         
     def _ping_logic(self) -> int:
         """
@@ -129,10 +134,13 @@ class PharosClient(BaseClient):
         Returns:
             int: Código de estado HTTP de la respuesta o 999 si falla la conexión.
         """
-        query = "query { dbVersion }"
+        query_data = {
+            "query": "query { dbVersion }",
+            "variables": {}
+        }
 
         if self._try_connection(self.GRAPHQL_URL):
-            response = self._query_graphql(query=query)
+            response = self._query_graphql(query_data)
             return response.status_code
         else:
             return 999
@@ -141,4 +149,4 @@ class PharosClient(BaseClient):
         """
         Placeholder para lógica de validación de los datos obtenidos de Pharos.
         """
-        raise NotImplementedError("Método check_data no implementado en PharosClient.")
+        pass

@@ -6,6 +6,7 @@ from src.rarediseasefinder.biodata_providers.ensembl.EnsemblProcessor import Ens
 from src.rarediseasefinder.biodata_providers.pharos.PharosProcessor import PharosProcessor
 from src.rarediseasefinder.biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
 from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
+from src.rarediseasefinder.biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
 
 if __name__ == "__main__" :
     filters_json = '''[
@@ -118,10 +119,53 @@ if __name__ == "__main__" :
                         "FILTROS_METODO_PARSER": ""
                     }
                 ]
+            },
+            {
+                "PROCESSOR": "OpenTargetsProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "ENSG00000118271"} 
+                ],
+                "METODOS_PARSER": [
+                    {
+                        "NOMBRE_METODO": "basic_info",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "pathways",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "known_drugs",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "associated_diseases",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "interactions",
+                        "FILTROS_METODO_PARSER": ""
+                    },
+                    {
+                        "NOMBRE_METODO": "mouse_phenotypes",
+                        "FILTROS_METODO_PARSER": ""
+                    }
+                ]
             }
-            
-        ]'''
+    ]'''
     filters_json = json.loads(filters_json)
+
+        
+    #Call OpenTargets processor
+    print("\033[91mOpenTargets\033[0m")
+    processor = OpenTargetsProcessor()
+    print("Status code " + str(processor.get_status_code()))
+    if processor.get_status_code() == 200:
+        open_targets_id = processor.fetch(filters_json)
+        for dataFrame in open_targets_id:
+            print(dataFrame)
+            print(tabulate(open_targets_id[dataFrame], headers='keys', tablefmt='fancy_grid'))
+        
     ##Call sellectChem processor
     print("\033[91msellectChem\033[0m")
     processor = SelleckchemProcessor()
@@ -162,3 +206,4 @@ if __name__ == "__main__" :
     if processor.get_status_code() == 200:
         ensembl_id = processor.fetch(filters_json)
         print(tabulate(ensembl_id, headers='keys', tablefmt='fancy_grid'))
+
