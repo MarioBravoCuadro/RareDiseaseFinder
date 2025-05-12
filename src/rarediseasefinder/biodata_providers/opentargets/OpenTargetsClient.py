@@ -127,7 +127,7 @@ class OpenTargetsClient(BaseClient):
     
     def _ping_logic(self) -> int:
         """
-        omprueba la versión de la base de datos de Pharos para verificar conectividad.
+        Comprueba la versión de la base de datos de Pharos para verificar conectividad.
         Returns:
             int: Código de estado HTTP de la respuesta o 999 si falla la conexión.
         """
