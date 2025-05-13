@@ -28,5 +28,5 @@ class PhanterProcessor(BaseProcessor):
             Dict[str, str]: Diccionario que relaciona el nombre de la operación con el método del parser.
         """
         return {
-            "annotation_name": "get_annotation_name",
+            "annotation_name": "get_annotation_name"
         }
