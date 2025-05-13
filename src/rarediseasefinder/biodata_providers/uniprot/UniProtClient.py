@@ -30,7 +30,7 @@ class UniProtClient(BaseClient):
             # Es un símbolo de gen
             reviewed_param = "AND+reviewed:true"
             url = f"{UNIPROT_BASE_URL}/search?query=gene:{id}+{reviewed_param}&format=json"
-
+            
         return self._get_data(url)
 
 
