@@ -3,7 +3,7 @@ import json
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PharosWorkflowStep import PharosWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.SelleckchemWorkflowStep import SelleckchemWorkflowStep
-from rarediseasefinder.core.BaseFilter import BaseFilter
+from src.rarediseasefinder.core.BaseFilter import BaseFilter
 
 class Workflow(IWorkflow):
     def __init__(self):
