@@ -15,7 +15,7 @@ class BaseParser:
         Transforma datos crudos en un DataFrame de pandas.
         
         Args:
-            data: Datos a parsear (dict, list o estructura anidada).
+            data: Datos a parsear (dict, list o estructura anidada de list o dict).
                         
         Returns:
             pd.DataFrame: Datos estructurados en tabla.
