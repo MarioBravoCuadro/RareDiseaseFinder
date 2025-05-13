@@ -101,12 +101,12 @@ class PharosClient(BaseClient):
         """
         return self._post_data(self.GRAPHQL_URL, json=query_data)
 
-    def get_target_data(self, target: str) -> dict:
+    def fetch(self, id: str) -> dict:
         """
         Obtiene datos de un objetivo específico de Pharos.
         
         Args:
-            target (str): Símbolo del objetivo a consultar.
+            id (str): Símbolo del objetivo a consultar.
             
         Returns:
             dict: Datos del objetivo desde Pharos.
@@ -115,7 +115,7 @@ class PharosClient(BaseClient):
             BaseParsingError: Si la respuesta no contiene los datos esperados.
         """
 
-        query_data = self._get_pharos_query(target)
+        query_data = self._get_pharos_query(id)
         response = self._query_graphql(query_data)
         
         try:
@@ -126,7 +126,7 @@ class PharosClient(BaseClient):
         if "data" in response_data and "target" in response_data["data"]:
             return response_data["data"]["target"]
         else:
-            raise BaseParsingError(f"No se encontraron datos para el gen con ID Ensembl: {target}")
+            raise BaseParsingError(f"No se encontraron datos para el gen con ID Ensembl: {id}")
         
     def _ping_logic(self) -> int:
         """

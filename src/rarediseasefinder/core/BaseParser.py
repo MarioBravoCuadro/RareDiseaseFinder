@@ -10,14 +10,13 @@ class BaseParser:
     def __init__(self):
         pass
     
-    def parse_to_dataframe(self, data: Union[dict, list], **kwargs) -> pd.DataFrame:
+    def parse_to_dataframe(self, data: Union[dict, list]) -> pd.DataFrame:
         """
         Transforma datos crudos en un DataFrame de pandas.
         
         Args:
             data: Datos a parsear (dict, list o estructura anidada).
-            kwargs: Parámetros adicionales para personalizar el parsing.
-            
+                        
         Returns:
             pd.DataFrame: Datos estructurados en tabla.
             

@@ -14,8 +14,24 @@ class BaseRetriever(ABC):
     específica de conexión.
     """
 
+    @abstractmethod
+    def fetch(self,id: str) -> dict:
+        """
+        Método abstracto para recuperar datos.
+
+        Este método debe ser implementado por las clases derivadas para proporcionar
+        la lógica específica de recuperación de datos.
+
+        Args:
+            id (str): Identificador del recurso a recuperar.
+
+        Returns:
+            dict: Datos recuperados.
+        """
+        pass
+
     @staticmethod
-    def _fetch_response(url) -> requests.Response:
+    def _http_response(url) -> requests.Response:
         """
         Método privado para realizar solicitudes HTTP
         
@@ -23,7 +39,7 @@ class BaseRetriever(ABC):
             url (str): URL a consultar
             
         Returns:
-            dict: Datos JSON de la respuesta
+            requests.Response: Datos JSON de la respuesta
             
         Raises:
             BaseHTTPError: Si hay un error en la comunicación con la API
@@ -58,16 +74,20 @@ class BaseRetriever(ABC):
         una implementación específica de la lógica de conexión con el servicio correspondiente.
 
         Returns:
-            requests.Response: La respuesta de la conexión establecida.
+            int: Código de estado HTTP de la respuesta o 999 si falla la conexión.
         """
         pass
 
     def get_connection_code(self) -> int:
         """
         Devuelve el código asociado a una conexión. Este código puede ser HTTP o un código de error.
+        Actúa como wrapper para el método _ping_logic.
         
         Returns:
             int: Código de estado HTTP de la conexión o código de error.
+                Los códigos de error son:
+                - 1001: Error del scrapper al iniciar el driver
+                - 999: Error de conexión
         """
         response = self._ping_logic()
         return response
@@ -82,4 +102,4 @@ class BaseRetriever(ABC):
         Returns:
             bool: _description_
         """
-        raise NotImplementedError("Método check_data no implementado en BaseRetriever.")
+        pass

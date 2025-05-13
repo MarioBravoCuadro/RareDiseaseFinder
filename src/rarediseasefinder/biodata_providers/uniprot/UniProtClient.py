@@ -6,7 +6,7 @@ UNIPROT_BASE_URL = "https://rest.uniprot.org/uniprotkb"
 class UniProtClient(BaseClient):
     """Cliente para interactuar con la API de UniProt"""
 
-    def get_by_id(self, uniprot_id) -> dict:
+    def fetch(self, uniprot_id: str) -> dict:
         """
         Obtiene información de una proteína por su ID de UniProt
         
@@ -21,9 +21,9 @@ class UniProtClient(BaseClient):
             UniProtParsingError: Si la respuesta no es un JSON válido
         """
         url = f"{UNIPROT_BASE_URL}/{uniprot_id}"
-        return self._fetch_data(url)
+        return self._get_data(url)
 
-    def search_by_gene(self, gene_name, reviewed_only=True) -> dict:
+    def fetch(self, gene_name: str, reviewed_only: bool = True) -> dict:
         """
         Busca proteínas por nombre de gen
         
@@ -40,17 +40,7 @@ class UniProtClient(BaseClient):
         """
         reviewed_param = "AND+reviewed:true" if reviewed_only else ""
         url = f"{UNIPROT_BASE_URL}/search?query=gene:{gene_name}+{reviewed_param}&format=json"
-        return self._fetch_data(url)
-
-    def get_target_data(self, target_id) -> dict:
-        """
-        Obtiene los datos de una proteína por su ID de UniProt.
-        Args:
-            target_id (str): Identificador de UniProt.
-        Returns:
-            dict: Datos crudos de la respuesta de la API.
-        """
-        return self.get_by_id(target_id)
+        return self._get_data(url)
 
     def _ping_logic(self) -> int:
         """Realiza una petición de ping al servidor de Ensembl para comprobar disponibilidad.
@@ -62,7 +52,7 @@ class UniProtClient(BaseClient):
         ext = "/info/ping?"
         url = server+ext
         if self._try_connection(url):
-            response = UniProtClient._fetch_response(url)
+            response = UniProtClient._http_response(url)
             return response.status_code
         else:
             return 999

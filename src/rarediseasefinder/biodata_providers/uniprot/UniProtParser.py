@@ -161,16 +161,3 @@ class UniProtParser(BaseParser):
         ]
         # El ordenamiento se hace ahora dentro de parse_to_dataframe con un parámetro
         return self.parse_to_dataframe(interactions_data, sort_by="NumExperiments", ascending=False)
-
-# uniprot/errors.py
-class UniProtError(Exception):
-    """Excepción base para errores relacionados con UniProt"""
-    pass
-
-class UniProtHTTPError(UniProtError):
-    """Error de comunicación con la API de UniProt"""
-    pass
-
-class UniProtParsingError(UniProtError):
-    """Error al procesar datos de UniProt"""
-    pass

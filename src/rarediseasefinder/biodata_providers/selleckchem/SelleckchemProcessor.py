@@ -1,11 +1,8 @@
 from typing import Dict
 
-import pandas as pd
-
 from ..selleckchem import SelleckchemParser
-from ..selleckchem import SelleckchemScrapper
+from ..selleckchem import SelleckchemScraper
 from ...core.BaseProcessor import BaseProcessor
-
 
 class SelleckchemProcessor(BaseProcessor):
     """
@@ -17,10 +14,9 @@ class SelleckchemProcessor(BaseProcessor):
         Inicializa el procesador de Selleckchem.
         Configura el scrapper, el parser y el mapeo de métodos.
         """
-        self.client = SelleckchemScrapper.SelleckchemScrapper()
+        self.client = SelleckchemScraper.SelleckchemScraper()
         self.parser = SelleckchemParser.SelleckchemParser()
         super().__init__(self.client,self.parser)
-        self.method_map = self.get_method_map()
 
     def get_method_map(self) -> Dict[str, str]:
         """
@@ -33,22 +29,3 @@ class SelleckchemProcessor(BaseProcessor):
             "obtener_link_selleckchem": "obtener_link_selleckchem",
             "obtener_links_selleckchem": "obtener_links_selleckchem"
         }
-
-    def fetch(self, filters: dict) -> Dict[str, pd.DataFrame]:
-        """
-        Ejecuta la búsqueda y parseo de enlaces de productos.
-
-        Args:
-            filters (dict): Filtros que deben incluir 'search_id'.
-        Returns:
-            Dict[str, pd.DataFrame]: DataFrames resultantes del parseo.
-        """
-        search_params = self.client_filters(filters)
-        if not search_params or "search_id" not in search_params:
-            print("Error: No se encontró un search_id válido en los filtros")
-            return {}
-        search_id = search_params["search_id"]
-        data = self.client.buscar_medicamento(search_id)
-        if data:
-            return self.parse_filters(data, filters)
-        return {}

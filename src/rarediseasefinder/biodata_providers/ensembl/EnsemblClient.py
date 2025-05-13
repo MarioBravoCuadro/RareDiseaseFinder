@@ -31,7 +31,7 @@ class EnsemblClient(BaseClient):
         """
         return str(self.path_url + gen_term + self.query_url)
 
-    def get_by_gene(self,gen_term)->dict:
+    def fetch(self,id:str)->dict:
         """
         Obtiene los datos de un gen desde Ensembl usando su nombre.
         Args:
@@ -39,8 +39,8 @@ class EnsemblClient(BaseClient):
         Returns:
             dict: Datos obtenidos de la API de Ensembl.
         """
-        url = self._create_url_string(gen_term)
-        return self._fetch_data(url)
+        url = self._create_url_string(id)
+        return self._get_data(url)
     
     def _ping_logic(self) -> int:
         """
@@ -53,7 +53,7 @@ class EnsemblClient(BaseClient):
         ext = "/info/ping?"
         url = server+ext
         if self._try_connection(url):
-            response = EnsemblClient._fetch_response(url)
+            response = EnsemblClient._http_response(url)
             return response.status_code
         else:
             return 999

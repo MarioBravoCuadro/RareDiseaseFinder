@@ -2,7 +2,7 @@
 Módulo de parser para extraer información de medicamentos de la web de Selleckchem.
 Proporciona métodos para obtener listas y enlaces de productos como DataFrames de pandas.
 """
-from typing import List, Dict
+from typing import Dict, Any
 
 import pandas as pd
 from bs4 import BeautifulSoup
@@ -18,15 +18,16 @@ class SelleckchemParser(BaseParser):
     def __init__(self):
         super().__init__()
 
-    def extraer_medicamentos(self, html: str) -> pd.DataFrame:
+    def extraer_medicamentos(self, data: Dict[str, Any]) -> pd.DataFrame:
         """
         Extrae información de medicamentos de un HTML dado.
 
         Args:
-            html (str): Contenido HTML de la página con la lista de medicamentos.
+            data (Dict[str, Any]): Diccionario con la clave 'html' que contiene el contenido HTML.
         Returns:
             pd.DataFrame: DataFrame con los datos de los medicamentos extraídos.
         """
+        html = data.get('html')
         soup = BeautifulSoup(html, 'html.parser')
         medicamentos = []
         filas = soup.find_all('tr', attrs={'name': 'productList'})
@@ -47,35 +48,37 @@ class SelleckchemParser(BaseParser):
         medicamentos_df = self.parse_to_dataframe(medicamentos)
         return medicamentos_df
 
-    def obtener_link_selleckchem(self, html: str) -> pd.DataFrame:
+    def obtener_link_selleckchem(self, data: Dict[str, Any]) -> pd.DataFrame:
         """
         Obtiene el primer enlace de producto de la lista de medicamentos.
 
         Args:
-            html (str): Contenido HTML de la página con la lista de medicamentos.
+            data (Dict[str, Any]): Diccionario con la clave 'html' que contiene el contenido HTML.
+            filter_params (Dict, optional): Parámetros de filtrado. Defaults to None.
         Returns:
             pd.DataFrame: DataFrame con el primer enlace completo o vacío si no hay productos.
         """
-        productos = self.extraer_medicamentos(html)
+        productos = self.extraer_medicamentos(data)
         if not productos.empty:
             primer_link = f"www.selleckchem.com{productos.loc[0]['Link']}"
             return self.parse_to_dataframe([primer_link])
         return self.parse_to_dataframe([])
 
-    def obtener_links_selleckchem(self, html: str) -> pd.DataFrame:
+    def obtener_links_selleckchem(self, data: Dict[str, Any]) -> pd.DataFrame:
         """
         Obtiene todos los enlaces de productos de la lista de medicamentos.
 
         Args:
-            html (str): Contenido HTML de la página con la lista de medicamentos.
+            data (Dict[str, Any]): Diccionario con la clave 'html' que contiene el contenido HTML.
+            filter_params (Dict, optional): Parámetros de filtrado. Defaults to None.
         Returns:
             pd.DataFrame: DataFrame con los enlaces completos de todos los productos.
         """
-        productos = self.extraer_medicamentos(html)
+        productos = self.extraer_medicamentos(data)
         links = []
-        rango = range(len(productos))
-        for i in rango:
-            links.append(f"www.selleckchem.com{productos.loc[i]['Link']}")
+        if not productos.empty:
+            rango = range(len(productos))
+            for i in rango:
+                links.append(f"www.selleckchem.com{productos.loc[i]['Link']}")
 
-        links = self.parse_to_dataframe(links)
-        return links
+        return self.parse_to_dataframe(links)

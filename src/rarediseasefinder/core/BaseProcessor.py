@@ -3,9 +3,9 @@ from typing import Dict, Any, Optional
 
 import pandas as pd
 
-from .BaseClient import BaseClient
+from .BaseRetriever import BaseRetriever
 from .BaseParser import BaseParser
-from .BaseScraper import BaseScraper
+
 
 
 class BaseProcessor(ABC):
@@ -15,7 +15,7 @@ class BaseProcessor(ABC):
     o sobreescritos por las clases derivadas.
     """
     
-    def __init__(self, retriever : BaseScraper | BaseClient, parser: BaseParser):
+    def __init__(self, retriever : BaseRetriever, parser: BaseParser):
         """
         Inicializa el procesador base.
         Las clases derivadas deben inicializar sus clientes y parsers específicos.
@@ -24,25 +24,41 @@ class BaseProcessor(ABC):
         self.parser = parser
         self.method_map = self.get_method_map()
 
+    @abstractmethod
     def get_method_map(self) -> Dict[str, str]:
         """
         Devuelve un diccionario que mapea nombres de métodos a sus implementaciones.
-        Las clases derivadas pueden sobreescribir este método para proporcionar su propio mapeo.
+        Las clases derivadas deben implementar este método para proporcionar su propio mapeo.
         
         Returns:
             Dict[str, str]: Mapeo de nombres de métodos.
         """
-        return {}
+        pass
 
     def get_status_code(self) -> int:
         status = self.retriever.get_connection_code()
         return status
 
-    @abstractmethod
     def fetch(self, filters: Dict[str, Any]) -> Dict[str, pd.DataFrame]:
         """
-        Método abstracto. Debe ser implementado por cada procesador hijo según el método de su cliente.
+        Obtiene los datos del gen usando el cliente y los procesa con el parser según los filtros.
+        
+        Args:
+            filters (Dict[str, Any]): Filtros de búsqueda y métodos de parser.
+            
+        Returns:
+            Dict[str, pd.DataFrame]: Diccionario de DataFrames procesados por el parser.
+            
+        Raises:
+            ValueError: Si no se encuentra un ID de la fuente en los parámetros de búsqueda.
         """
+        search_params = self.retriever_filters(filters)
+        if not search_params or 'search_id' not in search_params:
+            raise ValueError("No se encontró un identificador de la fuente en los parámetros de búsqueda para el procesador.")
+        
+        search_id = search_params['search_id']
+        data = self.retriever.fetch(search_id)
+        return self.parse_filters(data, filters)
 
     def parse_filters(self, data: Dict[str, Any], filters: list[str, Any]) -> Dict[str, pd.DataFrame]:
         """
@@ -77,7 +93,7 @@ class BaseProcessor(ABC):
                         print(f"El procesador {processor['PROCESSOR']} no admite la instrucción {method_name} en el parser.")
         return results
 
-    def client_filters(self, filters: Dict[str, Any]) -> Optional[Dict[str, Any]]:
+    def retriever_filters(self, filters: Dict[str, Any]) -> Optional[Dict[str, Any]]:
         """
         Extrae los parámetros de búsqueda para el cliente desde la configuración de filtros.
         

@@ -2,7 +2,7 @@
 Módulo de cliente para la API GraphQL de OpenTargets.
 Proporciona métodos para consultar información de genes y dianas terapéuticas.
 """
-from typing import Dict, Optional
+from typing import Dict
 
 import requests
 
@@ -99,12 +99,12 @@ class OpenTargetsClient(BaseClient):
         """
         return self._post_data(self.GRAPHQL_URL, json=query_data)
     
-    def get_target_data(self, ensembl_id: str) -> dict:
+    def fetch(self, id: str) -> dict:
         """
         Obtiene datos de un gen específico de OpenTargets.
         
         Args:
-            ensembl_id (str): ID de Ensembl del gen a consultar.
+            id (str): ID de Ensembl del gen a consultar.
             
         Returns:
             dict: Datos del gen desde OpenTargets.
@@ -112,7 +112,7 @@ class OpenTargetsClient(BaseClient):
         Raises:
             BaseParsingError: Si la respuesta no contiene los datos esperados.
         """
-        query_data = self._get_gene_query(ensembl_id)
+        query_data = self._get_gene_query(id)
         response = self._query_graphql(query_data)
         
         try:
@@ -123,7 +123,7 @@ class OpenTargetsClient(BaseClient):
         if "data" in response_data and "target" in response_data["data"]:
             return response_data["data"]["target"]
         else:
-            raise BaseParsingError(f"No se encontraron datos para el gen con ID Ensembl: {ensembl_id}")
+            raise BaseParsingError(f"No se encontraron datos para el gen con ID Ensembl: {id}")
     
     def _ping_logic(self) -> int:
         """
@@ -161,5 +161,5 @@ class OpenTargetsClient(BaseClient):
         Returns:
             bool: True si los datos son válidos, False en caso contrario.
         """
-        return NotImplementedError("Método check_data no implementado en OpenTargetsClient.")
+        pass
         

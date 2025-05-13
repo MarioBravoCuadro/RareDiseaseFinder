@@ -10,7 +10,7 @@ from ..core.BaseRetriever import BaseRetriever
 class BaseClient(BaseRetriever, ABC):
     """Cliente base para interactuar con la API """
 
-    def _fetch_data(self, url) -> dict:
+    def _get_data(self, url) -> dict:
         """
         Método privado para devolver la respuesta en json
         
@@ -26,7 +26,7 @@ class BaseClient(BaseRetriever, ABC):
             BaseError: Para cualquier otro error inesperado
         """
         try:
-            response = self._fetch_response(url)
+            response = self._http_response(url)
             return response.json()
         except ValueError as json_err:
             raise BaseParsingError(f"JSON inválido: {json_err}")
@@ -56,7 +56,6 @@ class BaseClient(BaseRetriever, ABC):
         """
         try:
             response = requests.post(url, json=json, data=data, headers=headers)
-            #response.raise_for_status() check the status code
             return response
         except requests.exceptions.HTTPError as http_err:
             raise BaseHTTPError(f"HTTP error: {http_err}")
