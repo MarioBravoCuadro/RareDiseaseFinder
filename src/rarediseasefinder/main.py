@@ -3,6 +3,7 @@ import json
 from tabulate import tabulate
 
 from src.rarediseasefinder.biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
+from src.rarediseasefinder.biodata_providers.phanterdb.PhanterProcessor import PhanterProcessor
 from src.rarediseasefinder.biodata_providers.pharos.PharosProcessor import PharosProcessor
 from src.rarediseasefinder.biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
 from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
@@ -151,6 +152,18 @@ if __name__ == "__main__" :
                         "FILTROS_METODO_PARSER": ""
                     }
                 ]
+            },
+            {
+                "PROCESSOR": "PhanterProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "P02766"}
+                ],
+                "METODOS_PARSER": [
+                    {
+                        "NOMBRE_METODO": "annotation_name",
+                        "FILTROS_METODO_PARSER": {}
+                    }
+                ]
             }
     ]'''
     filters_json = json.loads(filters_json)
@@ -207,3 +220,10 @@ if __name__ == "__main__" :
         ensembl_id = processor.fetch(filters_json)
         print(tabulate(ensembl_id, headers='keys', tablefmt='fancy_grid'))
 
+    #Call PhanterDB processor
+    print("\033[91mPhantherDB\033[0m")
+    processor = PhanterProcessor()
+    print("Status code " + str(processor.get_status_code()))
+    if processor.get_status_code() == 200:
+        phanter_data = processor.fetch(filters_json)
+        print(tabulate(phanter_data, headers='keys', tablefmt='fancy_grid'))
