@@ -6,6 +6,7 @@ from src.rarediseasefinder.biodata_providers.ensembl.EnsemblProcessor import Ens
 from src.rarediseasefinder.biodata_providers.phanterdb.PhanterProcessor import PhanterProcessor
 from src.rarediseasefinder.biodata_providers.pharos.PharosProcessor import PharosProcessor
 from src.rarediseasefinder.biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
+from src.rarediseasefinder.biodata_providers.stringdb.StringDbProcessor import StringDbProcessor
 from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
 from src.rarediseasefinder.biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
 
@@ -164,7 +165,20 @@ if __name__ == "__main__" :
                         "FILTROS_METODO_PARSER": {}
                     }
                 ]
+            },
+            {
+                "PROCESSOR": "StringDbProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "ENSP00000360522"}
+                ],
+                "METODOS_PARSER": [
+                    {
+                        "NOMBRE_METODO": "get_annotation",
+                        "FILTROS_METODO_PARSER": {}
+                    }
+                ]
             }
+            
     ]'''
     filters_json = json.loads(filters_json)
 
@@ -227,3 +241,14 @@ if __name__ == "__main__" :
     if processor.get_status_code() == 200:
         phanter_data = processor.fetch(filters_json)
         print(tabulate(phanter_data, headers='keys', tablefmt='fancy_grid'))
+
+    #Call StringDB processor
+    print("\033[91mStringDB\033[0m")
+    processor = StringDbProcessor()
+    print("Status code " + str(processor.get_status_code()))
+    if processor.get_status_code() == 200:
+        string_db = processor.fetch(filters_json) #Fanca
+        print(string_db.keys())
+        for key in string_db.keys():
+            print(key)
+            print(tabulate(string_db[key], headers='keys', tablefmt='fancy_grid'))
