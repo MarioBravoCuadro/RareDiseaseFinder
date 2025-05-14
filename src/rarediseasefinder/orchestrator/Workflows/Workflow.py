@@ -1,4 +1,5 @@
 import json
+from traceback import print_tb
 
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PharosWorkflowStep import PharosWorkflowStep
@@ -30,20 +31,117 @@ class Workflow(IWorkflow):
             }
         ]
 
-        self.minium_methods_uniprot=[]
-        self.minium_methods_selleckchem=[]
-        self.minium_methods_ensembl=[]
-        self.minium_methods_opentargets=[]
-        self.minium_methods_pantherdb=[]
-        self.minium_methods_stringdb=[]
+        self.minium_methods_uniprot=[
+            {
+                "METHOD_ID": "function",
+                "METHOD_PARSER_FILTERS": ""
+            }
+            ,
+            {
+                "METHOD_ID": "subcellular_location",
+                "METHOD_PARSER_FILTERS": ""
+            }
+            ,
+            {
+                "METHOD_ID": "go_terms",
+                "METHOD_PARSER_FILTERS": ""
+            }
+            ,
+            {
+                "METHOD_ID": "disease",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "disease_publications",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "parse_variants",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "parse_interactions",
+                "METHOD_PARSER_FILTERS": ""
+            }
+        ]
+        self.minium_methods_selleckchem=[
+            {
+                "METHOD_ID": "obtener_link_selleckchem",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "obtener_links_selleckchem",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "Funcion que da error",
+                "METHOD_PARSER_FILTERS": ""
+            }
+        ]
+        self.minium_methods_ensembl=[
+            {
+                "METHOD_ID": "ensembl_id",
+                "METHOD_PARSER_FILTERS": ""
+            }
+        ]
+        self.minium_methods_opentargets=[
+            {
+                "METHOD_ID": "basic_info",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "pathways",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "known_drugs",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "associated_diseases",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "interactions",
+                "METHOD_PARSER_FILTERS": ""
+            },
+            {
+                "METHOD_ID": "mouse_phenotypes",
+                "METHOD_PARSER_FILTERS": ""
+            }
+        ]
+        self.minium_methods_pantherdb=[
+            {
+                "METHOD_ID": "annotation_name",
+                "METHOD_PARSER_FILTERS": {}
+            }
+        ]
+        self.minium_methods_stringdb=[
+            {
+                "METHOD_ID": "get_annotation",
+                "METHOD_PARSER_FILTERS": {}
+            }
+        ]
         self.minium_methods_pharos = [
             {
-                "METHOD_ID": "create_protein_protein_relations_df",
-                "METHOD_PARSER_FILTERS": self.filtros_parser_pharos_front[0]
+                "METHOD_ID": "df_info",
+                "METHOD_PARSER_FILTERS": {}
+            },
+            {
+                "METHOD_ID": "df_omim",
+                "METHOD_PARSER_FILTERS": {}
             },
             {
                 "METHOD_ID": "create_protein_protein_relations_df",
-                "METHOD_PARSER_FILTERS": self.filtros_parser_pharos_front[0]
+                "METHOD_PARSER_FILTERS":self.filtros_parser_pharos_front[0]
+            },
+            {
+                "METHOD_ID": "df_vias",
+                "METHOD_PARSER_FILTERS": {}
+            },
+            {
+                "METHOD_ID": "df_numero_vias_por_fuente",
+                "METHOD_PARSER_FILTERS": {}
             }
         ]
 
@@ -60,6 +158,7 @@ class Workflow(IWorkflow):
         #traer el filtro formato json comom string
         pharos_filters_json_string = pharos_filters.get_json_str()
 
+        print(pharos_filters_json_string)
         #convertir el str a objeto json (objeto != archivo)
         pharos_filters_json_object = json.loads(pharos_filters_json_string)
 
