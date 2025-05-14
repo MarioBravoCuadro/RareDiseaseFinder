@@ -183,7 +183,15 @@ class Workflow(IWorkflow):
         stringdb_filters_json_object = json.loads(stringdb_filters_json_string)
 
         #Añadir termino de busqueda al filtro
+        #Sacalos del main.py  filters_json los terminos de busqueda
         pharos_filters.add_client_search_params("FANCA")
+        selleck_chem_filters.add_client_search_params("TCL")
+        ensembler_filters.add_client_search_params("FANCA")
+        opentargets_filters.add_client_search_params("ENSG00000118271")
+        pantherdb_filters.add_client_search_params("P02766")
+        uniprot_filters.add_client_search_params("O15360")
+        stringdb_filters.add_client_search_params("ENSP00000360522")
+
 
         #Coger step de la lista de pasos
         pharos_step = self.get_step("Pharos")
