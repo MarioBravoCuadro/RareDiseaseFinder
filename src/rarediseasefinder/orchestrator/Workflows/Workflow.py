@@ -197,7 +197,7 @@ class Workflow(IWorkflow):
         pharos_step = self.get_step("Pharos")
         selleckchem_step = self.get_step("Selleckchem")
         ensembler_step = self.get_step("Ensembl")
-        opentargets_step = self.get_step("OpenTargets")
+        opentargets_step = self.get_step("Opentargets")
         pantherdb_step = self.get_step("Panther")
         uniprot_step = self.get_step("Uniprot")
         stringdb_step = self.get_step("Stringdb")
