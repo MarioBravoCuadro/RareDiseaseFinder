@@ -187,3 +187,33 @@ class Workflow(IWorkflow):
 if __name__ == "__main__":
     print (Workflow().check_if_all_steps_available())
     print(Workflow().steps_execution())
+
+
+
+
+"""
+Example:
+    def step_pipeline(self):
+        #Crear Filtro es un BaseFilter
+        pharos_filters = BaseFilter(self.minium_methods_pharos,"PharosProcessor")
+
+        #Añadir termino de busqueda al filtro
+        pharos_filters.add_client_search_params("FANCA")
+
+        #Añadir parser method
+        pharos_filters.add_parser_method("secuenciasADN",self.filtros_parser_pharos_front)
+
+        #traer el filtro formato json comom string
+        pharos_filters_json_string = pharos_filters.get_json_str()
+
+        #convertir el str a objeto json (objeto != archivo)
+        pharos_filters_json_object = json.loads(pharos_filters_json_string)
+
+        pharos_step = self.get_step("Pharos")
+
+        pharos_step.set_filters(pharos_filters_json_object)
+        status_code = pharos_step.get_status_code()
+        result = pharos_step.process()
+
+        return result
+"""
