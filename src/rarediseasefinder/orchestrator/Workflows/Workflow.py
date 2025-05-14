@@ -159,28 +159,9 @@ class Workflow(IWorkflow):
         selleck_chem_filters = BaseFilter(self.minium_methods_selleckchem,"SelleckchemProcessor")
         ensembler_filters = BaseFilter(self.minium_methods_ensembl,"EnsemblProcessor")
         opentargets_filters = BaseFilter(self.minium_methods_opentargets,"OpenTargetsProcessor")
-        pantherdb_filters = BaseFilter(self.minium_methods_pantherdb,"PantherdbProcessor")
+        pantherdb_filters = BaseFilter(self.minium_methods_pantherdb,"PantherProcessor")
         uniprot_filters = BaseFilter(self.minium_methods_uniprot,"UniprotProcessor")
-        stringdb_filters = BaseFilter(self.minium_methods_stringdb,"StringdbProcessor")
-
-
-        #traer el filtro formato json comom string
-        pharos_filters_json_string = pharos_filters.get_json_str()
-        selleck_chem_filters_json_string = selleck_chem_filters.get_json_str()
-        ensembler_filters_json_string = ensembler_filters.get_json_str()
-        opentargets_filters_json_string = opentargets_filters.get_json_str()
-        pantherdb_filters_json_string = pantherdb_filters.get_json_str()
-        uniprot_filters_json_string = uniprot_filters.get_json_str()
-        stringdb_filters_json_string = stringdb_filters.get_json_str()
-
-        #convertir el str a objeto json (objeto != archivo)
-        pharos_filters_json_object = json.loads(pharos_filters_json_string)
-        selleck_chem_filters_json_object = json.loads(selleck_chem_filters_json_string)
-        ensembler_filters_json_object = json.loads(ensembler_filters_json_string)
-        opentargets_filters_json_object = json.loads(opentargets_filters_json_string)
-        pantherdb_filters_json_object = json.loads(pantherdb_filters_json_string)
-        uniprot_filters_json_object = json.loads(uniprot_filters_json_string)
-        stringdb_filters_json_object = json.loads(stringdb_filters_json_string)
+        stringdb_filters = BaseFilter(self.minium_methods_stringdb,"StringDbProcessor")
 
         #Añadir termino de busqueda al filtro
         #Sacalos del main.py  filters_json los terminos de busqueda
@@ -192,6 +173,31 @@ class Workflow(IWorkflow):
         uniprot_filters.add_client_search_params("O15360")
         stringdb_filters.add_client_search_params("ENSP00000360522")
 
+        #traer el filtro formato json comom string
+        pharos_filters_json_string = pharos_filters.get_json_str()
+        selleck_chem_filters_json_string = selleck_chem_filters.get_json_str()
+        ensembler_filters_json_string = ensembler_filters.get_json_str()
+        opentargets_filters_json_string = opentargets_filters.get_json_str()
+        pantherdb_filters_json_string = pantherdb_filters.get_json_str()
+        uniprot_filters_json_string = uniprot_filters.get_json_str()
+        stringdb_filters_json_string = stringdb_filters.get_json_str()
+
+        print(pharos_filters_json_string)
+        print(selleck_chem_filters_json_string)
+        print(ensembler_filters_json_string)
+        print(opentargets_filters_json_string)
+        print(pantherdb_filters_json_string)
+        print(uniprot_filters_json_string)
+        print(stringdb_filters_json_string)
+        
+        #convertir el str a objeto json (objeto != archivo)
+        pharos_filters_json_object = json.loads(pharos_filters_json_string)
+        selleck_chem_filters_json_object = json.loads(selleck_chem_filters_json_string)
+        ensembler_filters_json_object = json.loads(ensembler_filters_json_string)
+        opentargets_filters_json_object = json.loads(opentargets_filters_json_string)
+        pantherdb_filters_json_object = json.loads(pantherdb_filters_json_string)
+        uniprot_filters_json_object = json.loads(uniprot_filters_json_string)
+        stringdb_filters_json_object = json.loads(stringdb_filters_json_string)
 
         #Coger step de la lista de pasos
         pharos_step = self.get_step("Pharos")
