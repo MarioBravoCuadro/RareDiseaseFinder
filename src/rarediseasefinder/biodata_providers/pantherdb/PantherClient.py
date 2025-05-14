@@ -3,7 +3,7 @@ from abc import ABC
 from src.rarediseasefinder.core.BaseClient import BaseClient
 
 #https://pantherdb.org/services/openAPISpec.jsp
-class PhanterClient(BaseClient, ABC):
+class PantherClient(BaseClient, ABC):
     """
     Cliente para la API de PantherDB que permite obtener información genética.
     Implementa los métodos necesarios para comunicarse con el servicio web de PantherDB.

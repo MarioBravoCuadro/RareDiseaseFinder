@@ -1,12 +1,11 @@
-import json
 from typing import Dict
 
-from src.rarediseasefinder.biodata_providers.phanterdb.PhanterClient import PhanterClient
-from src.rarediseasefinder.biodata_providers.phanterdb.PhanterParser import PhanterParser
+from rarediseasefinder.biodata_providers.pantherdb.PantherClient import PantherClient
+from rarediseasefinder.biodata_providers.pantherdb.PantherParser import PantherParser
 from src.rarediseasefinder.core.BaseProcessor import BaseProcessor
 
 
-class PhanterProcessor(BaseProcessor):
+class PantherProcessor(BaseProcessor):
     """
     Procesador para datos de PantherDB.
     Esta clase gestiona el procesamiento de consultas y respuestas del servicio PantherDB.
@@ -16,8 +15,8 @@ class PhanterProcessor(BaseProcessor):
         """
         Inicializa el procesador con el cliente y el parser correspondiente.
         """
-        self.client = PhanterClient()
-        self.parser = PhanterParser()
+        self.client = PantherClient()
+        self.parser = PantherParser()
         super().__init__(self.client, self.parser)
 
     def get_method_map(self) -> Dict[str, str]:

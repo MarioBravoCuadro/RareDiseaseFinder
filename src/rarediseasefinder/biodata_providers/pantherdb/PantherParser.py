@@ -1,12 +1,9 @@
-from email.utils import parsedate_to_datetime
-from xml.sax import parse
-
 import pandas as pd
 
 from src.rarediseasefinder.core.BaseParser import BaseParser
 
 
-class PhanterParser(BaseParser):
+class PantherParser(BaseParser):
     """
     Parser para datos obtenidos de PantherDB.
     Esta clase implementa métodos para extraer y formatear información específica de los datos
