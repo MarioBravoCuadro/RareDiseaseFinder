@@ -33,6 +33,9 @@ class Workflow(IWorkflow):
         self.minium_methods_uniprot=[]
         self.minium_methods_selleckchem=[]
         self.minium_methods_ensembl=[]
+        self.minium_methods_opentargets=[]
+        self.minium_methods_pantherdb=[]
+        self.minium_methods_stringdb=[]
         self.minium_methods_pharos = [
             {
                 "METHOD_ID": "create_protein_protein_relations_df",
