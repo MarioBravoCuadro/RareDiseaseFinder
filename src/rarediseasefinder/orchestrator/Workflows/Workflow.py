@@ -170,7 +170,6 @@ class Workflow(IWorkflow):
         #traer el filtro formato json comom string
         pharos_filters_json_string = pharos_filters.get_json_str()
 
-        print(pharos_filters_json_string)
         #convertir el str a objeto json (objeto != archivo)
         pharos_filters_json_object = json.loads(pharos_filters_json_string)
 
