@@ -1,5 +1,3 @@
-import pandas as pd
-
 from ...biodata_providers.pharos.PharosProcessor import PharosProcessor
 from ...orchestrator.IWorkflowStep import IWorkflowStep
 

@@ -1,5 +1,3 @@
-import pandas as pd
-
 from ...biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
 from ...orchestrator.IWorkflowStep import IWorkflowStep
 
