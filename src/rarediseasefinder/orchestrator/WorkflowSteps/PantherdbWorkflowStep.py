@@ -1,4 +1,4 @@
-from src.rarediseasefinder.biodata_providers.phanterdb.PhanterProcessor import PhanterProcessor
+from src.rarediseasefinder.biodata_providers.pantherdb.PantherProcessor import PantherProcessor
 from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
 
 
@@ -18,7 +18,7 @@ class PantherdbWorkflowStep(IWorkflowStep):
         """
         self.name = "Panther step"
         self.description = "Fetches x data from Panther API"
-        self.processor = PhanterProcessor()
+        self.processor = PantherProcessor()
 
     def set_filters(self, filters):
         """
