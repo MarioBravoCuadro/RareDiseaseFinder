@@ -1,11 +1,11 @@
-from src.rarediseasefinder.biodata_providers.phanterdb.PhanterProcessor import PhanterProcessor
+from src.rarediseasefinder.biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
 from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
 
 
-class PantherdbStep(IWorkflowStep):
+class EnsemblerWorkflowStep(IWorkflowStep):
     """
-    Paso de flujo de trabajo que interactúa con la API de Pantherdb.
-    Este paso recupera datos biológicos desde Pantherdb basándose en los filtros proporcionados.
+    Paso de flujo de trabajo que interactúa con la API de Ensembl.
+    Este paso recupera datos genómicos desde Ensembl basándose en los filtros proporcionados.
     """
     name = None
     description = None
@@ -14,15 +14,15 @@ class PantherdbStep(IWorkflowStep):
 
     def __init__(self):
         """
-        Inicializa el paso de flujo de trabajo de Panther con valores predeterminados.
+        Inicializa el paso de flujo de trabajo de Ensembl con valores predeterminados.
         """
-        self.name = "Panther step"
-        self.description = "Fetches x data from Panther API"
-        self.processor = PhanterProcessor()
+        self.name = "Ensembler step"
+        self.description = "Fetches x data from Ensembler API"
+        self.processor = EnsemblProcessor()
 
     def set_filters(self, filters):
         """
-        Establece los filtros para la consulta a Pantherdb.
+        Establece los filtros para la consulta a Ensembl.
         
         Args:
             filters: Los filtros a aplicar en la consulta.
@@ -40,10 +40,10 @@ class PantherdbStep(IWorkflowStep):
 
     def process(self)-> dict:
         """
-        Procesa la consulta a Pantherdb utilizando los filtros configurados.
+        Procesa la consulta a Ensembl utilizando los filtros configurados.
         
         Returns:
-            dict: Resultados de la consulta a Pantherdb.
+            dict: Resultados de la consulta a Ensembl.
         """
         return self.processor.fetch(self.filters)
 

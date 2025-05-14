@@ -1,11 +1,11 @@
-from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
+from src.rarediseasefinder.biodata_providers.stringdb.StringDbProcessor import StringDbProcessor
 from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
 
 
-class UniprotStep(IWorkflowStep):
+class StringdbWorkflowStep(IWorkflowStep):
     """
-    Paso de flujo de trabajo que interactúa con la API de Uniprot.
-    Este paso recupera datos de proteínas desde Uniprot basándose en los filtros proporcionados.
+    Paso de flujo de trabajo que interactúa con la API de StringDB.
+    Este paso recupera datos de interacciones de proteínas desde StringDB basándose en los filtros proporcionados.
     """
     name = None
     description = None
@@ -14,15 +14,15 @@ class UniprotStep(IWorkflowStep):
 
     def __init__(self):
         """
-        Inicializa el paso de flujo de trabajo de Uniprot con valores predeterminados.
+        Inicializa el paso de flujo de trabajo de StringDB con valores predeterminados.
         """
-        self.name = "Uniprot step"
-        self.description = "Fetches x data from Uniprot API"
-        self.processor = UniprotProcessor()
+        self.name = "Stringdb step"
+        self.description = "Fetches x data from Stringdb API"
+        self.processor = StringDbProcessor()
 
     def set_filters(self, filters):
         """
-        Establece los filtros para la consulta a Uniprot.
+        Establece los filtros para la consulta a StringDB.
         
         Args:
             filters: Los filtros a aplicar en la consulta.
@@ -40,10 +40,10 @@ class UniprotStep(IWorkflowStep):
 
     def process(self)-> dict:
         """
-        Procesa la consulta a Uniprot utilizando los filtros configurados.
+        Procesa la consulta a StringDB utilizando los filtros configurados.
         
         Returns:
-            dict: Resultados de la consulta a Uniprot.
+            dict: Resultados de la consulta a StringDB.
         """
         return self.processor.fetch(self.filters)
 

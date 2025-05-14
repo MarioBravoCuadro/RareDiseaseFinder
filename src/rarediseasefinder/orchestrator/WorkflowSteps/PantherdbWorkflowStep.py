@@ -1,11 +1,11 @@
-from src.rarediseasefinder.biodata_providers.stringdb.StringDbProcessor import StringDbProcessor
+from src.rarediseasefinder.biodata_providers.phanterdb.PhanterProcessor import PhanterProcessor
 from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
 
 
-class StringdbStep(IWorkflowStep):
+class PantherdbWorkflowStep(IWorkflowStep):
     """
-    Paso de flujo de trabajo que interactúa con la API de StringDB.
-    Este paso recupera datos de interacciones de proteínas desde StringDB basándose en los filtros proporcionados.
+    Paso de flujo de trabajo que interactúa con la API de Pantherdb.
+    Este paso recupera datos biológicos desde Pantherdb basándose en los filtros proporcionados.
     """
     name = None
     description = None
@@ -14,15 +14,15 @@ class StringdbStep(IWorkflowStep):
 
     def __init__(self):
         """
-        Inicializa el paso de flujo de trabajo de StringDB con valores predeterminados.
+        Inicializa el paso de flujo de trabajo de Panther con valores predeterminados.
         """
-        self.name = "Stringdb step"
-        self.description = "Fetches x data from Stringdb API"
-        self.processor = StringDbProcessor()
+        self.name = "Panther step"
+        self.description = "Fetches x data from Panther API"
+        self.processor = PhanterProcessor()
 
     def set_filters(self, filters):
         """
-        Establece los filtros para la consulta a StringDB.
+        Establece los filtros para la consulta a Pantherdb.
         
         Args:
             filters: Los filtros a aplicar en la consulta.
@@ -40,10 +40,10 @@ class StringdbStep(IWorkflowStep):
 
     def process(self)-> dict:
         """
-        Procesa la consulta a StringDB utilizando los filtros configurados.
+        Procesa la consulta a Pantherdb utilizando los filtros configurados.
         
         Returns:
-            dict: Resultados de la consulta a StringDB.
+            dict: Resultados de la consulta a Pantherdb.
         """
         return self.processor.fetch(self.filters)
 
