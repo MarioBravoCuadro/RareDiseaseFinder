@@ -156,23 +156,72 @@ class Workflow(IWorkflow):
     def step_pipeline(self):
         #Crear Filtro es un BaseFilter
         pharos_filters = BaseFilter(self.minium_methods_pharos,"PharosProcessor")
+        selleck_chem_filters = BaseFilter(self.minium_methods_selleckchem,"SelleckchemProcessor")
+        ensembler_filters = BaseFilter(self.minium_methods_ensembl,"EnsemblProcessor")
+        opentargets_filters = BaseFilter(self.minium_methods_opentargets,"OpenTargetsProcessor")
+        pantherdb_filters = BaseFilter(self.minium_methods_pantherdb,"PantherdbProcessor")
+        uniprot_filters = BaseFilter(self.minium_methods_uniprot,"UniprotProcessor")
+        stringdb_filters = BaseFilter(self.minium_methods_stringdb,"StringdbProcessor")
+
+
+        #traer el filtro formato json comom string
+        pharos_filters_json_string = pharos_filters.get_json_str()
+        selleck_chem_filters_json_string = selleck_chem_filters.get_json_str()
+        ensembler_filters_json_string = ensembler_filters.get_json_str()
+        opentargets_filters_json_string = opentargets_filters.get_json_str()
+        pantherdb_filters_json_string = pantherdb_filters.get_json_str()
+        uniprot_filters_json_string = uniprot_filters.get_json_str()
+        stringdb_filters_json_string = stringdb_filters.get_json_str()
+
+        #convertir el str a objeto json (objeto != archivo)
+        pharos_filters_json_object = json.loads(pharos_filters_json_string)
+        selleck_chem_filters_json_object = json.loads(selleck_chem_filters_json_string)
+        ensembler_filters_json_object = json.loads(ensembler_filters_json_string)
+        opentargets_filters_json_object = json.loads(opentargets_filters_json_string)
+        pantherdb_filters_json_object = json.loads(pantherdb_filters_json_string)
+        uniprot_filters_json_object = json.loads(uniprot_filters_json_string)
+        stringdb_filters_json_object = json.loads(stringdb_filters_json_string)
 
         #Añadir termino de busqueda al filtro
         pharos_filters.add_client_search_params("FANCA")
 
-        #traer el filtro formato json comom string
-        pharos_filters_json_string = pharos_filters.get_json_str()
-
-        #convertir el str a objeto json (objeto != archivo)
-        pharos_filters_json_object = json.loads(pharos_filters_json_string)
-
+        #Coger step de la lista de pasos
         pharos_step = self.get_step("Pharos")
-
+        selleckchem_step = self.get_step("Selleckchem")
+        ensembler_step = self.get_step("Ensembl")
+        opentargets_step = self.get_step("OpenTargets")
+        pantherdb_step = self.get_step("Panther")
+        uniprot_step = self.get_step("Uniprot")
+        stringdb_step = self.get_step("Stringdb")
+        
+        #Añadir filtro a cada step
         pharos_step.set_filters(pharos_filters_json_object)
-        status_code = pharos_step.get_status_code()
-        result = pharos_step.process()
+        selleckchem_step.set_filters(selleck_chem_filters_json_object)
+        ensembler_step.set_filters(ensembler_filters_json_object)
+        opentargets_step.set_filters(opentargets_filters_json_object)
+        pantherdb_step.set_filters(pantherdb_filters_json_object)
+        uniprot_step.set_filters(uniprot_filters_json_object)
+        stringdb_step.set_filters(stringdb_filters_json_object)
 
-        return result
+        #Ejecutar cada step
+        pharos_status_code = pharos_step.get_status_code()
+        selleckchem_status_code = selleckchem_step.get_status_code()
+        ensembler_status_code = ensembler_step.get_status_code()
+        opentargets_status_code = opentargets_step.get_status_code()
+        pantherdb_status_code = pantherdb_step.get_status_code()
+        uniprot_status_code = uniprot_step.get_status_code()
+        stringdb_status_code = stringdb_step.get_status_code()
+
+        #Ejecutar cada step
+        pharos_result = pharos_step.process()
+        selleckchem_result = selleckchem_step.process()
+        ensembler_result = ensembler_step.process()
+        opentargets_result = opentargets_step.process()
+        pantherdb_result = pantherdb_step.process()
+        uniprot_result = uniprot_step.process()
+        stringdb_result = stringdb_step.process()
+
+        return [pharos_result, selleckchem_result, ensembler_result, opentargets_result, pantherdb_result, uniprot_result, stringdb_result]
 
     def steps_execution(self)-> list[dict]:
         return self.step_pipeline()
