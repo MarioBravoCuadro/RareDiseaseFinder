@@ -2,9 +2,15 @@ import json
 from traceback import print_tb
 
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
+from src.rarediseasefinder.orchestrator.WorkflowSteps.OpentargetsWorkflowStep import OpentargetsWorkflowStep
+from src.rarediseasefinder.orchestrator.WorkflowSteps.EnsemblWorkflowStep import EnsemblerWorkflowStep
+from src.rarediseasefinder.orchestrator.WorkflowSteps.PantherdbWorkflowStep import PantherdbWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PharosWorkflowStep import PharosWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.SelleckchemWorkflowStep import SelleckchemWorkflowStep
 from src.rarediseasefinder.core.BaseFilter import BaseFilter
+from src.rarediseasefinder.orchestrator.WorkflowSteps.StringdbWorkflowStep import StringdbWorkflowStep
+from src.rarediseasefinder.orchestrator.WorkflowSteps.UniprotWorkflowStep import UniprotWorkflowStep
+
 
 class Workflow(IWorkflow):
     def __init__(self):
@@ -14,6 +20,12 @@ class Workflow(IWorkflow):
 
         self.add_step_to_list_of_steps({"Pharos": PharosWorkflowStep})
         self.add_step_to_list_of_steps({"Selleckchem": SelleckchemWorkflowStep})
+        self.add_step_to_list_of_steps({"Ensembl": EnsemblerWorkflowStep})
+        self.add_step_to_list_of_steps({"Opentargets": OpentargetsWorkflowStep})
+        self.add_step_to_list_of_steps({"Panther": PantherdbWorkflowStep})
+        self.add_step_to_list_of_steps({"Uniprot": UniprotWorkflowStep})
+        self.add_step_to_list_of_steps({"Stringdb": StringdbWorkflowStep})
+
         self.instantiate_steps()
 
         self.filtros_parser_pharos_front = [
