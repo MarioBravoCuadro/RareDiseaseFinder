@@ -84,10 +84,6 @@ class Workflow(IWorkflow):
             {
                 "METHOD_ID": "obtener_links_selleckchem",
                 "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "Funcion que da error",
-                "METHOD_PARSER_FILTERS": ""
             }
         ]
         self.minium_methods_ensembl=[
@@ -163,9 +159,6 @@ class Workflow(IWorkflow):
 
         #Añadir termino de busqueda al filtro
         pharos_filters.add_client_search_params("FANCA")
-
-        #Añadir parser method
-        pharos_filters.add_parser_method("secuenciasADN",self.filtros_parser_pharos_front)
 
         #traer el filtro formato json comom string
         pharos_filters_json_string = pharos_filters.get_json_str()
