@@ -235,7 +235,7 @@ if __name__ == "__main__" :
         print(tabulate(ensembl_id, headers='keys', tablefmt='fancy_grid'))
 
     #Call PhanterDB processor
-    print("\033[91mPantherDB\033[0m")
+    print("\033[91mPhantherDB\033[0m")
     processor = PantherProcessor()
     print("Status code " + str(processor.get_status_code()))
     if processor.get_status_code() == 200:
