@@ -33,10 +33,10 @@ class PantherClient(BaseClient, ABC):
 
     def fetch(self, id : str) -> dict:
         """
-        Obtiene datos de PantherDB para un término genético específico.
+        Obtiene datos de PantherDB para un término genético específico. Puede ser un symbol o un UniprotID.
         
         Args:
-            gen_term: Término genético para la consulta.
+            id: Término genético para la consulta.
             
         Returns:
             dict: Datos obtenidos de PantherDB.
