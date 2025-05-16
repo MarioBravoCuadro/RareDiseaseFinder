@@ -31,7 +31,7 @@ class PantherClient(BaseClient, ABC):
         """
         return str(self.PHANTER_DOMAIN_URL + self.PHANTER_SERVICE_URL + gen_term + self.PHANTER_URL_SUFIX)
 
-    def fetch(self, gen_term) -> dict:
+    def fetch(self, id : str) -> dict:
         """
         Obtiene datos de PantherDB para un término genético específico.
         
@@ -41,7 +41,7 @@ class PantherClient(BaseClient, ABC):
         Returns:
             dict: Datos obtenidos de PantherDB.
         """
-        url = self._create_url_string(gen_term)
+        url = self._create_url_string(id)
         return self._get_data(url)
 
     def _ping_logic(self) -> int:
