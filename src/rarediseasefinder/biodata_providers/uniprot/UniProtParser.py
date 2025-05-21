@@ -6,6 +6,7 @@ from src.rarediseasefinder.core.constants import (
     QUICKGO_URL_TEMPLATE,
     PUBMED_URL_TEMPLATE,
     OMIM_URL_TEMPLATE,
+    PHAROS_URL_TEMPLATE,
     NOT_FOUND_MESSAGE
 )
 from ...core.BaseParser import BaseParser
@@ -235,6 +236,81 @@ class UniProtParser(BaseParser):
             }]
             
         return self.parse_to_dataframe(variants_data)
+    
+    def parse_omim_references(self, data: Dict[str, Any]) -> pd.DataFrame:
+        """
+        Extrae referencias a la base de datos OMIM (MIM)
+
+        Args:
+            data (Dict[str, Any]): Datos crudos de UniProt
+
+        Returns:
+            pd.DataFrame: Referencias OMIM estructuradas
+        """
+        mim_data = []
+        result = self._get_first_result(data)
+
+        # Buscar referencias a OMIM
+        for reference in result.get("uniProtKBCrossReferences", []):
+            if reference.get("database") == "MIM":
+                ref_id = reference.get("id", "")
+                # Buscar propiedades si existen
+                properties_value = ""
+                if reference.get("properties") and len(reference.get("properties", [])) > 0:
+                    properties_value = reference.get("properties")[0].get("value", "")
+
+                mim_data.append({
+                    "MIM_ID": ref_id,
+                    "Description": properties_value,
+                    "Link": f"{OMIM_URL_TEMPLATE.format(ref_id)}" if ref_id else NOT_FOUND_MESSAGE
+                })
+
+        # Si no hay datos, usar datos por defecto
+        if not mim_data:
+            mim_data = [{
+                "MIM_ID": NOT_FOUND_MESSAGE,
+                "Description": "Referencias OMIM no disponibles",
+                "Link": NOT_FOUND_MESSAGE
+            }]
+
+        return self.parse_to_dataframe(mim_data)
+    
+    def parse_pharos_references(self, data: Dict[str, Any]) -> pd.DataFrame:
+        """
+        Extrae referencias a la base de datos Pharos
+
+        Args:
+            data (Dict[str, Any]): Datos crudos de UniProt
+
+        Returns:
+            pd.DataFrame: Referencias Pharos estructuradas
+        """
+        pharos_data = []
+        result = self._get_first_result(data)
+        # Buscar referencias a Pharos
+        for reference in result.get("uniProtKBCrossReferences", []):
+            if reference.get("database") == "Pharos":
+                ref_id = reference.get("id", "")
+                # Buscar propiedades si existen
+                properties_value = ""
+                if reference.get("properties") and len(reference.get("properties", [])) > 0:
+                    properties_value = reference.get("properties")[0].get("value", "")
+
+                pharos_data.append({
+                    "Uniprot_ID": ref_id,
+                    "TargetClass": properties_value,
+                    "Link": f"{PHAROS_URL_TEMPLATE.format(ref_id)}" if ref_id else NOT_FOUND_MESSAGE
+                })
+
+        # Si no hay datos, usar datos por defecto
+        if not pharos_data:
+            pharos_data = [{
+                "Pharos_ID": NOT_FOUND_MESSAGE,
+                "Description": "Referencias Pharos no disponibles",
+                "Link": NOT_FOUND_MESSAGE
+            }]
+
+        return self.parse_to_dataframe(pharos_data)
     
     def parse_interactions(self, data: Dict[str, Any]) -> pd.DataFrame:
         """
