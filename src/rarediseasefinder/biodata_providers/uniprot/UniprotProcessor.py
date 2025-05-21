@@ -24,5 +24,13 @@ class UniprotProcessor(BaseProcessor):
             "go_terms": "parse_go_terms",
             "disease": "parse_disease",
             "disease_publications": "parse_disease_publications",
-            "interactions": "parse_interactions"
+            "interactions": "parse_interactions",
+            "OMIM references": "parse_omim_references",
+            "Pharos references": "parse_pharos_references",
+            "OpenTargets references": "parse_opentargets_references",
+            "StringDB references": "parse_stringdb_references",
+            "PharmGKB references": "parse_pharmgkb_references",
+            "DrugBank references": "parse_drugbank_references",
+            "GO references": "parse_go_references"
         }
+    

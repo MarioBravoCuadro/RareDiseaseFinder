@@ -7,6 +7,10 @@ from src.rarediseasefinder.core.constants import (
     PUBMED_URL_TEMPLATE,
     OMIM_URL_TEMPLATE,
     PHAROS_URL_TEMPLATE,
+    OPENTARGETS_URL_TEMPLATE,
+    STRING_URL_TEMPLATE,
+    DRUGBANK_URL_TEMPLATE,
+    PHARMGKB_URL_TEMPLATE,
     NOT_FOUND_MESSAGE
 )
 from ...core.BaseParser import BaseParser
@@ -344,3 +348,188 @@ class UniProtParser(BaseParser):
         
         # El ordenamiento se hace ahora dentro de parse_to_dataframe con un parámetro
         return self.parse_to_dataframe(interactions_data, sort_by="NumExperiments", ascending=False)
+    
+    def parse_opentargets_references(self, data: Dict[str, Any]) -> pd.DataFrame:
+        """
+        Extrae referencias a la base de datos OpenTargets
+
+        Args:
+            data (Dict[str, Any]): Datos crudos de UniProt
+
+        Returns:
+            pd.DataFrame: Referencias OpenTargets estructuradas
+        """
+        ot_data = []
+        result = self._get_first_result(data)
+        # Buscar referencias a OpenTargets
+        for reference in result.get("uniProtKBCrossReferences", []):
+            if reference.get("database") == "OpenTargets":
+                ref_id = reference.get("id", "")
+    
+                ot_data.append({
+                    "OpenTargets_ID": ref_id,
+                    "Link": f"{OPENTARGETS_URL_TEMPLATE.format(ref_id)}" if ref_id else NOT_FOUND_MESSAGE
+                })
+
+        # Si no hay datos, usar datos por defecto
+        if not ot_data:
+            ot_data = [{
+                "OpenTargets_ID": NOT_FOUND_MESSAGE,
+                "Link": NOT_FOUND_MESSAGE
+            }]
+
+        return self.parse_to_dataframe(ot_data)
+    
+    def parse_stringdb_references(self, data: Dict[str, Any]) -> pd.DataFrame:
+        """
+        Extrae referencias a la base de datos STRING (interacciones proteína-proteína)
+
+        Args:
+            data (Dict[str, Any]): Datos crudos de UniProt
+
+        Returns:
+            pd.DataFrame: Referencias STRING estructuradas
+        """
+        string_data = []
+        result = self._get_first_result(data)
+
+        # Buscar referencias a STRING
+        for reference in result.get("uniProtKBCrossReferences", []):
+            if reference.get("database") == "STRING":
+                ref_id = reference.get("id", "")
+
+                string_data.append({
+                    "STRING_ID": ref_id,
+                    "Link": f"{STRING_URL_TEMPLATE.format(ref_id)}" if ref_id else NOT_FOUND_MESSAGE
+                })
+
+        # Si no hay datos, usar datos por defecto
+        if not string_data:
+            string_data = [{
+                "STRING_ID": NOT_FOUND_MESSAGE,
+                "Link": NOT_FOUND_MESSAGE
+            }]
+
+        return self.parse_to_dataframe(string_data)
+    
+    def parse_pharmgkb_references(self, data: Dict[str, Any]) -> pd.DataFrame:
+        """
+        Extrae referencias a la base de datos PharmGKB
+        
+        Args:
+            data (Dict[str, Any]): Datos crudos de UniProt
+            
+        Returns:
+            pd.DataFrame: Referencias PharmGKB estructuradas
+        """
+        pharmgkb_data = []
+        result = self._get_first_result(data)
+        
+        # Buscar referencias a PharmGKB
+        for reference in result.get("uniProtKBCrossReferences", []):
+            if reference.get("database") == "PharmGKB":
+                ref_id = reference.get("id", "")
+                
+                pharmgkb_data.append({
+                    "PharmGKB_ID": ref_id,
+                    "Link": f"{PHARMGKB_URL_TEMPLATE.format(ref_id)}" if ref_id else NOT_FOUND_MESSAGE
+                })
+        
+        # Si no hay datos, usar datos por defecto
+        if not pharmgkb_data:
+            pharmgkb_data = [{
+                "PharmGKB_ID": NOT_FOUND_MESSAGE,
+                "Link": NOT_FOUND_MESSAGE
+            }]
+        
+        return self.parse_to_dataframe(pharmgkb_data)
+
+    def parse_drugbank_references(self, data: Dict[str, Any]) -> pd.DataFrame:
+        """
+        Extrae referencias a la base de datos DrugBank (fármacos/medicamentos relacionados)
+        
+        Args:
+            data (Dict[str, Any]): Datos crudos de UniProt
+            
+        Returns:
+            pd.DataFrame: Referencias DrugBank estructuradas
+        """
+        drugbank_data = []
+        result = self._get_first_result(data)
+        
+        # Buscar referencias a DrugBank
+        for reference in result.get("uniProtKBCrossReferences", []):
+            if reference.get("database") == "DrugBank":
+                ref_id = reference.get("id", "")
+                # Buscar propiedades si existen
+                drug_name = ""
+                
+                if reference.get("properties"):
+                    for prop in reference.get("properties", []):
+                        if prop.get("key") == "DrugName" or prop.get("key") == "Name":
+                            drug_name = prop.get("value", "")
+                
+                # Si no encontramos propiedades específicas pero hay al menos una propiedad
+                if not drug_name and reference.get("properties") and len(reference.get("properties", [])) > 0:
+                    drug_name = reference.get("properties")[0].get("value", "")
+                
+                drugbank_data.append({
+                    "Drug_Name": drug_name,
+                    "Link": f"{DRUGBANK_URL_TEMPLATE.format(ref_id)}" if ref_id else NOT_FOUND_MESSAGE
+                })
+        
+        # Si no hay datos, usar datos por defecto
+        if not drugbank_data:
+            drugbank_data = [{
+                "Drug_Name": NOT_FOUND_MESSAGE,
+                "Link": NOT_FOUND_MESSAGE
+            }]
+        
+        return self.parse_to_dataframe(drugbank_data)
+
+    def parse_go_references(self, data: Dict[str, Any]) -> pd.DataFrame:
+        """
+        Extrae referencias a la base de datos GO (Gene Ontology)
+        
+        Args:
+            data (Dict[str, Any]): Datos crudos de UniProt
+            
+        Returns:
+            pd.DataFrame: Referencias GO estructuradas
+        """
+        go_data = []
+        result = self._get_first_result(data)
+        
+        # Buscar referencias a GO
+        for reference in result.get("uniProtKBCrossReferences", []):
+            if reference.get("database") == "GO":
+                ref_id = reference.get("id", "")
+                
+                # Extraer propiedades importantes
+                go_term = ""
+                go_evidence = ""
+                
+                for prop in reference.get("properties", []):
+                    if prop.get("key") == "GoTerm":
+                        go_term = prop.get("value", "")
+                    elif prop.get("key") == "GoEvidenceType":
+                        go_evidence = prop.get("value", "")
+                
+                go_data.append({
+                    "GO_ID": ref_id,
+                    "GO_Term": go_term,
+                    "Evidence": go_evidence,
+                    "Link": f"{QUICKGO_URL_TEMPLATE.format(ref_id)}" if ref_id else NOT_FOUND_MESSAGE
+                })
+        
+        # Si no hay datos, usar datos por defecto
+        if not go_data:
+            go_data = [{
+                "GO_ID": NOT_FOUND_MESSAGE,
+                "GO_Term": "Referencias GO no disponibles",
+                "Evidence": NOT_FOUND_MESSAGE,
+                "Aspect": NOT_FOUND_MESSAGE,
+                "Link": NOT_FOUND_MESSAGE
+            }]
+        
+        return self.parse_to_dataframe(go_data)
