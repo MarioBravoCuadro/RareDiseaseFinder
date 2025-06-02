@@ -120,7 +120,7 @@ class Workflow(IWorkflow):
         ]
         self.minium_methods_pantherdb=[
             {
-                "METHOD_ID": "annotation_name",
+                "METHOD_ID": "panther_class",
                 "METHOD_PARSER_FILTERS": {}
             }
         ]

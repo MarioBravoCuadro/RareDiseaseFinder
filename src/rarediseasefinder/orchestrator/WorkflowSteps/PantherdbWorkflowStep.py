@@ -1,7 +1,7 @@
 from src.rarediseasefinder.biodata_providers.pantherdb.PantherProcessor import PantherProcessor
-from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
+from .BaseWorkflowStep import BaseWorkflowStep
 
-class PantherdbWorkflowStep(IWorkflowStep):
+class PantherdbWorkflowStep(BaseWorkflowStep):
     """
     Paso de flujo de trabajo que interactúa con la API de Pantherdb.
     Este paso recupera datos biológicos desde Pantherdb basándose en los filtros proporcionados.
