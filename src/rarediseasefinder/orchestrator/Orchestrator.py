@@ -11,10 +11,13 @@ class Orchestrator:
         pass
     def start_workflow(self,workflow):
         pass
+
     def get_if_all_steps_available(self, workflow:IWorkflow):
         pass
+
     def get_avaliable_steps(self, workflow:IWorkflow):
         pass
+
     def decode_search_params(self,searchConfigFilter):
         pass
 
@@ -44,5 +47,5 @@ class Orchestrator:
 
 
     def update_selected_optional_methods(self, list_of_methods):
-        #devuelve una lista con los métodos opcionales devuelvetos
+        #devuelve una lista con los métodos opcionales devueltos
         pass
