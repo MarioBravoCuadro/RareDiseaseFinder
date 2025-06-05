@@ -18,6 +18,7 @@ ipython = "^7.34.0"
 selenium = "^4.9.0"
 flask = "^3.1.1"
 flask-smorest = "^0.46.1"
+marshmallow = "^4.0.0"
 
 [tool.poetry.group.colab.dependencies]
 google-colab-selenium = "^1.0.14"
