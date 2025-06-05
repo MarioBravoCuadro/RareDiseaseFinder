@@ -1,9 +1,51 @@
 from abc import ABCMeta, abstractmethod
 
 class IWorkflow(metaclass=ABCMeta):
+    @property
+    @abstractmethod
+    def name(self):
+        pass
+
+    @name.setter
+    @abstractmethod
+    def name(self, value: str):
+        pass
+
+    @property
+    @abstractmethod
+    def description(self):
+        pass
+
+    @description.setter
+    @abstractmethod
+    def description(self, value: str):
+        pass
+
+    @property
+    @abstractmethod
+    def listOfSteps(self):
+        pass
+
+    @listOfSteps.setter
+    @abstractmethod
+    def listOfSteps(self, value: list):
+        pass
+
+    @property
+    @abstractmethod
+    def search_param(self):
+        pass
+
+    @search_param.setter
+    @abstractmethod
+    def search_param(self, value: str):
+        pass
+
     @abstractmethod
     def get_steps(self):
-        """Abstract method to be implemented by subclasses to define or return their workflow steps."""
+        """Abstract method to be implemented by subclasses to define or return their workflow steps.
+            Example content of the dict: {"Pharos" : PharosWorkflowStep} :str and :IWorkflowStep"""
+
         pass
 
     @abstractmethod
@@ -29,6 +71,8 @@ class IWorkflow(metaclass=ABCMeta):
 
         Assumes self.listOfSteps is an attribute containing a list of dictionaries,
         where each dictionary represents a step or a collection of named steps.
+
+        Example content of the dict: {"Pharos": PharosWorkflowStep}
 
         Returns:
             list[dict]: The list of steps.
@@ -80,3 +124,36 @@ class IWorkflow(metaclass=ABCMeta):
             if step_name in step:
                 return step[step_name]
         return None
+
+    def generate_optional_methods(self):
+        """
+        Genera los métodos opcionales calculando la diferencia entre method_map y minimum_methods
+        para cada step del workflow.
+        
+        Returns:
+            dict: Diccionario con métodos opcionales por step
+        """
+        optional_methods = {}
+        
+        for step_dict in self.listOfSteps:
+            for step_name, step_instance in step_dict.items():
+                # Obtener todos los métodos disponibles del step
+                all_methods = step_instance.get_method_map()
+                
+                # Obtener métodos mínimos del step
+                minimum_methods = getattr(self, 'minimum_methods_by_step', {}).get(step_name, [])
+                minimum_method_ids = {method["METHOD_ID"] for method in minimum_methods}
+                
+                # Calcular métodos opcionales (diferencia)
+                optional_method_ids = set(all_methods.keys()) - minimum_method_ids
+                
+                # Crear estructura de métodos opcionales
+                optional_methods[step_name] = [
+                    {
+                        "METHOD_ID": method_id,
+                        "METHOD_PARSER_FILTERS": ""
+                    }
+                    for method_id in optional_method_ids
+                ]
+        
+        return optional_methods
