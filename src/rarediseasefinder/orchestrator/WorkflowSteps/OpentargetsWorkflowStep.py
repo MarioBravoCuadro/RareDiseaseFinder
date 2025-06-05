@@ -1,7 +1,7 @@
 from src.rarediseasefinder.biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
-from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
+from .BaseWorkflowStep import BaseWorkflowStep
 
-class OpentargetsWorkflowStep(IWorkflowStep):
+class OpentargetsWorkflowStep(BaseWorkflowStep):
     """
     Paso de flujo de trabajo que interactúa con la API de OpenTargets.
     Este paso recupera datos biológicos desde OpenTargets basándose en los filtros proporcionados.
