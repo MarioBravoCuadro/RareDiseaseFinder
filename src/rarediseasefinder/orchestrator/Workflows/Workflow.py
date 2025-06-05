@@ -1,4 +1,5 @@
 import json
+from abc import ABC
 from traceback import print_tb
 
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
@@ -12,11 +13,45 @@ from src.rarediseasefinder.orchestrator.WorkflowSteps.StringdbWorkflowStep impor
 from src.rarediseasefinder.orchestrator.WorkflowSteps.UniprotWorkflowStep import UniprotWorkflowStep
 
 
-class Workflow(IWorkflow):
+class Workflow(IWorkflow, ABC):
+    @property
+    def name(self):
+        return self._name
+
+    @name.setter
+    def name(self, value: str):
+        self._name = value
+
+    @property
+    def description(self):
+        return self._description
+
+    @description.setter
+    def description(self, value: str):
+        self._description = value
+
+    @property
+    def listOfSteps(self):
+        return self._listOfSteps
+
+    @listOfSteps.setter
+    def listOfSteps(self, value: list):
+        self._listOfSteps = value
+
+    @property
+    def search_param(self):
+        return self._search_param
+
+    @search_param.setter
+    def search_param(self, value: str):
+        self._search_param = value
+
+
     def __init__(self):
-        self.name = "Workflow for TFG"
-        self.description = "Fetches x data from Pharos API x data from selleckchem"
-        self.listOfSteps = []
+        self._search_param = ""
+        self._name = "Workflow for TFG"
+        self._description = "Fetches x data from Pharos API x data from selleckchem"
+        self._listOfSteps = []
 
         self.add_step_to_list_of_steps({"Pharos": PharosWorkflowStep})
         self.add_step_to_list_of_steps({"Selleckchem": SelleckchemWorkflowStep})
@@ -26,8 +61,8 @@ class Workflow(IWorkflow):
         self.add_step_to_list_of_steps({"Uniprot": UniprotWorkflowStep})
         self.add_step_to_list_of_steps({"Stringdb": StringdbWorkflowStep})
 
-        self.instantiate_steps()
-
+        self.instantiate_steps()    
+        
         self.filtros_parser_pharos_front = [
             {
                 "PRIORIDAD_CLASES": {
@@ -43,126 +78,128 @@ class Workflow(IWorkflow):
             }
         ]
 
-        self.minium_methods_uniprot=[
-            {
-                "METHOD_ID": "function",
-                "METHOD_PARSER_FILTERS": ""
-            }
-            ,
-            {
-                "METHOD_ID": "subcellular_location",
-                "METHOD_PARSER_FILTERS": ""
-            }
-            ,
-            {
-                "METHOD_ID": "go_terms",
-                "METHOD_PARSER_FILTERS": ""
-            }
-            ,
-            {
-                "METHOD_ID": "disease",
-                "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "disease_publications",
-                "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "parse_variants",
-                "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "parse_interactions",
-                "METHOD_PARSER_FILTERS": ""
-            }
-        ]
-        self.minium_methods_selleckchem=[
-            {
-                "METHOD_ID": "obtener_link_selleckchem",
-                "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "obtener_links_selleckchem",
-                "METHOD_PARSER_FILTERS": ""
-            }
-        ]
-        self.minium_methods_ensembl=[
-            {
-                "METHOD_ID": "ensembl_id",
-                "METHOD_PARSER_FILTERS": ""
-            }
-        ]
-        self.minium_methods_opentargets=[
-            {
-                "METHOD_ID": "basic_info",
-                "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "pathways",
-                "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "known_drugs",
-                "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "associated_diseases",
-                "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "interactions",
-                "METHOD_PARSER_FILTERS": ""
-            },
-            {
-                "METHOD_ID": "mouse_phenotypes",
-                "METHOD_PARSER_FILTERS": ""
-            }
-        ]
-        self.minium_methods_pantherdb=[
-            {
-                "METHOD_ID": "panther_class",
-                "METHOD_PARSER_FILTERS": {}
-            }
-        ]
-        self.minium_methods_stringdb=[
-            {
-                "METHOD_ID": "get_annotation",
-                "METHOD_PARSER_FILTERS": {}
-            }
-        ]
-        self.minium_methods_pharos = [
-            {
-                "METHOD_ID": "df_info",
-                "METHOD_PARSER_FILTERS": {}
-            },
-            {
-                "METHOD_ID": "df_omim",
-                "METHOD_PARSER_FILTERS": {}
-            },
-            {
-                "METHOD_ID": "create_protein_protein_relations_df",
-                "METHOD_PARSER_FILTERS":self.filtros_parser_pharos_front[0]
-            },
-            {
-                "METHOD_ID": "df_vias",
-                "METHOD_PARSER_FILTERS": {}
-            },
-            {
-                "METHOD_ID": "df_numero_vias_por_fuente",
-                "METHOD_PARSER_FILTERS": {}
-            }
-        ]
+        self.minimum_methods_by_step = {
+            "Uniprot": [
+                {
+                    "METHOD_ID": "function",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "subcellular_location",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "go_terms",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "disease",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "disease_publications",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "parse_variants",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "parse_interactions",
+                    "METHOD_PARSER_FILTERS": ""
+                }
+            ],
+
+            "Selleckchem": [
+                {
+                    "METHOD_ID": "obtener_link_selleckchem",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "obtener_links_selleckchem",
+                    "METHOD_PARSER_FILTERS": ""
+                }
+            ],
+            "Ensembl": [
+                {
+                    "METHOD_ID": "ensembl_id",
+                    "METHOD_PARSER_FILTERS": ""
+                }
+            ],
+            "Opentargets": [
+                {
+                    "METHOD_ID": "basic_info",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "pathways",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "known_drugs",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "associated_diseases",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "interactions",
+                    "METHOD_PARSER_FILTERS": ""
+                },
+                {
+                    "METHOD_ID": "mouse_phenotypes",
+                    "METHOD_PARSER_FILTERS": ""
+                }
+            ],
+            "Panther": [
+                {
+                    "METHOD_ID": "panther_class",
+                    "METHOD_PARSER_FILTERS": {}
+                }
+            ],
+            "Stringdb": [
+                {
+                    "METHOD_ID": "get_annotation",
+                    "METHOD_PARSER_FILTERS": {}
+                }
+            ],
+            "Pharos": [
+                {
+                    "METHOD_ID": "df_info",
+                    "METHOD_PARSER_FILTERS": {}
+                },
+                {
+                    "METHOD_ID": "df_omim",
+                    "METHOD_PARSER_FILTERS": {}
+                },
+                {
+                    "METHOD_ID": "create_protein_protein_relations_df",
+                    "METHOD_PARSER_FILTERS": self.filtros_parser_pharos_front[0]
+                },
+                {
+                    "METHOD_ID": "df_vias",
+                    "METHOD_PARSER_FILTERS": {}
+                },
+                {
+                    "METHOD_ID": "df_numero_vias_por_fuente",
+                    "METHOD_PARSER_FILTERS": {}
+                }
+            ]        }   
+
+        # Generar métodos opcionales dinámicamente
+        self.optional_methods_by_step = self.generate_optional_methods()
 
     def step_pipeline(self):
         #Crear Filtro es un BaseFilter
-        pharos_filters = BaseFilter(self.minium_methods_pharos,"PharosProcessor")
-        selleck_chem_filters = BaseFilter(self.minium_methods_selleckchem,"SelleckchemProcessor")
-        ensembler_filters = BaseFilter(self.minium_methods_ensembl,"EnsemblProcessor")
-        opentargets_filters = BaseFilter(self.minium_methods_opentargets,"OpenTargetsProcessor")
-        pantherdb_filters = BaseFilter(self.minium_methods_pantherdb,"PantherProcessor")
-        uniprot_filters = BaseFilter(self.minium_methods_uniprot,"UniprotProcessor")
-        stringdb_filters = BaseFilter(self.minium_methods_stringdb,"StringDbProcessor")
-
+        pharos_filters = BaseFilter(self.minimum_methods_by_step["Pharos"],"PharosProcessor")
+        selleck_chem_filters = BaseFilter(self.minimum_methods_by_step["Selleckchem"],"SelleckchemProcessor")
+        ensembler_filters = BaseFilter(self.minimum_methods_by_step["Ensembl"],"EnsemblProcessor")
+        opentargets_filters = BaseFilter(self.minimum_methods_by_step["Opentargets"],"OpenTargetsProcessor")
+        pantherdb_filters = BaseFilter(self.minimum_methods_by_step["Panther"],"PantherProcessor")
+        uniprot_filters = BaseFilter(self.minimum_methods_by_step["Uniprot"],"UniprotProcessor")
+        stringdb_filters = BaseFilter(self.minimum_methods_by_step["Stringdb"],"StringDbProcessor")
+        
         #Añadir termino de busqueda al filtro
         #Sacalos del main.py  filters_json los terminos de busqueda
         pharos_filters.add_client_search_params("FANCA")
@@ -241,6 +278,7 @@ class Workflow(IWorkflow):
         return self.step_pipeline()
 
 if __name__ == "__main__":
+    print(Workflow().generate_optional_methods())
     print (Workflow().check_if_all_steps_available())
     print(Workflow().steps_execution())
 
