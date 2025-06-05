@@ -1,4 +1,5 @@
 from abc import ABC
+from platform import processor
 from typing import Dict, Any
 from ..IWorkflowStep import IWorkflowStep
 from ...core.BaseProcessor import BaseProcessor
@@ -48,4 +49,22 @@ class BaseWorkflowStep(IWorkflowStep, ABC):
         Revierte las operaciones realizadas por este paso.
         Por defecto no realiza ninguna acción.
         """
-        pass
+        pass    
+
+    def set_filters(self, filters):
+        """
+        Establece los filtros para el procesamiento de datos.
+
+        Args:
+            filters: Los filtros a aplicar en la consulta.
+        """
+        self.filters = filters
+
+    def get_method_map(self):
+        """
+        Obtiene el mapa de métodos disponibles del procesador.
+        
+        Returns:
+            dict: Diccionario con el mapeo de métodos disponibles en el procesador
+        """
+        return self.processor.method_map
