@@ -60,6 +60,12 @@ class BaseWorkflowStep(IWorkflowStep, ABC):
         """
         self.filters = filters
 
+    def get_filters(self):
+        """
+        Devuelve filtros.
+      """
+        return self.filters
+
     def get_method_map(self):
         """
         Obtiene el mapa de métodos disponibles del procesador.

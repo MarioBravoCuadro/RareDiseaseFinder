@@ -1,6 +1,21 @@
-from abc import ABCMeta, abstractmethod
+from abc import abstractmethod, ABC
 
-class IWorkflow(metaclass=ABCMeta):
+from src.rarediseasefinder.core.BaseFilter import BaseFilter
+from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
+from src.rarediseasefinder.orchestrator.WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
+
+
+class IWorkflow(ABC):
+    @property
+    @abstractmethod
+    def workflow_state(self):
+        pass
+
+    @workflow_state.setter
+    @abstractmethod
+    def workflow_state(self, value: str):
+        pass
+
     @property
     @abstractmethod
     def name(self):
@@ -39,6 +54,26 @@ class IWorkflow(metaclass=ABCMeta):
     @search_param.setter
     @abstractmethod
     def search_param(self, value: str):
+        pass
+
+    @property
+    @abstractmethod
+    def minium_methods_by_step(self) -> dict:
+        pass
+
+    @minium_methods_by_step.setter
+    @abstractmethod
+    def minium_methods_by_step(self, value: dict):
+        pass
+
+    @property
+    @abstractmethod
+    def optional_methods_by_step(self) -> dict:
+        pass
+
+    @optional_methods_by_step.setter
+    @abstractmethod
+    def optional_methods_by_step(self, value: dict):
         pass
 
     @abstractmethod
@@ -95,7 +130,7 @@ class IWorkflow(metaclass=ABCMeta):
                     return False
         return True
 
-    def add_step_to_list_of_steps(self, step):
+    def add_step_to_list_of_steps(self, step:[str,IWorkflowStep]):
         """
         Adds a new step to the workflow's list of steps.
 
@@ -107,7 +142,7 @@ class IWorkflow(metaclass=ABCMeta):
         """
         self.listOfSteps.append(step)
 
-    def get_step(self, step_name: str):
+    def get_step(self, step_name: str) -> IWorkflowStep | None:
         """
         Retrieves a specific step by its name from the workflow's list of steps.
 
@@ -128,32 +163,66 @@ class IWorkflow(metaclass=ABCMeta):
     def generate_optional_methods(self):
         """
         Genera los métodos opcionales calculando la diferencia entre method_map y minimum_methods
-        para cada step del workflow.
+        para cada step del workflow. Maneja múltiples steps que apuntan al mismo procesador.
         
         Returns:
             dict: Diccionario con métodos opcionales por step
         """
         optional_methods = {}
         
-        for step_dict in self.listOfSteps:
-            for step_name, step_instance in step_dict.items():
-                # Obtener todos los métodos disponibles del step
-                all_methods = step_instance.get_method_map()
+        # Iterar sobre las claves de minimum_methods_by_step para manejar cada configuración
+        for step_key, step_config in self.minium_methods_by_step.items():
+            step_name = step_config.get("step_name", "")
+            processor = step_config.get("processor", "")
+            minimum_methods = step_config.get("methods", [])
+            minimum_method_ids = {method["METHOD_ID"] for method in minimum_methods}
+            
+            # Buscar el step instance correspondiente en listOfSteps
+            step_instance = None
+            for step_dict in self.listOfSteps:
+                if step_name in step_dict:
+                    step_instance = step_dict[step_name]
+                    break
+            
+            if step_instance is None:
+                print(f"\033[33mWarning: No se encontró step instance para {step_name}\033[0m")
+                continue
                 
-                # Obtener métodos mínimos del step
-                minimum_methods = getattr(self, 'minimum_methods_by_step', {}).get(step_name, [])
-                minimum_method_ids = {method["METHOD_ID"] for method in minimum_methods}
+            # Obtener todos los métodos disponibles del step
+            all_methods = step_instance.get_method_map()
+            all_method_ids = set(all_methods.keys())
+            
+            # Calcular métodos opcionales (diferencia entre todos los métodos y los mínimos)
+            optional_method_ids = all_method_ids - minimum_method_ids
+            #print(f"\033[31mOptional methods for {step_key} ({step_name}): {optional_method_ids}\033[0m")
+            
+            # Crear estructura de métodos opcionales para cada step_key único
+            if optional_method_ids:  # Solo si hay métodos opcionales
+                optional_methods[step_key] = {
+                    "step_name": step_name,
+                    "processor": processor,
+                    "methods": [
+                        {
+                            "METHOD_ID": method_id,
+                            "METHOD_PARSER_FILTERS": {}
+                        }
+                        for method_id in optional_method_ids
+                    ]
+                }
+            else:
+                # Incluso si no hay métodos opcionales, crear la estructura vacía
+                optional_methods[step_key] = {
+                    "step_name": step_name,
+                    "processor": processor,
+                    "methods": []
+                }
                 
-                # Calcular métodos opcionales (diferencia)
-                optional_method_ids = set(all_methods.keys()) - minimum_method_ids
-                
-                # Crear estructura de métodos opcionales
-                optional_methods[step_name] = [
-                    {
-                        "METHOD_ID": method_id,
-                        "METHOD_PARSER_FILTERS": ""
-                    }
-                    for method_id in optional_method_ids
-                ]
-        
         return optional_methods
+
+
+    def set_filter_to_method(self,filters,method_name,workflow_step_name):
+        for step in self.listOfSteps:
+            if step.keys == workflow_step_name:
+                step[workflow_step_name].get_filters().set_filter_to_method(filters,method_name)
+
+

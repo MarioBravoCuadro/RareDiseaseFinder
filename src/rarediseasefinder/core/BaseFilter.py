@@ -70,6 +70,12 @@ class BaseFilter:
         for method in self.minium_methods:
             self.add_parser_method(method["METHOD_ID"], method["METHOD_PARSER_FILTERS"])
 
+    def set_filter_to_method(self,filters,method_id):
+        #Metodo que sobreescribe los filtros
+        for method in self.json_filter[0]["METODOS_PARSER"]:
+            if method["NOMBRE_METODO"] == method_id:
+                method["FILTROS_METODO_PARSER"] = filters
+
     def get_json_str(self) -> str:
         """
         Returns the JSON filter as a JSON formatted string.
