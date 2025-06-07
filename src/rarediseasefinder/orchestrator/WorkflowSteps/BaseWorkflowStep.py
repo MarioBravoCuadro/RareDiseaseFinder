@@ -1,7 +1,9 @@
+import json
 from abc import ABC
 from platform import processor
 from typing import Dict, Any
 from ..IWorkflowStep import IWorkflowStep
+from ...core.BaseFilter import BaseFilter
 from ...core.BaseProcessor import BaseProcessor
 
 class BaseWorkflowStep(IWorkflowStep, ABC):
@@ -10,7 +12,7 @@ class BaseWorkflowStep(IWorkflowStep, ABC):
     Implementa la funcionalidad común compartida por todos los pasos.
     """
     
-    def __init__(self, name: str, description: str, processor: BaseProcessor, filters: Dict[str, Any] = None):
+    def __init__(self, name: str, description: str, processor: BaseProcessor, filters:BaseFilter = None):
         """
         Inicializa el paso de workflow con sus atributos básicos.
         
@@ -42,7 +44,7 @@ class BaseWorkflowStep(IWorkflowStep, ABC):
         """
         if not self.filters:
             raise ValueError("Los filtros deben establecerse antes de procesar")
-        return self.processor.fetch(self.filters)
+        return self.processor.fetch(json.loads(self.filters.get_json_str()))
 
     def revert(self) -> None:
         """
@@ -51,7 +53,7 @@ class BaseWorkflowStep(IWorkflowStep, ABC):
         """
         pass    
 
-    def set_filters(self, filters):
+    def set_filters(self, filters:BaseFilter):
         """
         Establece los filtros para el procesamiento de datos.
 
@@ -60,7 +62,7 @@ class BaseWorkflowStep(IWorkflowStep, ABC):
         """
         self.filters = filters
 
-    def get_filters(self):
+    def get_filters(self)->BaseFilter:
         """
         Devuelve filtros.
       """

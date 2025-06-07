@@ -52,13 +52,13 @@ class BaseFilter:
         """
         self.json_filter[0]["CLIENT_SEARCH_PARAMS"] = [{"search_id": search_id}]
 
-    def add_parser_method(self, method_id: str, parser_method_filters: List[Any]) -> None:
+    def add_parser_method(self, method_id: str, parser_method_filters: dict) -> None:
         """
         Adds a parser method to the JSON filter.
 
         Args:
             method_id (str): The ID of the method.
-            parser_method_filters (List[Any]): A list of filters for the parser method.
+            parser_method_filters (dict): A dictionary of filters for the parser method.
         """
         self.json_filter[0]["METODOS_PARSER"].append({
             "NOMBRE_METODO": method_id,
@@ -70,12 +70,36 @@ class BaseFilter:
         for method in self.minium_methods:
             self.add_parser_method(method["METHOD_ID"], method["METHOD_PARSER_FILTERS"])
 
-    def set_filter_to_method(self,filters,method_id):
-        #Metodo que sobreescribe los filtros
+    def set_filter_to_method(self, filters: Any, method_id: str) -> None:
+        """
+        Overwrites the filters for a specific method.
+        
+        Args:
+            filters (Any): The filters to apply to the method.
+            method_id (str): The ID of the method to update.
+            
+        Returns:
+            None
+        """
         for method in self.json_filter[0]["METODOS_PARSER"]:
             if method["NOMBRE_METODO"] == method_id:
                 method["FILTROS_METODO_PARSER"] = filters
 
+    def get_filters_from_method(self, method_id: str) -> dict:
+        """
+        Retrieves the filters for a specific method.
+        
+        Args:
+            method_id (str): The ID of the method to get filters from.
+            
+        Returns:
+            dict: The filters for the specified method, or empty dict if not found.
+        """
+        for method in self.json_filter[0]["METODOS_PARSER"]:
+            if method["NOMBRE_METODO"] == method_id:
+                return method["FILTROS_METODO_PARSER"]
+        return {}
+            
     def get_json_str(self) -> str:
         """
         Returns the JSON filter as a JSON formatted string.
@@ -86,3 +110,5 @@ class BaseFilter:
             str: The JSON filter formatted as a string (e.g., '[{...}]').
         """
         return json.dumps(self.json_filter, indent=4)
+
+

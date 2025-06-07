@@ -1,6 +1,6 @@
 from abc import abstractmethod, ABC
 
-from src.rarediseasefinder.core.BaseFilter import BaseFilter
+
 from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
 
@@ -38,7 +38,7 @@ class IWorkflow(ABC):
 
     @property
     @abstractmethod
-    def listOfSteps(self):
+    def listOfSteps(self)->list:
         pass
 
     @listOfSteps.setter
@@ -88,12 +88,19 @@ class IWorkflow(ABC):
         """Abstract method to be implemented by subclasses to check if all their defined steps are available."""
         pass
 
-    def instantiate_steps(self):
+    @abstractmethod
+    def steps_execution(self):
+        pass
+
+    def instantiate_steps(self) -> None:
         """
-        Instantiates step objects within self.listOfSteps if they are stored as types.
+        Instantiates step objects within self.listOfSteps if they are stored as types (classes).
 
         Assumes self.listOfSteps is a list of dictionaries, where dictionary values
         can be step types (classes) that need to be instantiated.
+        
+        Returns:
+            None
         """
         for step in self.listOfSteps:
             for key, step_instance in step.items():
@@ -114,7 +121,7 @@ class IWorkflow(ABC):
         """
         return self.listOfSteps
 
-    def check_if_all_steps_available(self):
+    def check_if_all_steps_available(self) -> bool:
         """
         Checks if all instantiated steps in self.listOfSteps have a status code of 200.
 
@@ -130,19 +137,23 @@ class IWorkflow(ABC):
                     return False
         return True
 
-    def add_step_to_list_of_steps(self, step:[str,IWorkflowStep]):
+    def add_step_to_list_of_steps(self, step: dict) -> None:
         """
         Adds a new step to the workflow's list of steps.
 
         Assumes self.listOfSteps is an attribute that is a list.
 
         Args:
-            step: The step to add to self.listOfSteps. Typically a dictionary
-                  representing the step or its configuration.
+            step (dict[str, IWorkflowStep]): The step to add to self.listOfSteps. 
+                                           Typically, a dictionary representing the step or its configuration.
+                                           Format: {"step_name": step_instance}
+        
+        Returns:
+            None
         """
         self.listOfSteps.append(step)
 
-    def get_step(self, step_name: str) -> IWorkflowStep | None:
+    def get_step(self, step_name: str) -> BaseWorkflowStep | None:
         """
         Retrieves a specific step by its name from the workflow's list of steps.
 
@@ -160,24 +171,39 @@ class IWorkflow(ABC):
                 return step[step_name]
         return None
 
-    def generate_optional_methods(self):
+    def generate_optional_methods(self) -> dict:
         """
-        Genera los métodos opcionales calculando la diferencia entre method_map y minimum_methods
-        para cada step del workflow. Maneja múltiples steps que apuntan al mismo procesador.
+        Generates optional methods by calculating the difference between method_map and minimum_methods
+        for each workflow step. Handles multiple steps pointing to the same processor.
+        
+        This method iterates over all steps defined in minium_methods_by_step and calculates
+        which methods are available in each processor but are not defined as minimum methods.
         
         Returns:
-            dict: Diccionario con métodos opcionales por step
+            dict: Dictionary with optional methods per step. The structure is:
+                  {
+                      "step_key": {
+                          "step_name": str,
+                          "processor": str,
+                          "methods": [
+                              {
+                                  "METHOD_ID": str,
+                                  "METHOD_PARSER_FILTERS": dict
+                              }, ...
+                          ]
+                      }, ...
+                  }
         """
         optional_methods = {}
         
-        # Iterar sobre las claves de minimum_methods_by_step para manejar cada configuración
+        # Iterate over minimum_methods_by_step keys to handle each configuration
         for step_key, step_config in self.minium_methods_by_step.items():
             step_name = step_config.get("step_name", "")
             processor = step_config.get("processor", "")
             minimum_methods = step_config.get("methods", [])
             minimum_method_ids = {method["METHOD_ID"] for method in minimum_methods}
             
-            # Buscar el step instance correspondiente en listOfSteps
+            # Find the corresponding step instance in listOfSteps
             step_instance = None
             for step_dict in self.listOfSteps:
                 if step_name in step_dict:
@@ -185,19 +211,19 @@ class IWorkflow(ABC):
                     break
             
             if step_instance is None:
-                print(f"\033[33mWarning: No se encontró step instance para {step_name}\033[0m")
+                print(f"\033[33mWarning: Step instance not found for {step_name}\033[0m")
                 continue
                 
-            # Obtener todos los métodos disponibles del step
+            # Get all available methods from the step
             all_methods = step_instance.get_method_map()
             all_method_ids = set(all_methods.keys())
             
-            # Calcular métodos opcionales (diferencia entre todos los métodos y los mínimos)
+            # Calculate optional methods (difference between all methods and minimum ones)
             optional_method_ids = all_method_ids - minimum_method_ids
             #print(f"\033[31mOptional methods for {step_key} ({step_name}): {optional_method_ids}\033[0m")
             
-            # Crear estructura de métodos opcionales para cada step_key único
-            if optional_method_ids:  # Solo si hay métodos opcionales
+            # Create optional methods structure for each unique step_key
+            if optional_method_ids:  # Only if there are optional methods
                 optional_methods[step_key] = {
                     "step_name": step_name,
                     "processor": processor,
@@ -210,7 +236,7 @@ class IWorkflow(ABC):
                     ]
                 }
             else:
-                # Incluso si no hay métodos opcionales, crear la estructura vacía
+                # Even if there are no optional methods, create empty structure
                 optional_methods[step_key] = {
                     "step_name": step_name,
                     "processor": processor,
@@ -219,10 +245,56 @@ class IWorkflow(ABC):
                 
         return optional_methods
 
-
-    def set_filter_to_method(self,filters,method_name,workflow_step_name):
+    def get_filters_from_method(self, workflow_step_name: str, method_name: str) -> dict:
+        """
+        Retrieves filters for a specific method within a workflow step.
+        
+        Searches for the specified step in the list of steps and returns the filters
+        for the indicated method within that step.
+        
+        Args:
+            workflow_step_name (str): Name of the workflow step where the method is located
+            method_name (str): Name of the method to get filters from
+            
+        Returns:
+            dict: The filters for the specified method, or empty dict if not found
+        """
         for step in self.listOfSteps:
-            if step.keys == workflow_step_name:
-                step[workflow_step_name].get_filters().set_filter_to_method(filters,method_name)
+            if list(step.keys())[0] == workflow_step_name:
+               return  step[workflow_step_name].get_filters().get_filters_from_method(method_name)
+        return {}
 
+    def set_filter_to_method(self,workflow_step_name: str, method_name: str, filters: dict) -> None:
+        """
+        Sets specific filters for a method within a workflow step.
+        
+        Searches for the specified step in the list of steps and applies the provided
+        filters to the indicated method within that step.
+        
+        Args:
+            filters (dict): Dictionary with filters to apply to the method
+            method_name (str): Name of the method to which filters will be applied
+            workflow_step_name (str): Name of the workflow step where the method is located
+            
+        Returns:
+            None
+        """
+        for step in self.listOfSteps:
+            if list(step.keys())[0] == workflow_step_name:
+                step[workflow_step_name].get_filters().set_filter_to_method(filters, method_name)
+
+    def set_selected_optional_methods(self, selected_optional_method: str, workflow_step_name: str) -> None:
+        """
+        Sets a selected optional parser method to a specific workflow step.
+
+        Args:
+            selected_optional_method (str): ID of the optional method to select.
+            workflow_step_name (str): Name of the workflow step to apply the optional method.
+
+        Returns:
+            None
+        """
+        for step in self.listOfSteps:
+            if list(step.keys())[0] == workflow_step_name:
+                step[workflow_step_name].get_filters().add_parser_method(selected_optional_method, {})  #Filtros vacios porque se añade primero el método opcional y luego se seleccionan filtros para este.
 
