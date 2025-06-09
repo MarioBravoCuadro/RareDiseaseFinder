@@ -2,14 +2,14 @@ import json
 
 from tabulate import tabulate
 
-from .biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
-from .biodata_providers.pantherdb.PantherProcessor import PantherProcessor
-from .biodata_providers.pharos.PharosProcessor import PharosProcessor
-from .biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
-from .biodata_providers.stringdb.StringDbProcessor import StringDbProcessor
-from .biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
-from .biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
-from .biodata_providers.pharmgkb.PharmGKBProcessor import PharmGKBProcessor
+from src.rarediseasefinder.biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
+from src.rarediseasefinder.biodata_providers.pantherdb.PantherProcessor import PantherProcessor
+from src.rarediseasefinder.biodata_providers.pharos.PharosProcessor import PharosProcessor
+from src.rarediseasefinder.biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
+from src.rarediseasefinder.biodata_providers.stringdb.StringDbProcessor import StringDbProcessor
+from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
+from src.rarediseasefinder.biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
+from src.rarediseasefinder.biodata_providers.pharmgkb.PharmGKBProcessor import PharmGKBProcessor
 
 if __name__ == "__main__" :
     filters_json = '''[
