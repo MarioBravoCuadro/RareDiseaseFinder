@@ -15,9 +15,9 @@ class PantherProcessor(BaseProcessor):
         """
         Inicializa el procesador con el cliente y el parser correspondiente.
         """
-        self.client = PantherClient()
-        self.parser = PantherParser()
-        super().__init__(self.client, self.parser)
+        client = PantherClient()
+        parser = PantherParser()
+        super().__init__(client, parser)
 
     def get_method_map(self) -> Dict[str, str]:
         """
@@ -27,5 +27,7 @@ class PantherProcessor(BaseProcessor):
             Dict[str, str]: Diccionario que relaciona el nombre de la operación con el método del parser.
         """
         return {
-            "panther_class": "get_annotation_name"
+            "annotation_name": "get_annotation_name",
+            "annotations": "parse_annotations",
+            "pathways": "parse_pathways"
         }

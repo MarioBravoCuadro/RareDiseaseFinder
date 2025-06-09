@@ -1,7 +1,5 @@
 from typing import Dict
 
-import pandas as pd
-
 from ...core.BaseProcessor import BaseProcessor
 from .PharmacologyClient import PharmacologyClient
 from .PharmacologyParser import PharmacologyParser

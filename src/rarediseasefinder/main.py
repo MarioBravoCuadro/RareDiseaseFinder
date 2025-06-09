@@ -13,7 +13,29 @@ from src.rarediseasefinder.biodata_providers.pharmgkb.PharmGKBProcessor import P
 from src.rarediseasefinder.biodata_providers.guidetopharmacology.PharmacologyProcessor import PharmacologyProcessor
 from src.rarediseasefinder.biodata_providers.drugcentral.DrugCentralProcessor import DrugCentralProcessor
 
-if __name__ == "__main__" :
+
+def process_data_source(processor_name, processor_class, filters_json):
+    """
+    Procesa datos de una fuente específica y muestra los resultados.
+    
+    Args:
+        processor_name (str): Nombre de la fuente de datos (para mostrar en consola)
+        processor_class (class): Clase del procesador a utilizar
+        filters_json (dict): Filtros JSON para la consulta
+    """
+    print(f"\033[91m{processor_name}\033[0m")
+    processor = processor_class()
+    print(f"Status code {processor.get_status_code()}")
+    
+    if processor.get_status_code() == 200:
+        results = processor.fetch(filters_json)
+        if hasattr(results, "keys"):
+            for key in results.keys():
+                print(key)
+                print(tabulate(results[key], headers='keys', tablefmt='fancy_grid'))
+
+
+if __name__ == "__main__":
     filters_json = '''[
             {
                 "PROCESSOR": "PharosProcessor",
@@ -244,110 +266,17 @@ if __name__ == "__main__" :
                     }
                 ]
             }
-            
     ]'''
     filters_json = json.loads(filters_json)
 
-        
-    #Call OpenTargets processor
-    print("\033[91mOpenTargets\033[0m")
-    processor = OpenTargetsProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    if processor.get_status_code() == 200:
-        open_targets_id = processor.fetch(filters_json)
-        for dataFrame in open_targets_id:
-            print(dataFrame)
-            print(tabulate(open_targets_id[dataFrame], headers='keys', tablefmt='fancy_grid'))
-        
-    ##Call sellectChem processor
-    print("\033[91msellectChem\033[0m")
-    processor = SelleckchemProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    dataframeLinksSellectChem = processor.fetch(filters_json)
-    for dataFrame in dataframeLinksSellectChem:
-        print(dataFrame)
-        print(tabulate(dataframeLinksSellectChem[dataFrame],headers='keys', tablefmt='fancy_grid'))
-
-    ##Call pharos processor
-    print("\033[91mpharos\033[0m")
-    processor = PharosProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    if processor.get_status_code() == 200:
-        pharos_df_dict = processor.fetch(filters_json) #devuelve una lista de dataframes.
-        #print(pharos_df_dict.keys())
-        #print(tabulate(pharos_df_dict, headers='keys', tablefmt='fancy_grid'))
-
-        for dataFrame in pharos_df_dict:
-            print(dataFrame)
-            print(tabulate(pharos_df_dict[dataFrame], headers='keys', tablefmt='fancy_grid'))
-
-    ##Call Uniprot processor
-    print("\033[91mUniProt\033[0m")
-    processor = UniprotProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    if processor.get_status_code() == 200:
-        uniprot_dict = processor.fetch(filters_json) #Fanca
-        print(uniprot_dict.keys())
-        for key in uniprot_dict.keys():
-            print(key)
-            print(tabulate(uniprot_dict[key], headers='keys', tablefmt='fancy_grid'))
-
-    #Call Ensembl processor
-    print("\033[91mEnsembl\033[0m")
-    processor = EnsemblProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    if processor.get_status_code() == 200:
-        ensembl_id = processor.fetch(filters_json)
-        print(tabulate(ensembl_id, headers='keys', tablefmt='fancy_grid'))
-
-    #Call PhanterDB processor
-    print("\033[91mPhantherDB\033[0m")
-    processor = PantherProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    if processor.get_status_code() == 200:
-        phanter_data = processor.fetch(filters_json)
-        print(tabulate(phanter_data, headers='keys', tablefmt='fancy_grid'))
-
-    #Call StringDB processor
-    print("\033[91mStringDB\033[0m")
-    processor = StringDbProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    if processor.get_status_code() == 200:
-        string_db = processor.fetch(filters_json) #Fanca
-        print(string_db.keys())
-        for key in string_db.keys():
-            print(key)
-            print(tabulate(string_db[key], headers='keys', tablefmt='fancy_grid'))
-    
-    #Call PharmGKB processor
-    print("\033[91mPharmGKB\033[0m")
-    processor = PharmGKBProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    if processor.get_status_code() == 200:
-        string_db = processor.fetch(filters_json) #Fanca
-        print(string_db.keys())
-        for key in string_db.keys():
-            print(key)
-            print(tabulate(string_db[key], headers='keys', tablefmt='fancy_grid'))
-    
-    #Call Pharmacology processor
-    print("\033[91mPharmacology\033[0m")
-    processor = PharmacologyProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    if processor.get_status_code() == 200:
-        string_db = processor.fetch(filters_json) #Fanca
-        print(string_db.keys())
-        for key in string_db.keys():
-            print(key)
-            print(tabulate(string_db[key], headers='keys', tablefmt='fancy_grid'))
-    
-    # Call DrugCentral processor
-    print("\033[91mDrugCentral\033[0m")
-    processor = DrugCentralProcessor()
-    print("Status code " + str(processor.get_status_code()))
-    if processor.get_status_code() == 200:
-        string_db = processor.fetch(filters_json) #Fanca
-        print(string_db.keys())
-        for key in string_db.keys():
-            print(key)
-            print(tabulate(string_db[key], headers='keys', tablefmt='fancy_grid'))
+    # Procesar todas las fuentes de datos usando la función
+    process_data_source("OpenTargets", OpenTargetsProcessor, filters_json)
+    process_data_source("SelleckChem", SelleckchemProcessor, filters_json)
+    process_data_source("Pharos", PharosProcessor, filters_json)
+    process_data_source("UniProt", UniprotProcessor, filters_json)
+    process_data_source("Ensembl", EnsemblProcessor, filters_json)
+    process_data_source("PantherDB", PantherProcessor, filters_json)
+    process_data_source("StringDB", StringDbProcessor, filters_json)
+    process_data_source("PharmGKB", PharmGKBProcessor, filters_json)
+    process_data_source("Pharmacology", PharmacologyProcessor, filters_json)
+    process_data_source("DrugCentral", DrugCentralProcessor, filters_json)
