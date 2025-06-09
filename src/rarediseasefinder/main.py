@@ -11,6 +11,7 @@ from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import Uni
 from src.rarediseasefinder.biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
 from src.rarediseasefinder.biodata_providers.pharmgkb.PharmGKBProcessor import PharmGKBProcessor
 from src.rarediseasefinder.biodata_providers.guidetopharmacology.PharmacologyProcessor import PharmacologyProcessor
+from src.rarediseasefinder.biodata_providers.drugcentral.DrugCentralProcessor import DrugCentralProcessor
 
 if __name__ == "__main__" :
     filters_json = '''[
@@ -226,6 +227,22 @@ if __name__ == "__main__" :
                         "FILTROS_METODO_PARSER": {}
                     }
                 ]
+            },
+            {
+                "PROCESSOR": "DrugCentralProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "TTR"}
+                ],
+                "METODOS_PARSER": [
+                    {
+                        "NOMBRE_METODO": "drug_results",
+                        "FILTROS_METODO_PARSER": {}
+                    },
+                    {
+                        "NOMBRE_METODO": "drug_details",
+                        "FILTROS_METODO_PARSER": {}
+                    }
+                ]
             }
             
     ]'''
@@ -316,6 +333,17 @@ if __name__ == "__main__" :
     #Call Pharmacology processor
     print("\033[91mPharmacology\033[0m")
     processor = PharmacologyProcessor()
+    print("Status code " + str(processor.get_status_code()))
+    if processor.get_status_code() == 200:
+        string_db = processor.fetch(filters_json) #Fanca
+        print(string_db.keys())
+        for key in string_db.keys():
+            print(key)
+            print(tabulate(string_db[key], headers='keys', tablefmt='fancy_grid'))
+    
+    # Call DrugCentral processor
+    print("\033[91mDrugCentral\033[0m")
+    processor = DrugCentralProcessor()
     print("Status code " + str(processor.get_status_code()))
     if processor.get_status_code() == 200:
         string_db = processor.fetch(filters_json) #Fanca

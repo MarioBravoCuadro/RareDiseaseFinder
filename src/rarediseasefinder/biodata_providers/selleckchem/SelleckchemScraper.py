@@ -3,14 +3,13 @@ Módulo de scrapper para automatizar búsquedas en Selleckchem usando Selenium.
 Proporciona una clase para buscar medicamentos y obtener el HTML de resultados.
 """
 
-from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
+from typing import Dict, Any
 
-from src.rarediseasefinder.core.BaseScraper import BaseScraper
-from src.rarediseasefinder.core.utils import get_unique_directory
+from ...core.BaseScraper import BaseScraper
 
 
 class SelleckchemScraper(BaseScraper):
@@ -19,30 +18,14 @@ class SelleckchemScraper(BaseScraper):
     Proporciona la función buscar_medicamento para obtener el HTML de los resultados
     de búsqueda de un término dado en la web de Selleckchem.
     """
-    chrome_options = None
-    unique_dir = None
-    driver = None
-
-    SELLECKCHEM_URL = "https://www.selleckchem.com/search.html"
 
     def __init__(self):
         """
         Inicializa el objeto SelleckchemScraper.
         """
-        super().__init__()
-        self.unique_dir = get_unique_directory()
-        self.chrome_options = self.getOptionsChromeDriver()
-        self.chrome_options.add_argument(f"--user-data-dir={self.unique_dir}")
-        self.driver = webdriver.Chrome(options=self.chrome_options)
+        super().__init__("https://www.selleckchem.com/search.html")
 
-    def __del__(self):
-        """
-        Destructor para cerrar el navegador al eliminar la instancia.
-        """
-        if self.driver:
-            self.driver.quit()
-
-    def fetch(self,id:str) -> dict:
+    def fetch(self, id: str) -> Dict[str, Any]:
         """
         Busca un medicamento en la web de Selleckchem y devuelve el HTML de los resultados.
 
@@ -50,10 +33,13 @@ class SelleckchemScraper(BaseScraper):
             id (str): identificador del medicamento a buscar. Generalmente un nombre o ID de producto.
 
         Returns:
-            str or None: HTML de la página de resultados o None si ocurre un error.
+            Dict[str, Any]: HTML de la página de resultados o mensaje de error.
         """
+        if not self.ok():
+            return {"error": "Error al inicializar Chrome driver"}
+            
         try:
-            self.driver.get(self.SELLECKCHEM_URL)
+            self.driver.get(self.BASE_URL)
             search_box = WebDriverWait(self.driver, 5).until(
                 EC.presence_of_element_located((By.NAME, "searchDTO.searchParam"))
             )
@@ -63,33 +49,8 @@ class SelleckchemScraper(BaseScraper):
                 EC.presence_of_element_located((By.CSS_SELECTOR, "tr[name='productList']"))
             )
             html = self.driver.page_source
-            self.driver.quit()
-            return {"html": html}
+            return {"html": html, "search_term": id}
         except Exception as e:
-            print("❌ Error:", e)
-            self.driver.quit()
+            print(f"❌ Error al buscar en Selleckchem: {str(e)}")
+            self.reset_driver()
             return {"error": str(e)}
-
-    def _ping_logic(self) -> int:
-        """
-        Comprueba la accesibilidad de la web de Selleckchem.
-
-        Returns:
-            int: Código de estado HTTP de la página, 1001 si falla el driver o 999 si no hay conexión.
-        """
-        if not self.ok:
-            return 1001
-        if self._try_connection(self.SELLECKCHEM_URL):
-            response = SelleckchemScraper._http_response(self.SELLECKCHEM_URL)
-            return response.status_code
-        else:
-            return 999
-        
-    def check_data(self):
-        """
-        Placeholder para lógica de validación de los datos obtenidos con Selenium.
-
-        Raises:
-            NotImplementedError: Indica que el método no está implementado.
-        """
-        pass
