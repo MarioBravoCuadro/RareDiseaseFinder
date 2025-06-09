@@ -17,7 +17,7 @@ class PantherClient(BaseClient):
         """
         pass
 
-    def _create_url_string(self, gen_term) -> str:
+    def _create_url_string(self, gen_term:str) -> str:
         """
         Crea la URL de consulta para PantherDB.
         

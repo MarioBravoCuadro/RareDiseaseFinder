@@ -10,6 +10,7 @@ from src.rarediseasefinder.biodata_providers.stringdb.StringDbProcessor import S
 from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
 from src.rarediseasefinder.biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
 from src.rarediseasefinder.biodata_providers.pharmgkb.PharmGKBProcessor import PharmGKBProcessor
+from src.rarediseasefinder.biodata_providers.guidetopharmacology.PharmacologyProcessor import PharmacologyProcessor
 
 if __name__ == "__main__" :
     filters_json = '''[
@@ -201,6 +202,30 @@ if __name__ == "__main__" :
                         "FILTROS_METODO_PARSER": {}
                     }
                 ]
+            },
+            {
+                "PROCESSOR": "PharmacologyProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "TTR"}
+                ],
+                "METODOS_PARSER": [
+                    {
+                        "NOMBRE_METODO": "target_id",
+                        "FILTROS_METODO_PARSER": {}
+                    },
+                    {
+                        "NOMBRE_METODO": "comments",
+                        "FILTROS_METODO_PARSER": {}
+                    },
+                    {
+                        "NOMBRE_METODO": "references",
+                        "FILTROS_METODO_PARSER": {}
+                    },
+                    {
+                        "NOMBRE_METODO": "interactions",
+                        "FILTROS_METODO_PARSER": {}
+                    }
+                ]
             }
             
     ]'''
@@ -280,6 +305,17 @@ if __name__ == "__main__" :
     #Call PharmGKB processor
     print("\033[91mPharmGKB\033[0m")
     processor = PharmGKBProcessor()
+    print("Status code " + str(processor.get_status_code()))
+    if processor.get_status_code() == 200:
+        string_db = processor.fetch(filters_json) #Fanca
+        print(string_db.keys())
+        for key in string_db.keys():
+            print(key)
+            print(tabulate(string_db[key], headers='keys', tablefmt='fancy_grid'))
+    
+    #Call Pharmacology processor
+    print("\033[91mPharmacology\033[0m")
+    processor = PharmacologyProcessor()
     print("Status code " + str(processor.get_status_code()))
     if processor.get_status_code() == 200:
         string_db = processor.fetch(filters_json) #Fanca
