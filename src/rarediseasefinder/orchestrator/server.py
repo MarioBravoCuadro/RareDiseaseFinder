@@ -83,7 +83,7 @@ class SetStage3Schema(Schema):
 
 class WorkflowStartedSchema(Schema):
     class Meta:
-        description = "Workflow iniciado exitosamente"
+        description = "Ejecuta el workflow y devuelve el informe en formato JSON"
         unknown = "INCLUDE"  # Incluye campos desconocidos
 class SetStage1Schema(Schema):
     class Meta:
@@ -330,21 +330,19 @@ class SetStage3Collection(MethodView):
 @stage_3.route("/start_workflow")
 class StartWorkflowCollection(MethodView):
     @stage_3.arguments(WorkflowNameQuerySchema, location="query")
-    @stage_3.response(status_code=200, schema=WorkflowStartedSchema)
     def post(self, workflow_args):
-        """Inicia la ejecución del workflow"""
+        """Inicia la ejecución del workflow y devuelve el resultado JSON sin schema predefinido CAMBIA A STAGE_1 AUTOMÁTICAMENTE"""
         workflow_name = workflow_args["workflow_name"]
         logger.info(f"POST /stage3/start_workflow - Iniciando ejecución del workflow {workflow_name}")
         try:
             results = orchestrator.start_workflow(workflow_name)
             logger.info(f"POST /stage3/start_workflow - Workflow {workflow_name} iniciado exitosamente")
-
             return {
-                "message": f"Workflow {workflow_name} started successfully", 
                 "workflow_name": workflow_name,
+                "message": f"Workflow {workflow_name} started successfully",
                 "status": "completed",
-                "results": results
-            }
+                "results": results,
+            }, 200
         except Exception as e:
             logger.error(f"POST /stage3/start_workflow - Error al iniciar workflow {workflow_name}: {str(e)}")
             abort(500, description=str(e))

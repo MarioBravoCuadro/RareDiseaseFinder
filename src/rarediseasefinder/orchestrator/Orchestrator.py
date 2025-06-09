@@ -308,11 +308,9 @@ if __name__ == "__main__":
 
     print("All step available? " + str(orchestrator.get_if_all_steps_available("WorkflowTFG")))
 
-    print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step", "Workflow for TFG"))
-    print(orchestrator.get_optional_methods_from_workflow("Pharos_Step", "Workflow for TFG"))
 
     orchestrator.set_stage_2("WorkflowTFG")
 
     orchestrator.set_workflow_search_param("FANCA","WorkflowTFG")
     orchestrator.set_stage_3("WorkflowTFG")
-    print( orchestrator.start_workflow("WorkflowTFG"))
+    print( type(orchestrator.start_workflow("WorkflowTFG")))

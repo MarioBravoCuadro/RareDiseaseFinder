@@ -2,6 +2,8 @@ import json
 from abc import ABC
 from typing import List
 
+from pandas.core.interchange.dataframe_protocol import DataFrame
+
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.OpentargetsWorkflowStep import OpentargetsWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.EnsemblWorkflowStep import EnsemblerWorkflowStep
@@ -11,6 +13,7 @@ from src.rarediseasefinder.orchestrator.WorkflowSteps.SelleckchemWorkflowStep im
 from src.rarediseasefinder.core.BaseFilter import BaseFilter
 from src.rarediseasefinder.orchestrator.WorkflowSteps.StringdbWorkflowStep import StringdbWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.UniprotWorkflowStep import UniprotWorkflowStep
+from src.rarediseasefinder.orchestrator.Workflows.DataframesUtils import DataframesUtils
 
 
 class Workflow(IWorkflow):
@@ -311,7 +314,17 @@ class Workflow(IWorkflow):
         stringdb_result = stringdb_step.process()
 
         self.workflow_state = "stage_1"
-        return [pharos_result, ensembler_result, opentargets_result, pantherdb_result, uniprot_result, stringdb_result]
+
+        results_dict = {
+            'pharos': pharos_result,
+            'ensembl': ensembler_result,
+            'opentargets': opentargets_result,
+            'panther': pantherdb_result,
+            'uniprot': uniprot_result,
+            'stringdb': stringdb_result
+        }
+        serializable_results = DataframesUtils.dataframe_to_json(results_dict)
+        return serializable_results
 
 
     def steps_execution(self)-> list[dict]:
