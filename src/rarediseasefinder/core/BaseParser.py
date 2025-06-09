@@ -1,6 +1,6 @@
 import json
 from typing import Union
-
+import re
 import pandas as pd
 
 from .errors import BaseError, BaseParsingError
@@ -46,3 +46,10 @@ class BaseParser:
             json_data = json.loads(json_data)  # Convertir de cadena JSON a diccionario
 
         return pd.json_normalize(json_data)
+    
+    def clean_html(html_text: str) -> str:
+        """
+        Limpia texto HTML básico para presentación en DataFrame.
+        """
+        clean = re.compile('<.*?>')
+        return re.sub(clean, '', html_text)
