@@ -2,13 +2,14 @@ import json
 
 from tabulate import tabulate
 
-from src.rarediseasefinder.biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
-from src.rarediseasefinder.biodata_providers.pantherdb.PantherProcessor import PantherProcessor
-from src.rarediseasefinder.biodata_providers.pharos.PharosProcessor import PharosProcessor
-from src.rarediseasefinder.biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
-from src.rarediseasefinder.biodata_providers.stringdb.StringDbProcessor import StringDbProcessor
-from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
-from src.rarediseasefinder.biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
+from .biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
+from .biodata_providers.pantherdb.PantherProcessor import PantherProcessor
+from .biodata_providers.pharos.PharosProcessor import PharosProcessor
+from .biodata_providers.selleckchem.SelleckchemProcessor import SelleckchemProcessor
+from .biodata_providers.stringdb.StringDbProcessor import StringDbProcessor
+from .biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
+from .biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
+from .biodata_providers.pharmgkb.PharmGKBProcessor import PharmGKBProcessor
 
 if __name__ == "__main__" :
     filters_json = '''[
@@ -177,6 +178,29 @@ if __name__ == "__main__" :
                         "FILTROS_METODO_PARSER": {}
                     }
                 ]
+            }, {
+                "PROCESSOR": "PharmGKBProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "FANCA"}
+                ],
+                "METODOS_PARSER": [
+                    {
+                        "NOMBRE_METODO": "gene_symbols",
+                        "FILTROS_METODO_PARSER": {}
+                    },
+                    {
+                        "NOMBRE_METODO": "label_annotations",
+                        "FILTROS_METODO_PARSER": {}
+                    },
+                    {
+                        "NOMBRE_METODO": "literature",
+                        "FILTROS_METODO_PARSER": {}
+                    },
+                    {
+                        "NOMBRE_METODO": "pathways",
+                        "FILTROS_METODO_PARSER": {}
+                    }
+                ]
             }
             
     ]'''
@@ -245,6 +269,17 @@ if __name__ == "__main__" :
     #Call StringDB processor
     print("\033[91mStringDB\033[0m")
     processor = StringDbProcessor()
+    print("Status code " + str(processor.get_status_code()))
+    if processor.get_status_code() == 200:
+        string_db = processor.fetch(filters_json) #Fanca
+        print(string_db.keys())
+        for key in string_db.keys():
+            print(key)
+            print(tabulate(string_db[key], headers='keys', tablefmt='fancy_grid'))
+    
+    #Call PharmGKB processor
+    print("\033[91mPharmGKB\033[0m")
+    processor = PharmGKBProcessor()
     print("Status code " + str(processor.get_status_code()))
     if processor.get_status_code() == 200:
         string_db = processor.fetch(filters_json) #Fanca

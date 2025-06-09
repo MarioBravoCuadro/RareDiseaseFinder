@@ -1,8 +1,8 @@
 from typing import Dict
 
-from rarediseasefinder.biodata_providers.pantherdb.PantherClient import PantherClient
-from rarediseasefinder.biodata_providers.pantherdb.PantherParser import PantherParser
-from src.rarediseasefinder.core.BaseProcessor import BaseProcessor
+from .PantherClient import PantherClient
+from .PantherParser import PantherParser
+from ...core.BaseProcessor import BaseProcessor
 
 
 class PantherProcessor(BaseProcessor):
