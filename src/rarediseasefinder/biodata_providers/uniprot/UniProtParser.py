@@ -2,7 +2,7 @@ from typing import Dict, Any
 
 import pandas as pd
 
-from src.rarediseasefinder.core.constants import (
+from ...core.constants import (
     QUICKGO_URL_TEMPLATE,
     PUBMED_URL_TEMPLATE,
     OMIM_URL_TEMPLATE,

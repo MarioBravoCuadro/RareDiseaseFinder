@@ -31,12 +31,13 @@ class BaseRetriever(ABC):
         pass
 
     @staticmethod
-    def _http_response(url) -> requests.Response:
+    def _http_response(url: str, stream: bool = False) -> requests.Response:
         """
         Método privado para realizar solicitudes HTTP
         
         Args:
             url (str): URL a consultar
+            stream (bool): Si se debe transmitir la respuesta (por defecto es False)
             
         Returns:
             requests.Response: Datos JSON de la respuesta
@@ -47,7 +48,7 @@ class BaseRetriever(ABC):
             BaseError: Para cualquier otro error inesperado
         """
         try:
-            response = requests.get(url)
+            response = requests.get(url, stream=stream, timeout=15)
             #response.raise_for_status() check the status code
             return response
         except requests.exceptions.HTTPError as http_err:

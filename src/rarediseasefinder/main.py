@@ -12,6 +12,7 @@ from src.rarediseasefinder.biodata_providers.opentargets.OpenTargetsProcessor im
 from src.rarediseasefinder.biodata_providers.pharmgkb.PharmGKBProcessor import PharmGKBProcessor
 from src.rarediseasefinder.biodata_providers.guidetopharmacology.PharmacologyProcessor import PharmacologyProcessor
 from src.rarediseasefinder.biodata_providers.drugcentral.DrugCentralProcessor import DrugCentralProcessor
+from src.rarediseasefinder.biodata_providers.ppiatlas.PPIAtlasProcessor import PPIAtlasProcessor
 
 
 def process_data_source(processor_name, processor_class, filters_json):
@@ -265,6 +266,18 @@ if __name__ == "__main__":
                         "FILTROS_METODO_PARSER": {}
                     }
                 ]
+            },
+            {
+                "PROCESSOR": "PPIAtlasProcessor",
+                "CLIENT_SEARCH_PARAMS": [
+                    {"search_id": "TTR"}
+                ],
+                "METODOS_PARSER": [
+                    {
+                        "NOMBRE_METODO": "ppi_table",
+                        "FILTROS_METODO_PARSER": {}
+                    }
+                ]
             }
     ]'''
     filters_json = json.loads(filters_json)
@@ -280,3 +293,4 @@ if __name__ == "__main__":
     process_data_source("PharmGKB", PharmGKBProcessor, filters_json)
     process_data_source("Pharmacology", PharmacologyProcessor, filters_json)
     process_data_source("DrugCentral", DrugCentralProcessor, filters_json)
+    process_data_source("PPIAtlas", PPIAtlasProcessor, filters_json)
