@@ -1,4 +1,4 @@
-from src.rarediseasefinder.biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
+from ...biodata_providers.opentargets.OpenTargetsProcessor import OpenTargetsProcessor
 from .BaseWorkflowStep import BaseWorkflowStep
 
 class OpentargetsWorkflowStep(BaseWorkflowStep):

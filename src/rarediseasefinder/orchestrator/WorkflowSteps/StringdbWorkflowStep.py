@@ -1,4 +1,4 @@
-from src.rarediseasefinder.biodata_providers.stringdb.StringDbProcessor import StringDbProcessor
+from ...biodata_providers.stringdb.StringDbProcessor import StringDbProcessor
 from .BaseWorkflowStep import BaseWorkflowStep
 
 class StringdbWorkflowStep(BaseWorkflowStep):

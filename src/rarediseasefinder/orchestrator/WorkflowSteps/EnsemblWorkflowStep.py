@@ -1,4 +1,4 @@
-from src.rarediseasefinder.biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
+from ...biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
 from .BaseWorkflowStep import BaseWorkflowStep
 
 class EnsemblerWorkflowStep(BaseWorkflowStep):

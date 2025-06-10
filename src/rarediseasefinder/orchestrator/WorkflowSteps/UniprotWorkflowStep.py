@@ -1,4 +1,4 @@
-from src.rarediseasefinder.biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
+from ...biodata_providers.uniprot.UniprotProcessor import UniprotProcessor
 from .BaseWorkflowStep import BaseWorkflowStep
 
 class UniprotWorkflowStep(BaseWorkflowStep):

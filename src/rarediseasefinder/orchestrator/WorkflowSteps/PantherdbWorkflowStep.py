@@ -1,4 +1,4 @@
-from src.rarediseasefinder.biodata_providers.pantherdb.PantherProcessor import PantherProcessor
+from ...biodata_providers.pantherdb.PantherProcessor import PantherProcessor
 from .BaseWorkflowStep import BaseWorkflowStep
 
 class PantherdbWorkflowStep(BaseWorkflowStep):
