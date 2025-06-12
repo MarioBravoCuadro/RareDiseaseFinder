@@ -84,7 +84,7 @@ class IWorkflow(ABC):
         pass
 
     @abstractmethod
-    def check_if_all_steps_available(self):
+    def check_if_all_steps_available(self)->bool:
         """Abstract method to be implemented by subclasses to check if all their defined steps are available."""
         pass
 
