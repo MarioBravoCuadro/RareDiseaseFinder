@@ -119,7 +119,7 @@ if __name__ == "__main__":
             {
                 "PROCESSOR": "SelleckchemProcessor",
                 "CLIENT_SEARCH_PARAMS": [
-                    {"search_id": "TCL"}
+                    {"search_id": "penicilina"}
                 ],                
                 "METODOS_PARSER": [
                     {
@@ -254,7 +254,7 @@ if __name__ == "__main__":
             {
                 "PROCESSOR": "DrugCentralProcessor",
                 "CLIENT_SEARCH_PARAMS": [
-                    {"search_id": "TTR"}
+                    {"search_id": "tafamidis"}
                 ],
                 "METODOS_PARSER": [
                     {

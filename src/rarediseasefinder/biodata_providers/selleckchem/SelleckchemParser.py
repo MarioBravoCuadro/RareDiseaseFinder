@@ -1,7 +1,3 @@
-"""
-Módulo de parser para extraer información de medicamentos de la web de Selleckchem.
-Proporciona métodos para obtener listas y enlaces de productos como DataFrames de pandas.
-"""
 from typing import Dict, Any
 
 import pandas as pd
@@ -14,6 +10,8 @@ class SelleckchemParser(BaseParser):
     """
     Clase para parsear la información de medicamentos de Selleckchem.
     """
+    
+    BASE_URL = "https://www.selleckchem.com"
 
     def __init__(self):
         super().__init__()
@@ -34,7 +32,7 @@ class SelleckchemParser(BaseParser):
         for fila in filas:
             td_catalogo = fila.find('td', class_='posRel')
             catalogo = td_catalogo.get_text(strip=True) if td_catalogo else "N/A"
-            enlace = fila.find('a', class_='blue f15 bold')
+            enlace = fila.find('a', class_='blue bold f15')
             nombre_producto = enlace.get_text(strip=True) if enlace else "N/A"
             link = enlace.get("href") if enlace else "N/A"
             p_tags = fila.find_all('p')
@@ -54,13 +52,12 @@ class SelleckchemParser(BaseParser):
 
         Args:
             data (Dict[str, Any]): Diccionario con la clave 'html' que contiene el contenido HTML.
-            filter_params (Dict, optional): Parámetros de filtrado. Defaults to None.
         Returns:
             pd.DataFrame: DataFrame con el primer enlace completo o vacío si no hay productos.
         """
         productos = self.extraer_medicamentos(data)
         if not productos.empty:
-            primer_link = f"www.selleckchem.com{productos.loc[0]['Link']}"
+            primer_link = f"{self.BASE_URL}{productos.loc[0]['Link']}"
             return self.parse_to_dataframe([primer_link])
         return self.parse_to_dataframe([])
 
@@ -70,7 +67,6 @@ class SelleckchemParser(BaseParser):
 
         Args:
             data (Dict[str, Any]): Diccionario con la clave 'html' que contiene el contenido HTML.
-            filter_params (Dict, optional): Parámetros de filtrado. Defaults to None.
         Returns:
             pd.DataFrame: DataFrame con los enlaces completos de todos los productos.
         """
@@ -79,6 +75,8 @@ class SelleckchemParser(BaseParser):
         if not productos.empty:
             rango = range(len(productos))
             for i in rango:
-                links.append(f"www.selleckchem.com{productos.loc[i]['Link']}")
+                link = productos.loc[i]['Link']
+                if link and link != "N/A":
+                    links.append(f"{self.BASE_URL}{link}")
 
         return self.parse_to_dataframe(links)
