@@ -77,18 +77,6 @@ class IWorkflow(ABC):
         pass
 
     @abstractmethod
-    def get_steps(self):
-        """Abstract method to be implemented by subclasses to define or return their workflow steps.
-            Example content of the dict: {"Pharos" : PharosWorkflowStep} :str and :IWorkflowStep"""
-
-        pass
-
-    @abstractmethod
-    def check_if_all_steps_available(self)->bool:
-        """Abstract method to be implemented by subclasses to check if all their defined steps are available."""
-        pass
-
-    @abstractmethod
     def steps_execution(self):
         pass
 
@@ -120,6 +108,24 @@ class IWorkflow(ABC):
             list[dict]: The list of steps.
         """
         return self.listOfSteps
+
+    def get_list_of_steps_names(self) -> list[str]:
+        """
+        Returns the list of step names from the workflow.
+
+        Extracts the dictionary keys (step names) from each step in self.listOfSteps.
+        Each step is expected to be a dictionary with format: {"step_name": step_instance}
+
+        Returns:
+            list[str]: List of step names extracted from dictionary keys.
+                      Example: ["Pharos_Step", "UniProt_Step", "NCBI_Step"]
+        """
+
+        step_names = []
+        for step in self.listOfSteps:
+            step_name = next(iter(step.keys()))
+            step_names.append(step_name+"_Step")
+        return step_names
 
     def check_if_all_steps_available(self) -> bool:
         """
@@ -259,6 +265,7 @@ class IWorkflow(ABC):
         Returns:
             dict: The filters for the specified method, or empty dict if not found
         """
+        workflow_step_name = workflow_step_name.replace("_Step", "")  # Remove "_Step" suffix if present
         for step in self.listOfSteps:
             if list(step.keys())[0] == workflow_step_name:
                return  step[workflow_step_name].get_filters().get_filters_from_method(method_name)

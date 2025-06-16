@@ -73,7 +73,7 @@ class Workflow(IWorkflow):
 
         self.workflow_state = "stage_1"
         self._search_param = ""
-        self._name = "Workflow for TFG"
+        self._name = "WorkflowTFG"
         self._description = "Fetches x data from Pharos API x data from selleckchem"
         self._listOfSteps = []
 

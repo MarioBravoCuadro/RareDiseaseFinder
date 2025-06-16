@@ -32,7 +32,7 @@ class SelleckchemScraper(BaseScraper):
         super().__init__()
         self.unique_dir = get_unique_directory()
         self.chrome_options = self.getOptionsChromeDriver()
-        self.chrome_options.add_argument(f"--user-data-dir={self.unique_dir}")
+        #self.chrome_options.add_argument(f"--user-data-dir={self.unique_dir}")
         self.driver = webdriver.Chrome(options=self.chrome_options)
 
     def __del__(self):
