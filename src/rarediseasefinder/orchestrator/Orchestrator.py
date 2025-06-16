@@ -1,7 +1,9 @@
+from typing import List, Dict, Any
+
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
 from src.rarediseasefinder.orchestrator.Workflows.Workflow import Workflow
-
+from src.rarediseasefinder.core.errors import IncorrectStageError
 
 class Orchestrator:
     server = None
@@ -17,8 +19,14 @@ class Orchestrator:
         Returns:
             None
         """
+        print(f"\033[34mx-x-x-x-x-x-x-x Orchestrator initializing x-x-x-x-x-x-x-x")
         for workflow in lista:
-            print(f"\033[32m Orchestrator initialized with workflows: {workflow.name}\033[0m")
+            print(f"\033[32m Orchestrator initialized with workflow: {workflow.name}\033[0m")
+
+            #incializamos los estados de los workflows a stage_1
+            workflow.workflow_state = "stage_1"
+            print(f"El estado del workflow {workflow.name} se ha incializado en {workflow.workflow_state}")
+
         self.workflows_list = lista
 
     ########################Stage 1 methods#######################
@@ -33,6 +41,8 @@ class Orchestrator:
         """
         list_of_workflows = []
         for workflow in self.workflows_list:
+            if workflow.workflow_state != "stage_1":
+                raise IncorrectStageError(workflow.workflow_state, "stage_1", f"get_workflows")
             list_of_workflows.append(
                 {"name": workflow.name, "status": workflow.check_if_all_steps_available()}
             )
@@ -50,10 +60,12 @@ class Orchestrator:
         """
         for workflow in self.workflows_list:
             if workflow_name == workflow.name:
+                if workflow.workflow_state != "stage_1":
+                    raise IncorrectStageError(workflow.workflow_state, "stage_1", f"get_if_all_steps_available para workflow '{workflow_name}'")
                 return workflow.check_if_all_steps_available()
         return False
 
-    def get_minium_methods_for_step_from_workflow(self, step_name: str, workflow_name: str) -> dict | None:
+    def get_minium_methods_for_step_from_workflow(self, step_name: str, workflow_name: str) -> dict | None :
         """
         Get the JSON of minimum methods for a given step in a workflow.
 
@@ -70,6 +82,8 @@ class Orchestrator:
         """
         for workflow in self.workflows_list:
             if workflow_name == workflow.name:
+                if workflow.workflow_state != "stage_1":
+                    raise IncorrectStageError(workflow.workflow_state, "stage_1", f"get_workflows")
                 return workflow.minium_methods_by_step[step_name]
         return None
 
@@ -90,8 +104,28 @@ class Orchestrator:
         """
         for workflow in self.workflows_list:
             if workflow_name == workflow.name:
+                if workflow.workflow_state != "stage_1":
+                    raise IncorrectStageError(workflow.workflow_state, "stage_1", f"get_optional_methods_from_workflow")
                 return workflow.optional_methods_by_step[step_name]
         return None
+
+    def get_list_of_steps_names(self, workflow_name: str) -> list[str] | dict[Any, Any]:
+        """
+        Retrieve all steps from a specific workflow.
+        
+        Args:
+            workflow_name (str): The name of the workflow.
+            
+        Returns:
+            dict: Dictionary of steps with step names as keys and IWorkflowStep instances as values.
+                 Example: {"Pharos": PharosWorkflowStep, "UniProt": UniProtWorkflowStep}
+        """
+        for workflow in self.workflows_list:
+            if workflow_name == workflow.name:
+                if workflow.workflow_state != "stage_1":
+                    raise IncorrectStageError(workflow.workflow_state, "stage_1", f"get_list_of_steps_names")
+                return workflow.get_list_of_steps_names()
+        return {}
 
     def get_method_filters(self, method_name: str, step_name: str, workflow_name: str) -> dict:
         """
@@ -107,13 +141,22 @@ class Orchestrator:
         """
         for workflow in self.workflows_list:
             if workflow_name == workflow.name:
+                if workflow.workflow_state != "stage_1":
+                    raise IncorrectStageError(workflow.workflow_state, "stage_1", f"get_method_filters")
                 return workflow.get_filters_from_method(step_name, method_name)
         return {}
+
+    def set_stage_2(self,workflow_name) -> None :
+         for workflow in self.workflows_list:
+             if workflow_name == workflow_name:
+                 if workflow.workflow_state != "stage_1":
+                     raise IncorrectStageError(workflow.workflow_state, "stage_1", f"set_stage_2 para workflow '{workflow_name}'")
+                 workflow.workflow_state = "stage_2"
 
     ########################Stage 2 methods#######################
 
     def set_selected_optional_method(self, selected_optional_method: str, workflow_step_name: str,
-                                     workflow_name: str) -> None:
+                                     workflow_name: str) -> None :
         """
         Apply a selected optional parser method to a workflow step.
 
@@ -130,10 +173,12 @@ class Orchestrator:
         """
         for workflow in self.workflows_list:
             if workflow_name == workflow.name:
+                if workflow.workflow_state != "stage_2":
+                    raise IncorrectStageError(workflow.workflow_state, "stage_2", f"set_selected_optional_method")
                 workflow.set_selected_optional_methods(selected_optional_method, workflow_step_name)
 
     def set_filter_to_method(self, filters: dict, method_name: str, workflow_step_name: str,
-                             workflow_name: str) -> None:
+                             workflow_name: str) -> None :
         """
         Apply filter configuration to a specific method in a workflow step.
 
@@ -151,9 +196,11 @@ class Orchestrator:
         """
         for workflow in self.workflows_list:
             if workflow_name == workflow.name:
+                if workflow.workflow_state != "stage_2":
+                    raise IncorrectStageError(workflow.workflow_state, "stage_2", f"set_filter_to_method")
                 workflow.set_filter_to_method(workflow_step_name, method_name, filters)
 
-    def set_workflow_search_param(self, search_term: str, workflow_name: str) -> None:
+    def set_workflow_search_param(self, search_term: str, workflow_name: str) -> None :
         """
         Set the search parameter for a specific workflow.
 
@@ -169,11 +216,20 @@ class Orchestrator:
         """
         for workflow in self.workflows_list:
             if workflow_name == workflow.name:
+                if workflow.workflow_state != "stage_2":
+                    raise IncorrectStageError(workflow.workflow_state, "stage_2", f"set_workflow_search_param")
                 workflow.search_param = search_term
+
+    def set_stage_3(self,workflow_name):
+         for workflow in self.workflows_list:
+             if workflow_name == workflow_name:
+                 if workflow.workflow_state != "stage_2":
+                     raise IncorrectStageError(workflow.workflow_state, "stage_2", f"set_stage_3 para workflow '{workflow_name}'")
+                 workflow.workflow_state = "stage_3"
 
     ########################Stage 3 methods#######################
 
-    def start_workflow(self, workflow_name: str) -> None:
+    def start_workflow(self, workflow_name: str) -> None :
         """
         Execute the workflow matching the given name.
 
@@ -185,10 +241,22 @@ class Orchestrator:
         """
         for workflow in self.workflows_list:
             if workflow_name == workflow.name:
+                if workflow.workflow_state != "stage_3":
+                    raise IncorrectStageError(workflow.workflow_state, "stage_3", f"start_workflow")
                 workflow.steps_execution()
 
+    def set_stage_1(self,workflow_name):
+         for workflow in self.workflows_list:
+             if workflow_name == workflow.name:
+                 print(f"Workflow '{workflow_name}' está actualmente en stage: {workflow.workflow_state}")
+                 print(f"Intentando cambiar workflow '{workflow_name}' a stage_1")
+                 if workflow.workflow_state != "stage_3":
+                     raise IncorrectStageError(workflow.workflow_state, "stage_3", f"set_stage_1 para workflow '{workflow_name}'")
+                 workflow.workflow_state = "stage_1"
+                 print(f"Workflow '{workflow_name}' cambiado exitosamente a stage_1")
+
     ########################Debugin methods#######################
-    def get_search_param(self, workflow_name: str) -> str | None:
+    def get_search_param(self, workflow_name: str) -> str | None :
         """
         Retrieve the search parameter for the specified workflow.
 
@@ -231,8 +299,11 @@ if __name__ == "__main__":
     orchestrator = Orchestrator(wokflows)
 
     print(orchestrator.get_workflows())
+    print(orchestrator.get_list_of_steps_names("WorkflowTFG"))
+    print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step","WorkflowTFG"))
+    print(orchestrator.get_optional_methods_from_workflow("Pharos_Step","WorkflowTFG"))
+    print(orchestrator.get_method_filters("create_protein_protein_relations_df", "Pharos", "WorkflowTFG"))
 
-    orchestrator.start_workflow("Workflow for TFG")
 
     print(orchestrator.get_method_filters("df_omim", "Pharos", "Workflow for TFG"))
     orchestrator.set_workflow_search_param("FANCA", "Workflow for TFG")
@@ -243,6 +314,9 @@ if __name__ == "__main__":
     print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step", "Workflow for TFG"))
     print(orchestrator.get_optional_methods_from_workflow("Pharos_Step", "Workflow for TFG"))
 
+    orchestrator.set_stage_2("WorkflowTFG")
+
+    print(orchestrator.workflows_list[0].workflow_state)
     orchestrator.set_filter_to_method(
             {
                 "PRIORIDAD_CLASES": {
@@ -266,3 +340,6 @@ if __name__ == "__main__":
     orchestrator.set_selected_optional_method("metodo_anadido_desde_front", "Pharos", "Workflow for TFG")
 
     print(orchestrator.get_step("Pharos", "Workflow for TFG").get_filters().get_json_str())
+
+
+    orchestrator.start_workflow("WorkflowTFG")
