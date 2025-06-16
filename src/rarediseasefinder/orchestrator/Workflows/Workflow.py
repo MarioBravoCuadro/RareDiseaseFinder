@@ -1,5 +1,6 @@
 import json
 from abc import ABC
+from typing import List
 
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.OpentargetsWorkflowStep import OpentargetsWorkflowStep
@@ -198,7 +199,7 @@ class Workflow(IWorkflow):
                 "methods": [
                     {
                         "METHOD_ID": "panther_class",
-                        "METHOD_PARSER_FILTERS": {}
+                        "METHOD_PARSER_FILTERS": ""
                     }
                 ]
             },
@@ -208,7 +209,7 @@ class Workflow(IWorkflow):
                 "methods": [
                     {
                         "METHOD_ID": "get_annotation",
-                        "METHOD_PARSER_FILTERS": {}
+                        "METHOD_PARSER_FILTERS": ""
                     }
                 ]
             },
@@ -218,37 +219,23 @@ class Workflow(IWorkflow):
                 "methods": [
                     {
                         "METHOD_ID": "df_info",
-                        "METHOD_PARSER_FILTERS": {}
+                        "METHOD_PARSER_FILTERS": ""
                     },
                     {
                         "METHOD_ID": "df_omim",
-                        "METHOD_PARSER_FILTERS": {}
+                        "METHOD_PARSER_FILTERS": ""
                     },
                     {
                         "METHOD_ID": "create_protein_protein_relations_df",
-                        "METHOD_PARSER_FILTERS": self.filtros_parser_pharos_front[0]
+                        "METHOD_PARSER_FILTERS":  self.filtros_parser_pharos_front[0]
                     },
                     {
                         "METHOD_ID": "df_vias",
-                        "METHOD_PARSER_FILTERS": {}
+                        "METHOD_PARSER_FILTERS": ""
                     },
                     {
                         "METHOD_ID": "df_numero_vias_por_fuente",
-                        "METHOD_PARSER_FILTERS": {}
-                    }
-                ]
-            },
-            "Pharos_Step_2": {
-                "step_name": "Pharos",
-                "processor": "PharosProcessor",
-                "methods": [
-                    {
-                        "METHOD_ID": "df_info",
-                        "METHOD_PARSER_FILTERS": {}
-                    },
-                    {
-                        "METHOD_ID": "df_omim",
-                        "METHOD_PARSER_FILTERS": {}
+                        "METHOD_PARSER_FILTERS": ""
                     }
                 ]
             }
@@ -263,16 +250,33 @@ class Workflow(IWorkflow):
     def stage_1_pipeline(self):
         self.workflow_state = "stage_1"
 
-        #Añadir filtros inciales
+    def stage_2_pipeline(self):
+        #Cambios desde el front clase simbólica, no modificar.
+        self.workflow_state = "stage_2"
+
+    def stage_3_pipeline(self):
+        #Ejecución del pipeline
+
+        # Añadir filtros inciales
         pharos_filters = BaseFilter(self._minium_methods_by_step["Pharos_Step"]["methods"], "PharosProcessor")
-        selleck_chem_filters = BaseFilter(self._minium_methods_by_step["Selleckchem_Step"]["methods"],"SelleckchemProcessor")
+        selleck_chem_filters = BaseFilter(self._minium_methods_by_step["Selleckchem_Step"]["methods"],
+                                          "SelleckchemProcessor")
         ensembler_filters = BaseFilter(self._minium_methods_by_step["Ensembl_Step"]["methods"], "EnsemblProcessor")
-        opentargets_filters = BaseFilter(self._minium_methods_by_step["Opentargets_Step"]["methods"],"OpenTargetsProcessor")
+        opentargets_filters = BaseFilter(self._minium_methods_by_step["Opentargets_Step"]["methods"],
+                                         "OpenTargetsProcessor")
         pantherdb_filters = BaseFilter(self._minium_methods_by_step["Panther_Step"]["methods"], "PantherProcessor")
         uniprot_filters = BaseFilter(self._minium_methods_by_step["Uniprot_Step"]["methods"], "UniprotProcessor")
         stringdb_filters = BaseFilter(self._minium_methods_by_step["Stringdb_Step"]["methods"], "StringDbProcessor")
 
-        pharos_filters.set_filter_to_method("", "")
+        pharos_filters.add_client_search_params(self._search_param)
+        selleck_chem_filters.add_client_search_params("TCL")
+        ensembler_filters.add_client_search_params(self._search_param)
+        opentargets_filters.add_client_search_params("ENSG00000118271")
+        pantherdb_filters.add_client_search_params("P02766")
+        uniprot_filters.add_client_search_params("O15360")
+        stringdb_filters.add_client_search_params("ENSP00000360522")
+
+        #  pharos_filters.set_filter_to_method("", "")
 
         # Coger step de la lista de pasos
         pharos_step = self.get_step("Pharos")
@@ -293,26 +297,13 @@ class Workflow(IWorkflow):
         stringdb_step.set_filters(stringdb_filters)
 
 
-    def stage_2_pipeline(self):
-        #Cambios desde el front
-        self.workflow_state = "stage_2"
-
-    def stage_3_pipeline(self):
-        #Ejecución del pipeline
         self.workflow_state = "stage_3"
 
-        # Coger step de la lista de pasos
-        pharos_step = self.get_step("Pharos")
-        selleckchem_step = self.get_step("Selleckchem")
-        ensembler_step = self.get_step("Ensembl")
-        opentargets_step = self.get_step("Opentargets")
-        pantherdb_step = self.get_step("Panther")
-        uniprot_step = self.get_step("Uniprot")
-        stringdb_step = self.get_step("Stringdb")
+        print(pharos_step.get_filters().json_filter)
 
         #Ejecutar cada step
         pharos_result = pharos_step.process()
-        selleckchem_result = selleckchem_step.process()
+        #selleckchem_result = selleckchem_step.process()
         ensembler_result = ensembler_step.process()
         opentargets_result = opentargets_step.process()
         pantherdb_result = pantherdb_step.process()
@@ -320,82 +311,8 @@ class Workflow(IWorkflow):
         stringdb_result = stringdb_step.process()
 
         self.workflow_state = "stage_1"
-
-        return [pharos_result, selleckchem_result, ensembler_result, opentargets_result, pantherdb_result, uniprot_result, stringdb_result]
-
+        return [pharos_result, ensembler_result, opentargets_result, pantherdb_result, uniprot_result, stringdb_result]
 
 
-    def step_pipeline(self):
-        #Crear Filtro es un BaseFilter
-        pharos_filters = BaseFilter(self._minium_methods_by_step["Pharos_Step"]["methods"],"PharosProcessor")
-        pharos_2_filters = BaseFilter(self._minium_methods_by_step["Pharos_Step_2"]["methods"],"PharosProcessor")
-        selleck_chem_filters = BaseFilter(self._minium_methods_by_step["Selleckchem_Step"]["methods"],"SelleckchemProcessor")
-        ensembler_filters = BaseFilter(self._minium_methods_by_step["Ensembl_Step"]["methods"],"EnsemblProcessor")
-        opentargets_filters = BaseFilter(self._minium_methods_by_step["Opentargets_Step"]["methods"],"OpenTargetsProcessor")
-        pantherdb_filters = BaseFilter(self._minium_methods_by_step["Panther_Step"]["methods"],"PantherProcessor")
-        uniprot_filters = BaseFilter(self._minium_methods_by_step["Uniprot_Step"]["methods"],"UniprotProcessor")
-        stringdb_filters = BaseFilter(self._minium_methods_by_step["Stringdb_Step"]["methods"],"StringDbProcessor")
-        
-        #Añadir termino de busqueda al filtro
-        #Sacalos del main.py  filters_json los terminos de busqueda
-        pharos_filters.add_client_search_params("FANCA")
-        pharos_2_filters.add_client_search_params("FANCA")
-        selleck_chem_filters.add_client_search_params("TCL")
-        ensembler_filters.add_client_search_params("FANCA")
-        opentargets_filters.add_client_search_params("ENSG00000118271")
-        pantherdb_filters.add_client_search_params("P02766")
-        uniprot_filters.add_client_search_params("O15360")
-        stringdb_filters.add_client_search_params("ENSP00000360522")
-
-       # pharos_filters.set_filter_to_method("","")
-
-
-        #Coger step de la lista de pasos
-        pharos_step = self.get_step("Pharos")
-        pharos_2_step = self.get_step("Pharos")
-        selleckchem_step = self.get_step("Selleckchem")
-        ensembler_step = self.get_step("Ensembl")
-        opentargets_step = self.get_step("Opentargets")
-        pantherdb_step = self.get_step("Panther")
-        uniprot_step = self.get_step("Uniprot")
-        stringdb_step = self.get_step("Stringdb")
-        
-        #Añadir filtro a cada step
-        pharos_step.set_filters(pharos_filters)
-        pharos_2_step.set_filters(pharos_2_filters)
-        selleckchem_step.set_filters(selleck_chem_filters)
-        ensembler_step.set_filters(ensembler_filters)
-        opentargets_step.set_filters(opentargets_filters)
-        pantherdb_step.set_filters(pantherdb_filters)
-        uniprot_step.set_filters(uniprot_filters)
-        stringdb_step.set_filters(stringdb_filters)
-
-        #Ejecutar cada step
-        pharos_status_code = pharos_step.get_status_code()
-        selleckchem_status_code = selleckchem_step.get_status_code()
-        ensembler_status_code = ensembler_step.get_status_code()
-        opentargets_status_code = opentargets_step.get_status_code()
-        pantherdb_status_code = pantherdb_step.get_status_code()
-        uniprot_status_code = uniprot_step.get_status_code()
-        stringdb_status_code = stringdb_step.get_status_code()
-
-
-    def steps_execution(self):
-       self.step_pipeline()
-
-if __name__ == "__main__":
-   print(Workflow().minium_methods_by_step)
-   print(Workflow().optional_methods_by_step)
-   print (Workflow().check_if_all_steps_available())
-   print(Workflow().steps_execution())
-
-""" 
-        #Ejecutar cada step
-        pharos_status_code = pharos_step.get_status_code()
-        selleckchem_status_code = selleckchem_step.get_status_code()
-        ensembler_status_code = ensembler_step.get_status_code()
-        opentargets_status_code = opentargets_step.get_status_code()
-        pantherdb_status_code = pantherdb_step.get_status_code()
-        uniprot_status_code = uniprot_step.get_status_code()
-        stringdb_status_code = stringdb_step.get_status_code()
- """
+    def steps_execution(self)-> list[dict]:
+      return self.stage_3_pipeline()

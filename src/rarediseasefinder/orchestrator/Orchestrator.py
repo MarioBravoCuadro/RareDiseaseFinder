@@ -1,4 +1,6 @@
 from typing import List, Dict, Any
+import logging
+import pandas as pd
 
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
@@ -229,7 +231,7 @@ class Orchestrator:
 
     ########################Stage 3 methods#######################
 
-    def start_workflow(self, workflow_name: str) -> None :
+    def start_workflow(self, workflow_name: str):
         """
         Execute the workflow matching the given name.
 
@@ -237,13 +239,13 @@ class Orchestrator:
             workflow_name (str): The name of the workflow to start.
 
         Returns:
-            None
+            list[dict]
         """
         for workflow in self.workflows_list:
             if workflow_name == workflow.name:
                 if workflow.workflow_state != "stage_3":
                     raise IncorrectStageError(workflow.workflow_state, "stage_3", f"start_workflow")
-                workflow.steps_execution()
+                return  workflow.steps_execution()
 
     def set_stage_1(self,workflow_name):
          for workflow in self.workflows_list:
@@ -298,48 +300,19 @@ if __name__ == "__main__":
     wokflows = [Workflow()]
     orchestrator = Orchestrator(wokflows)
 
+
     print(orchestrator.get_workflows())
     print(orchestrator.get_list_of_steps_names("WorkflowTFG"))
     print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step","WorkflowTFG"))
     print(orchestrator.get_optional_methods_from_workflow("Pharos_Step","WorkflowTFG"))
-    print(orchestrator.get_method_filters("create_protein_protein_relations_df", "Pharos", "WorkflowTFG"))
 
-
-    print(orchestrator.get_method_filters("df_omim", "Pharos", "Workflow for TFG"))
-    orchestrator.set_workflow_search_param("FANCA", "Workflow for TFG")
-    print(orchestrator.get_search_param("Workflow for TFG"))
-
-    print("All step available? " + str(orchestrator.get_if_all_steps_available("Workflow for TFG")))
+    print("All step available? " + str(orchestrator.get_if_all_steps_available("WorkflowTFG")))
 
     print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step", "Workflow for TFG"))
     print(orchestrator.get_optional_methods_from_workflow("Pharos_Step", "Workflow for TFG"))
 
     orchestrator.set_stage_2("WorkflowTFG")
 
-    print(orchestrator.workflows_list[0].workflow_state)
-    orchestrator.set_filter_to_method(
-            {
-                "PRIORIDAD_CLASES": {
-                    "Tclin": 1,
-                    "Tchem": 2,
-                    "Tbio": 3,
-                    "Tdark": 4
-                },
-                "PRIORIDAD_PROPIEDADES": {
-                    "p_wrong": 1,
-                    "p_ni": 2
-                }
-            }
-        , "df_omim", "Pharos", "Workflow for TFG")
-
-    print("Filtros " + str(orchestrator.get_method_filters("metodo_no_existente", "Pharos", "Workflow for TFG")))
-    print("Filtros " + str(orchestrator.get_method_filters("df_omim", "Pharos", "Workflow for TFG")))
-
-    print(orchestrator.get_step("Pharos", "Workflow for TFG").get_filters().get_json_str())
-
-    orchestrator.set_selected_optional_method("metodo_anadido_desde_front", "Pharos", "Workflow for TFG")
-
-    print(orchestrator.get_step("Pharos", "Workflow for TFG").get_filters().get_json_str())
-
-
-    orchestrator.start_workflow("WorkflowTFG")
+    orchestrator.set_workflow_search_param("FANCA","WorkflowTFG")
+    orchestrator.set_stage_3("WorkflowTFG")
+    print( orchestrator.start_workflow("WorkflowTFG"))

@@ -77,7 +77,7 @@ class IWorkflow(ABC):
         pass
 
     @abstractmethod
-    def steps_execution(self):
+    def steps_execution(self)-> list[dict]:
         pass
 
     def instantiate_steps(self) -> None:
