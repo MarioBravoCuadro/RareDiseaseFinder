@@ -1,4 +1,5 @@
 import enum
+import json
 import uuid
 import logging
 from datetime import datetime, timezone
@@ -83,11 +84,7 @@ class SetStage3Schema(Schema):
 class WorkflowStartedSchema(Schema):
     class Meta:
         description = "Workflow iniciado exitosamente"
-    
-    class Meta:
-        additional = True  # Permite campos adicionales
         unknown = "INCLUDE"  # Incluye campos desconocidos
-
 class SetStage1Schema(Schema):
     class Meta:
         description = "Resetea el workflow al stage 1"
@@ -110,7 +107,7 @@ class FilterRequestSchema(Schema):
     filters = fields.Dict(required=True)
 
 class SearchParamRequestSchema(Schema):
-    search_term = fields.Str(required=True)
+    search_id = fields.Str(required=True)
 
 
 class APIConfig:
@@ -303,7 +300,7 @@ class SetSearchParamCollection(MethodView):
     def post(self, workflow_args, json_data):
         """Establece el parámetro de búsqueda para un workflow"""
         workflow_name = workflow_args["workflow_name"]
-        search_term = json_data["search_term"]
+        search_term = json_data["search_id"]
         logger.info(f"POST /stage2/set_search_param - Estableciendo parámetro de búsqueda '{search_term}' para workflow {workflow_name}")
         try:
             orchestrator.set_workflow_search_param(search_term, workflow_name)
@@ -339,12 +336,14 @@ class StartWorkflowCollection(MethodView):
         workflow_name = workflow_args["workflow_name"]
         logger.info(f"POST /stage3/start_workflow - Iniciando ejecución del workflow {workflow_name}")
         try:
-            orchestrator.start_workflow(workflow_name)
+            results = orchestrator.start_workflow(workflow_name)
             logger.info(f"POST /stage3/start_workflow - Workflow {workflow_name} iniciado exitosamente")
+
             return {
-                "message": f"Workflow {workflow_name} started successfully",
+                "message": f"Workflow {workflow_name} started successfully", 
                 "workflow_name": workflow_name,
-                "status": "started"
+                "status": "completed",
+                "results": results
             }
         except Exception as e:
             logger.error(f"POST /stage3/start_workflow - Error al iniciar workflow {workflow_name}: {str(e)}")
