@@ -1,5 +1,5 @@
 from abc import ABC, abstractmethod
-from typing import Dict, Any, Optional
+from typing import Dict, Any, Optional, List, Union
 
 import pandas as pd
 
@@ -86,9 +86,52 @@ class BaseProcessor(ABC):
                     if parser_method and hasattr(self.parser, parser_method):
                         method = getattr(self.parser, parser_method)
                         try:
-                            results[method_name] = method(data, filter_params)
+                            # Obtener el resultado del método del parser
+                            result = method(data, filter_params)
+                            
+                            # Verificar si hay instrucción de agrupación en los filtros
+                            group_by_column = filter_params.get("group_by")
+                            
+                            # Si el resultado es un DataFrame y se especificó group_by
+                            if isinstance(result, pd.DataFrame) and group_by_column and group_by_column in result.columns and not result.empty:
+                                # Realizar la agrupación
+                                grouped_dfs = []
+                                for group_value, group_df in result.groupby(group_by_column):
+                                    # Resetear índices
+                                    group_df = group_df.reset_index(drop=True)
+                                    # Guardar valor de grupo como metadato
+                                    group_df.attrs['group_value'] = group_value
+                                    grouped_dfs.append(group_df)
+                                
+                                # Si solo hay un grupo, mantenerlo como DataFrame único para compatibilidad
+                                if len(grouped_dfs) == 1:
+                                    results[method_name] = grouped_dfs[0]
+                                else:
+                                    results[method_name] = grouped_dfs
+                            else:
+                                # Mantener el resultado original (ya sea DataFrame o lista)
+                                results[method_name] = result
+                                
                         except TypeError:
-                            results[method_name] = method(data)
+                            # Sin filtros, llamar al método sin parámetros
+                            result = method(data)
+                            
+                            # Si se especificó group_by, intentar agrupar también
+                            group_by_column = filter_params.get("group_by")
+                            if isinstance(result, pd.DataFrame) and group_by_column and group_by_column in result.columns and not result.empty:
+                                # Lógica de agrupación (igual que arriba)
+                                grouped_dfs = []
+                                for group_value, group_df in result.groupby(group_by_column):
+                                    group_df = group_df.reset_index(drop=True)
+                                    group_df.attrs['group_value'] = group_value
+                                    grouped_dfs.append(group_df)
+                                
+                                if len(grouped_dfs) == 1:
+                                    results[method_name] = grouped_dfs[0]
+                                else:
+                                    results[method_name] = grouped_dfs
+                            else:
+                                results[method_name] = result
                     else:
                         print(f"El procesador {processor['PROCESSOR']} no admite la instrucción {method_name} en el parser.")
         return results
@@ -110,3 +153,37 @@ class BaseProcessor(ABC):
                     return search_params[0]
                 return search_params
         return None
+    
+    def results_to_json(self, results: Dict[str, Union[pd.DataFrame, List[pd.DataFrame]]]) -> Dict[str, Any]:
+        """
+        Convierte los resultados del procesador en una estructura JSON adecuada para API.
+        
+        Args:
+            results: Resultados del proceso de parseo (DataFrames individuales o listas)
+            
+        Returns:
+            Dict[str, Any]: Estructura JSON para enviar a la API
+        """
+        json_results = {}
+        
+        for method_name, result in results.items():
+            if isinstance(result, pd.DataFrame):
+                # DataFrame individual: convertir directamente
+                json_results[method_name] = result.to_dict(orient='records')
+            elif isinstance(result, list) and all(isinstance(df, pd.DataFrame) for df in result):
+                # Lista de DataFrames: crear estructura agrupada
+                if len(result) == 1:
+                    # Si solo hay un DataFrame, no usar estructura de grupos
+                    json_results[method_name] = result[0].to_dict(orient='records')
+                else:
+                    grouped_data = {}
+                    for i, df in enumerate(result):
+                        # Usar el valor de grupo almacenado o un índice numérico
+                        group_key = str(df.attrs.get('group_value', f'grupo_{i+1}'))
+                        grouped_data[group_key] = df.to_dict(orient='records')
+                    json_results[method_name] = grouped_data
+            else:
+                # Otros tipos de datos (poco probable)
+                json_results[method_name] = result
+                
+        return json_results
