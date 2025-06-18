@@ -167,7 +167,7 @@ class ListOfStepsCollection(MethodView):
         try:
             workflows_data = orchestrator.get_list_of_steps_names(workflow_name)
             logger.info(f"GET /stage1/list_steps - Workflow {workflow_name} tiene {len(workflows_data) if isinstance(workflows_data, list) else 'N/A'} steps")
-            return {"steps": [workflows_data]}
+            return {"steps": workflows_data}
         except Exception as e:
             logger.error(f"GET /stage1/list_steps - Error para workflow {workflow_name}: {str(e)}")
             abort(500, description=str(e))
@@ -186,7 +186,7 @@ class MinimumMethodsCollection(MethodView):
             methods_data = orchestrator.get_minium_methods_for_step_from_workflow(workflow_step,workflow_name)
             logger.info(f"GET /stage1/minimum_methods - Encontrados métodos mínimos para {workflow_step}: {methods_data}")
             print(methods_data)
-            return {"minimum_methods": [methods_data]}
+            return {"minimum_methods": methods_data}
         except Exception as e:
             logger.error(f"GET /stage1/minimum_methods - Error para step {workflow_step} en workflow {workflow_name}: {str(e)}")
             abort(500, description=str(e))
@@ -205,7 +205,7 @@ class OptionalMethodsCollection(MethodView):
             methods_data = orchestrator.get_optional_methods_from_workflow(workflow_step,workflow_name)
             logger.info(f"GET /stage1/optional_methods - Encontrados métodos opcionales para {workflow_step}: {methods_data}")
             print(methods_data)
-            return {"optional_methods": [methods_data]}
+            return {"optional_methods": methods_data}
         except Exception as e:
             logger.error(f"GET /stage1/optional_methods - Error para step {workflow_step} en workflow {workflow_name}: {str(e)}")
             abort(500, description=str(e))
