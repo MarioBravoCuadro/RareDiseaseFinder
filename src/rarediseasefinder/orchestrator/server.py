@@ -237,7 +237,7 @@ class MethodsFiltersCollection(MethodView):
 class SetStage2(MethodView):
     @stage_1.arguments(WorkflowNameQuerySchema, location="query")
     @stage_1.response(status_code=200, schema=SetStage2Schema)
-    def get(self,workflow_args):
+    def post(self,workflow_args):
         """Setea el workflow al stage 2"""
         workflow_name = workflow_args["workflow_name"]
         logger.info(f"GET /stage1/set_stage_2 - Cambiando workflow {workflow_name} a stage 2")
