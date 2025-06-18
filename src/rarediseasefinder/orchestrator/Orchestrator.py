@@ -315,4 +315,4 @@ if __name__ == "__main__":
 
     orchestrator.set_workflow_search_param("FANCA","WorkflowTFG")
     orchestrator.set_stage_3("WorkflowTFG")
-    print( type(orchestrator.start_workflow("WorkflowTFG")))
+    print(orchestrator.start_workflow("WorkflowTFG"))

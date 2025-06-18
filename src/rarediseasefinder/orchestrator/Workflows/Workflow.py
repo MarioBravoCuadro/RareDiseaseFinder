@@ -315,16 +315,22 @@ class Workflow(IWorkflow):
 
         self.workflow_state = "stage_1"
 
-        results_dict = {
-            'pharos': pharos_result,
-            'ensembl': ensembler_result,
-            'opentargets': opentargets_result,
-            'panther': pantherdb_result,
-            'uniprot': uniprot_result,
-            'stringdb': stringdb_result
-        }
-        serializable_results = DataframesUtils.dataframe_to_json(results_dict)
-        return serializable_results
+        results = [
+            ("pharos", pharos_result),
+            ("ensembl", ensembler_result),
+            ("opentargets", opentargets_result),
+            ("panther", pantherdb_result),
+            ("uniprot", uniprot_result),
+            ("stringdb", stringdb_result)
+        ]
+        output = []
+        for idx, (fuente, res) in enumerate(results, 1):
+            output.append({
+                "indice": idx,
+                "fuente": fuente,
+                "resultado": DataframesUtils.dataframe_to_json(res)
+            })
+        return output
 
 
     def steps_execution(self)-> list[dict]:
