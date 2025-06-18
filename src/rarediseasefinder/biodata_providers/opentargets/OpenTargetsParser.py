@@ -4,6 +4,7 @@ Módulo para transformar datos de OpenTargets en DataFrames estructurados.
 from typing import Dict, Any
 
 import pandas as pd
+from rarediseasefinder.core.constants import REACTOME_URL_TEMPLATE
 
 from ...core.BaseParser import BaseParser
 
@@ -48,7 +49,7 @@ class OpenTargetsParser(BaseParser):
         pathways_data = []
         for pathway in data.get("pathways", []):
             pathways_data.append({
-                "ID de vía": pathway.get("pathwayId", ""),
+                "Link": REACTOME_URL_TEMPLATE.format(pathway.get("pathwayId", "")),
                 "Vía": pathway.get("pathway", ""),
                 "Término de nivel superior": pathway.get("topLevelTerm", "")
             })
