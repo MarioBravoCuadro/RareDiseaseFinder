@@ -268,7 +268,10 @@ class IWorkflow(ABC):
         workflow_step_name = workflow_step_name.replace("_Step", "")  # Remove "_Step" suffix if present
         for step in self.listOfSteps:
             if list(step.keys())[0] == workflow_step_name:
-               return  step[workflow_step_name].get_filters().get_filters_from_method(method_name)
+                if step[workflow_step_name].get_filters() == None:
+                    return {}
+                else:
+                    return  step[workflow_step_name].get_filters().get_filters_from_method(method_name)
         return {}
 
     def set_filter_to_method(self,workflow_step_name: str, method_name: str, filters: dict) -> None:
