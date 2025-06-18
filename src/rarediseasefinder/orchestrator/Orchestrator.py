@@ -305,6 +305,8 @@ if __name__ == "__main__":
     print(orchestrator.get_list_of_steps_names("WorkflowTFG"))
     print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step","WorkflowTFG"))
     print(orchestrator.get_optional_methods_from_workflow("Pharos_Step","WorkflowTFG"))
+    print(orchestrator.get_method_filters("df_numero_vias_por_fuente","Pharos_Step","WorkflowTFG"))
+
 
     print("All step available? " + str(orchestrator.get_if_all_steps_available("WorkflowTFG")))
 
