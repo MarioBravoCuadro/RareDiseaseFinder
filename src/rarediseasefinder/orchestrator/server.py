@@ -35,7 +35,7 @@ class StepsAvailableSchema(Schema):
     are_steps_avaliable = fields.Bool(required=True)
 
 class ListOfStepsSchema(Schema):
-    steps = fields.List(fields.Str(), required=True)
+    steps = fields.List(fields.Dict(), required=True)
 
 class MethodSchema(Schema):
     METHOD_ID = fields.Str(required=True)

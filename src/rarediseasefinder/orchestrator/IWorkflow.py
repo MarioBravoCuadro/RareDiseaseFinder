@@ -1,5 +1,5 @@
 from abc import abstractmethod, ABC
-
+from typing import List, Dict, Any
 
 from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
@@ -109,7 +109,7 @@ class IWorkflow(ABC):
         """
         return self.listOfSteps
 
-    def get_list_of_steps_names(self) -> list[str]:
+    def get_list_of_steps_names(self) -> list[dict[Any, Any]]:
         """
         Returns the list of step names from the workflow.
 
@@ -124,7 +124,9 @@ class IWorkflow(ABC):
         step_names = []
         for step in self.listOfSteps:
             step_name = next(iter(step.keys()))
-            step_names.append(step_name+"_Step")
+            step_object = next(iter(step.values()))
+            step_names.append({"step_name":step_name+"_Step",
+                               "status": step_object.get_status_code()})
         return step_names
 
     def check_if_all_steps_available(self) -> bool:

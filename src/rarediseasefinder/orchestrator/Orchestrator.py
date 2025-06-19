@@ -111,7 +111,7 @@ class Orchestrator:
                 return workflow.optional_methods_by_step[step_name]
         return None
 
-    def get_list_of_steps_names(self, workflow_name: str) -> list[str] | dict[Any, Any]:
+    def get_list_of_steps_names(self, workflow_name: str) -> list[dict] | dict[Any, Any]:
         """
         Retrieve all steps from a specific workflow.
         
