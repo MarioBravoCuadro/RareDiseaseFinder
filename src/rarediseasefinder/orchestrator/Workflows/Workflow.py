@@ -249,6 +249,10 @@ class Workflow(IWorkflow):
 
         self.stage_1_pipeline()
 
+        pharos_filters = BaseFilter(self._minium_methods_by_step["Pharos_Step"]["methods"], "PharosProcessor")
+        pharos_step = self.get_step("Pharos")
+        pharos_step.set_filters(pharos_filters)
+
 
     def stage_1_pipeline(self):
         self.workflow_state = "stage_1"
