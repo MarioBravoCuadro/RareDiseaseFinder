@@ -224,7 +224,7 @@ class Orchestrator:
 
     def set_stage_3(self,workflow_name):
          for workflow in self.workflows_list:
-             if workflow_name == workflow_name:
+             if workflow_name == workflow.name:
                  if workflow.workflow_state != "stage_2":
                      raise IncorrectStageError(workflow.workflow_state, "stage_2", f"set_stage_3 para workflow '{workflow_name}'")
                  workflow.workflow_state = "stage_3"
