@@ -34,6 +34,7 @@ class OpenTargetsClient(BaseClient):
                 id
                 approvedSymbol
                 approvedName
+                functionDescriptions
                 pathways {
                     pathwayId
                     pathway

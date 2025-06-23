@@ -342,5 +342,4 @@ class UniProtParser(BaseParser):
                 "NumExperiments": 0
             }]
         
-        # El ordenamiento se hace ahora dentro de parse_to_dataframe con un parámetro
-        return self.parse_to_dataframe(interactions_data, sort_by="NumExperiments", ascending=False)
+        return self.parse_to_dataframe(interactions_data)
