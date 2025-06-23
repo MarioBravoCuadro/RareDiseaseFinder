@@ -111,7 +111,7 @@ class Orchestrator:
                 return workflow.optional_methods_by_step[step_name]
         return None
 
-    def get_list_of_steps_names(self, workflow_name: str) -> list[str] | dict[Any, Any]:
+    def get_list_of_steps_names(self, workflow_name: str) -> list[dict] | dict[Any, Any]:
         """
         Retrieve all steps from a specific workflow.
         
@@ -305,14 +305,14 @@ if __name__ == "__main__":
     print(orchestrator.get_list_of_steps_names("WorkflowTFG"))
     print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step","WorkflowTFG"))
     print(orchestrator.get_optional_methods_from_workflow("Pharos_Step","WorkflowTFG"))
+    print(orchestrator.get_method_filters("df_numero_vias_por_fuente","Pharos_Step","WorkflowTFG"))
+
 
     print("All step available? " + str(orchestrator.get_if_all_steps_available("WorkflowTFG")))
 
-    print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step", "Workflow for TFG"))
-    print(orchestrator.get_optional_methods_from_workflow("Pharos_Step", "Workflow for TFG"))
 
     orchestrator.set_stage_2("WorkflowTFG")
 
     orchestrator.set_workflow_search_param("FANCA","WorkflowTFG")
     orchestrator.set_stage_3("WorkflowTFG")
-    print( orchestrator.start_workflow("WorkflowTFG"))
+    print(orchestrator.start_workflow("WorkflowTFG"))

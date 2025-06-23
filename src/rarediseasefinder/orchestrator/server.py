@@ -35,7 +35,7 @@ class StepsAvailableSchema(Schema):
     are_steps_avaliable = fields.Bool(required=True)
 
 class ListOfStepsSchema(Schema):
-    steps = fields.List(fields.Str(), required=True)
+    steps = fields.List(fields.Dict(), required=True)
 
 class MethodSchema(Schema):
     METHOD_ID = fields.Str(required=True)
@@ -83,7 +83,7 @@ class SetStage3Schema(Schema):
 
 class WorkflowStartedSchema(Schema):
     class Meta:
-        description = "Workflow iniciado exitosamente"
+        description = "Ejecuta el workflow y devuelve el informe en formato JSON"
         unknown = "INCLUDE"  # Incluye campos desconocidos
 class SetStage1Schema(Schema):
     class Meta:
@@ -167,7 +167,7 @@ class ListOfStepsCollection(MethodView):
         try:
             workflows_data = orchestrator.get_list_of_steps_names(workflow_name)
             logger.info(f"GET /stage1/list_steps - Workflow {workflow_name} tiene {len(workflows_data) if isinstance(workflows_data, list) else 'N/A'} steps")
-            return {"steps": [workflows_data]}
+            return {"steps": workflows_data}
         except Exception as e:
             logger.error(f"GET /stage1/list_steps - Error para workflow {workflow_name}: {str(e)}")
             abort(500, description=str(e))
@@ -186,7 +186,7 @@ class MinimumMethodsCollection(MethodView):
             methods_data = orchestrator.get_minium_methods_for_step_from_workflow(workflow_step,workflow_name)
             logger.info(f"GET /stage1/minimum_methods - Encontrados métodos mínimos para {workflow_step}: {methods_data}")
             print(methods_data)
-            return {"minimum_methods": [methods_data]}
+            return {"minimum_methods":[methods_data]}
         except Exception as e:
             logger.error(f"GET /stage1/minimum_methods - Error para step {workflow_step} en workflow {workflow_name}: {str(e)}")
             abort(500, description=str(e))
@@ -237,7 +237,7 @@ class MethodsFiltersCollection(MethodView):
 class SetStage2(MethodView):
     @stage_1.arguments(WorkflowNameQuerySchema, location="query")
     @stage_1.response(status_code=200, schema=SetStage2Schema)
-    def get(self,workflow_args):
+    def post(self,workflow_args):
         """Setea el workflow al stage 2"""
         workflow_name = workflow_args["workflow_name"]
         logger.info(f"GET /stage1/set_stage_2 - Cambiando workflow {workflow_name} a stage 2")
@@ -330,21 +330,19 @@ class SetStage3Collection(MethodView):
 @stage_3.route("/start_workflow")
 class StartWorkflowCollection(MethodView):
     @stage_3.arguments(WorkflowNameQuerySchema, location="query")
-    @stage_3.response(status_code=200, schema=WorkflowStartedSchema)
     def post(self, workflow_args):
-        """Inicia la ejecución del workflow"""
+        """Inicia la ejecución del workflow y devuelve el resultado JSON sin schema predefinido CAMBIA A STAGE_1 AUTOMÁTICAMENTE"""
         workflow_name = workflow_args["workflow_name"]
         logger.info(f"POST /stage3/start_workflow - Iniciando ejecución del workflow {workflow_name}")
         try:
             results = orchestrator.start_workflow(workflow_name)
             logger.info(f"POST /stage3/start_workflow - Workflow {workflow_name} iniciado exitosamente")
-
             return {
-                "message": f"Workflow {workflow_name} started successfully", 
                 "workflow_name": workflow_name,
+                "message": f"Workflow {workflow_name} started successfully",
                 "status": "completed",
-                "results": results
-            }
+                "results": results,
+            }, 200
         except Exception as e:
             logger.error(f"POST /stage3/start_workflow - Error al iniciar workflow {workflow_name}: {str(e)}")
             abort(500, description=str(e))
