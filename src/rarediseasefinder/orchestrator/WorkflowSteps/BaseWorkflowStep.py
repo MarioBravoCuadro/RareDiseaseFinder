@@ -25,6 +25,7 @@ class BaseWorkflowStep(IWorkflowStep, ABC):
         self.description = description
         self.processor = processor
         self.filters = filters
+        self.status_code = self.processor.get_status_code()
 
     def get_status_code(self) -> int:
         """
@@ -33,7 +34,7 @@ class BaseWorkflowStep(IWorkflowStep, ABC):
         Returns:
             int: Código de estado HTTP o código de error
         """
-        return self.processor.get_status_code()
+        return self.status_code
 
     def process(self) -> dict:
         """
