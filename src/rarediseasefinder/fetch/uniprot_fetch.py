@@ -28,18 +28,13 @@ def procesar_uniprot(uniProtID):
     recommended_name = protein_description.get("recommendedName", {})
     full_name = recommended_name.get("fullName", {}).get("value", "⚠️ No se han encontrado datos.")
 
-    #Para la panther class
-    panther_class = obtener_panther_class(uniProtID)
-
 
 
     # 1. Función
     df_function = pd.DataFrame([{
         "Nombre": full_name,
         "Función": txt.get("value", ""),
-        "PantherClass": panther_class,
         "UniProtID": uniProtID,
-        "QuickGO": f"https://www.ebi.ac.uk/QuickGO/term/{ev['evidenceCode']}" if ev.get("evidenceCode") else "⚠️ No se han encontrado datos.",
         "PubMed": f"https://pubmed.ncbi.nlm.nih.gov/{ev['id']}" if ev.get("id") else "⚠️ No se han encontrado datos.",
         "Alphafold": f"https://alphafold.ebi.ac.uk/entry/{uniProtID}",
         "Secuencia": data.get("sequence", {}).get("value","⚠️ No se han encontrado datos."),   
