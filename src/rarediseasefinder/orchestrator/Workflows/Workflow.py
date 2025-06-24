@@ -251,35 +251,17 @@ class Workflow(IWorkflow):
 
 
     def stage_1_pipeline(self):
+        #Inicializar los filtros default modificables por el usuario.
         self.workflow_state = "stage_1"
-
-    def stage_2_pipeline(self):
-        #Cambios desde el front clase simbólica, no modificar.
-        self.workflow_state = "stage_2"
-
-    def stage_3_pipeline(self):
-        #Ejecución del pipeline
 
         # Añadir filtros inciales
         pharos_filters = BaseFilter(self._minium_methods_by_step["Pharos_Step"]["methods"], "PharosProcessor")
-        selleck_chem_filters = BaseFilter(self._minium_methods_by_step["Selleckchem_Step"]["methods"],
-                                          "SelleckchemProcessor")
+        selleck_chem_filters = BaseFilter(self._minium_methods_by_step["Selleckchem_Step"]["methods"],"SelleckchemProcessor")
         ensembler_filters = BaseFilter(self._minium_methods_by_step["Ensembl_Step"]["methods"], "EnsemblProcessor")
-        opentargets_filters = BaseFilter(self._minium_methods_by_step["Opentargets_Step"]["methods"],
-                                         "OpenTargetsProcessor")
+        opentargets_filters = BaseFilter(self._minium_methods_by_step["Opentargets_Step"]["methods"],"OpenTargetsProcessor")
         pantherdb_filters = BaseFilter(self._minium_methods_by_step["Panther_Step"]["methods"], "PantherProcessor")
         uniprot_filters = BaseFilter(self._minium_methods_by_step["Uniprot_Step"]["methods"], "UniprotProcessor")
         stringdb_filters = BaseFilter(self._minium_methods_by_step["Stringdb_Step"]["methods"], "StringDbProcessor")
-
-        pharos_filters.add_client_search_params(self._search_param)
-        selleck_chem_filters.add_client_search_params("TCL")
-        ensembler_filters.add_client_search_params(self._search_param)
-        opentargets_filters.add_client_search_params("ENSG00000118271")
-        pantherdb_filters.add_client_search_params("P02766")
-        uniprot_filters.add_client_search_params("O15360")
-        stringdb_filters.add_client_search_params("ENSP00000360522")
-
-        #  pharos_filters.set_filter_to_method("", "")
 
         # Coger step de la lista de pasos
         pharos_step = self.get_step("Pharos")
@@ -299,6 +281,39 @@ class Workflow(IWorkflow):
         uniprot_step.set_filters(uniprot_filters)
         stringdb_step.set_filters(stringdb_filters)
 
+    def stage_2_pipeline(self):
+        #Cambios desde el front clase simbólica, no modificar.
+        self.workflow_state = "stage_2"
+
+    def stage_3_pipeline(self):
+        #Ejecución del pipeline.
+
+        # Coger step de la lista de pasos
+        pharos_step = self.get_step("Pharos")
+        selleckchem_step = self.get_step("Selleckchem")
+        ensembler_step = self.get_step("Ensembl")
+        opentargets_step = self.get_step("Opentargets")
+        pantherdb_step = self.get_step("Panther")
+        uniprot_step = self.get_step("Uniprot")
+        stringdb_step = self.get_step("Stringdb")
+
+        #Coger los filtros
+        pharos_filters = pharos_step.get_filters()
+        selleck_chem_filters = selleckchem_step.get_filters()
+        ensembler_filters = ensembler_step.get_filters()
+        opentargets_filters = opentargets_step.get_filters()
+        pantherdb_filters = pantherdb_step.get_filters()
+        uniprot_filters =  uniprot_step.get_filters()
+        stringdb_filters = stringdb_step.get_filters()
+
+        #Añadir parametro de búsqueda
+        pharos_filters.add_client_search_params(self._search_param)
+        selleck_chem_filters.add_client_search_params("TCL")
+        ensembler_filters.add_client_search_params(self._search_param)
+        opentargets_filters.add_client_search_params("ENSG00000118271")
+        pantherdb_filters.add_client_search_params("P02766")
+        uniprot_filters.add_client_search_params("O15360")
+        stringdb_filters.add_client_search_params("ENSP00000360522")
 
         self.workflow_state = "stage_3"
 
@@ -312,6 +327,7 @@ class Workflow(IWorkflow):
         pantherdb_result = pantherdb_step.process()
         uniprot_result = uniprot_step.process()
         stringdb_result = stringdb_step.process()
+
 
         self.workflow_state = "stage_1"
 
@@ -335,3 +351,8 @@ class Workflow(IWorkflow):
 
     def steps_execution(self)-> list[dict]:
       return self.stage_3_pipeline()
+
+if __name__ == "__main__":
+    workflow  = Workflow()
+    workflow._search_param = "TCL"
+    print(workflow.steps_execution())
