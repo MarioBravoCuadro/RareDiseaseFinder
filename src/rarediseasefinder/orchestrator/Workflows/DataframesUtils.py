@@ -7,14 +7,14 @@ class DataframesUtils:
     @staticmethod
     def group_dataframe(df: pd.DataFrame, group_column: str = None) -> List[pd.DataFrame]:
         """
-        Agrupa un DataFrame por una columna específica.
+        Agrupa un DataFrame por una columna específica y añade un subíndice a cada grupo.
 
         Args:
             df (pd.DataFrame): DataFrame a agrupar.
             group_column (str, optional): Columna para agrupar.
 
         Returns:
-            List[pd.DataFrame]: Lista de DataFrames agrupados.
+            List[pd.DataFrame]: Lista de DataFrames agrupados, cada uno con una columna 'subindice'.
         """
         # Si el DataFrame está vacío o no hay columna de agrupación, devolver lista con el DataFrame original
         if df.empty or not group_column or group_column not in df.columns:
@@ -27,6 +27,8 @@ class DataframesUtils:
             group_df = group.reset_index(drop=True)
             # Añadir metadato para identificar el grupo
             group_df.attrs['group_value'] = name
+            # Añadir columna de subíndice
+            group_df['subindice'] = group_df.index + 1
             grouped_dfs.append(group_df)
 
         return grouped_dfs
@@ -74,3 +76,16 @@ class DataframesUtils:
             return {k: DataframesUtils.dataframe_to_json(v) for k, v in data.items()}
         else:
             return data
+
+    @staticmethod
+    def create_dataframe(df_list: List[dict]) -> pd.DataFrame:
+        """
+        Une múltiples DataFrames en uno solo.
+
+        Args:
+            df_list (List[pd.DataFrame]): Lista de DataFrames a unir.
+
+        Returns:
+            pd.DataFrame: DataFrame resultante de la unión.
+        """
+        return pd.DataFrame(df_list)
