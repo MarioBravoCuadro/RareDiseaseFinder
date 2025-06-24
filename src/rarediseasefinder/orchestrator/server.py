@@ -345,7 +345,9 @@ class StartWorkflowCollection(MethodView):
             }, 200
         except Exception as e:
             logger.error(f"POST /stage3/start_workflow - Error al iniciar workflow {workflow_name}: {str(e)}")
-            abort(500, description=str(e))
+            return {
+                "error_message" : "Search_ID inválido, no se han encontrado resultados."
+            }, 500
 
 @stage_3.route("/set_stage_1")
 class ResetToStage1Collection(MethodView):
