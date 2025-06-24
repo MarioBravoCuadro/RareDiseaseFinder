@@ -5,6 +5,7 @@ import pandas as pd
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
 from src.rarediseasefinder.orchestrator.Workflows.Workflow import Workflow
+from src.rarediseasefinder.orchestrator.Workflows.FullWorkflow import FullWorkflow
 from src.rarediseasefinder.core.errors import IncorrectStageError
 
 class Orchestrator:
@@ -297,7 +298,7 @@ class Orchestrator:
 
 
 if __name__ == "__main__":
-    wokflows = [Workflow()]
+    wokflows = [Workflow(), FullWorkflow()]
     orchestrator = Orchestrator(wokflows)
 
 
