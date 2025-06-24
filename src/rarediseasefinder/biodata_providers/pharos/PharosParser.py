@@ -3,6 +3,7 @@ from typing import Dict, List, Any
 import pandas as pd
 
 from ...core.BaseParser import BaseParser
+from ...core.constants import NOT_FOUND_MESSAGE
 
 
 class PharosParser(BaseParser):
@@ -127,7 +128,9 @@ class PharosParser(BaseParser):
         Returns:
             pd.DataFrame: DataFrame con la información principal.
         """
-        info_data = [{key: data[key] for key in ["nombre", "uniprot_ID", "descripcion", "claseDiana", "secuencia"]}]
+        info_data = [NOT_FOUND_MESSAGE]
+        if data:
+          info_data = [{key: data[key] for key in ["nombre", "uniprot_ID", "descripcion", "claseDiana", "secuencia"]}]
         return self.parse_to_dataframe(info_data)
 
     def create_omim_df(self, data: dict) -> pd.DataFrame:
@@ -140,7 +143,9 @@ class PharosParser(BaseParser):
         Returns:
             pd.DataFrame: DataFrame con las referencias OMIM.
         """
-        omim_data = data.get("referenciaOMIM", [])
+        omim_data = [NOT_FOUND_MESSAGE]
+        if data:
+          omim_data = data.get("referenciaOMIM", [])
         return self.parse_to_dataframe(omim_data)
 
     def create_protein_protein_relations_df(self, data: dict, filter_params: Dict[str, Any]) -> pd.DataFrame:
@@ -154,13 +159,15 @@ class PharosParser(BaseParser):
         Returns:
             pd.DataFrame: DataFrame con las relaciones proteína-proteína priorizadas.
         """
-        prioridad_clases = filter_params.get("PRIORIDAD_CLASES", {})
-        prioridad_propiedades = filter_params.get("PRIORIDAD_PROPIEDADES", {})
-        relations_data = self._get_protein_to_protein_ordered(data, [{
-            "procesador": "Pharos", 
-            "prioridad_clases": prioridad_clases, 
-            "prioridad_propiedades": prioridad_propiedades
-        }])
+        relations_data = [NOT_FOUND_MESSAGE]
+        if data:
+            prioridad_clases = filter_params.get("PRIORIDAD_CLASES", {})
+            prioridad_propiedades = filter_params.get("PRIORIDAD_PROPIEDADES", {})
+            relations_data = self._get_protein_to_protein_ordered(data, [{
+                "procesador": "Pharos",
+                "prioridad_clases": prioridad_clases,
+                "prioridad_propiedades": prioridad_propiedades
+            }])
         return self.parse_to_dataframe(relations_data)
 
     def create_numero_vias_por_fuente_df(self, data: dict) -> pd.DataFrame:
@@ -173,7 +180,9 @@ class PharosParser(BaseParser):
         Returns:
             pd.DataFrame: DataFrame con el número de vías por fuente.
         """
-        vias_data = data.get("numeroDeViasPorFuente", [])
+        vias_data = [NOT_FOUND_MESSAGE]
+        if data:
+             vias_data = data.get("numeroDeViasPorFuente", [])
         return self.parse_to_dataframe(vias_data)
 
     def create_vias_df(self, data: dict) -> pd.DataFrame:
@@ -186,6 +195,8 @@ class PharosParser(BaseParser):
         Returns:
             pd.DataFrame: DataFrame con las vías.
         """
-        vias_data = data.get("vias", [])
+        vias_data = [NOT_FOUND_MESSAGE]
+        if data:
+         vias_data = data.get("vias", [])
         return self.parse_to_dataframe(vias_data)
 
