@@ -32,6 +32,4 @@ class PharosProcessor(BaseProcessor):
             "create_protein_protein_relations_df": "create_protein_protein_relations_df",
             "df_numero_vias_por_fuente": "create_numero_vias_por_fuente_df",
             "df_vias": "create_vias_df",
-            "Metodo prueba": "create_vias_df"
-
         }
