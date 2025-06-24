@@ -30,5 +30,5 @@ class EnsemblParser(BaseParser):
         Returns:
             pd.DataFrame: DataFrame con el identificador extraído del diccionario.
         """
-        id_data = {data["id"]:""}
+        id_data = [data["id"]]
         return self.parse_to_dataframe(id_data)
