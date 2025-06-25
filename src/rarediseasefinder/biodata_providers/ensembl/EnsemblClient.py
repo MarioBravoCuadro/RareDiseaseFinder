@@ -11,8 +11,8 @@ class EnsemblClient(BaseClient):
     Cliente para interactuar con la API REST de Ensembl.
     Permite construir URLs de consulta y obtener datos de genes por su nombre.
     """
-    #url example ?content-type=application/json;expand=1
-    path_url = "https://grch37.rest.ensembl.org/lookup/symbol/homo_sapiens/FANCA?content-type=application/json;expand=1"
+    #url example https://grch37.rest.ensembl.org/lookup/symbol/homo_sapiens/FANCA?content-type=application/json;expand=1
+    path_url = "https://grch37.rest.ensembl.org/lookup/symbol/homo_sapiens/"
     query_url = "?content-type=application/json;expand=1"
 
     def __init__(self):
@@ -21,7 +21,7 @@ class EnsemblClient(BaseClient):
         """
         pass
 
-    def _create_url_string(self,gen_term )-> str:
+    def _create_url_string(self, gen_term: str) -> str:
         """
         Construye la URL para consultar un gen en Ensembl.
         Args:
@@ -31,7 +31,7 @@ class EnsemblClient(BaseClient):
         """
         return str(self.path_url + gen_term + self.query_url)
 
-    def fetch(self,id:str)->dict:
+    def fetch(self, id: str) -> dict:
         """
         Obtiene los datos de un gen desde Ensembl usando su nombre.
         Args:

@@ -199,4 +199,34 @@ class PharosParser(BaseParser):
         if data:
          vias_data = data.get("vias", [])
         return self.parse_to_dataframe(vias_data)
+    
+    def parse_ligands(self, data: dict) -> pd.DataFrame:
+        """
+        Crea un DataFrame con los ligandos conocidos y aprobados.
+        
+        Args:
+            data (dict): Diccionario con los datos del target.
+            
+        Returns:
+            pd.DataFrame: DataFrame con los ligandos conocidos y aprobados.
+        """
+        ligands_data = [NOT_FOUND_MESSAGE]
+        if data:
+            ligands_data = data.get("ligandosConocidos", [])
+        return self.parse_to_dataframe(ligands_data)
+    
+    def parse_drugs(self, data: dict) -> pd.DataFrame:
+        """
+        Crea un DataFrame con los ligandos que son fármacos aprobados.
+        
+        Args:
+            data (dict): Diccionario con los datos del target.
+            
+        Returns:
+            pd.DataFrame: DataFrame con los ligandos que son fármacos aprobados.
+        """
+        drugs_data = [NOT_FOUND_MESSAGE]
+        if data:
+            drugs_data = data.get("deLosCualesSonFarmacosAprobados", [])
+        return self.parse_to_dataframe(drugs_data)
 

@@ -264,8 +264,9 @@ class FullWorkflow(IWorkflow):
 
 
         #Llamadas a stringdb con id sacado de opentarget
-        strindb_results = []
-        for prot, puntuacion in zip(opentargets_result["interacciones"], opentargets_result["puntuaciones"]):
+        stringdb_results = []
+        print("Interacciones:" +opentargets_result["interactions"])
+        for prot, puntuacion in zip(opentargets_result["interactions"], opentargets_result["interactions"]["puntuaciones"]):
             stringdb_step = self.get_step("Stringdb")
             stringdb_filters = stringdb_step.get_filters()
             stringdb_filters.add_client_search_params(prot)
@@ -275,9 +276,9 @@ class FullWorkflow(IWorkflow):
                 results["Puntuación"] = puntuacion
             else:
                 results = {"result": results, "Puntuación": puntuacion}
-            strindb_results.append(results)
+            stringdb_results.append(results)
 
-        stringdb_results = DataframesUtils.create_dataframe(strindb_results)
+        stringdb_results = DataframesUtils.create_dataframe(stringdb_results)
         print(stringdb_results.to_string())
         stringdb_results.keys()
 
