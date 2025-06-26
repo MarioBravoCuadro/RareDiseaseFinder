@@ -99,8 +99,8 @@ class DrugCentralParser(BaseParser):
             # Añadir a resultados
             resultados.append({
                 "DrugName": nombre,
-                "Description": descripcion,
-                "Link": link_completo
+                "Description": descripcion or NOT_FOUND_MESSAGE,
+                "Link": link_completo or NOT_FOUND_MESSAGE
             })
         
         return resultados
