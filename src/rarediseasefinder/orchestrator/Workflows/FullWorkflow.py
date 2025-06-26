@@ -428,8 +428,8 @@ class FullWorkflow(IWorkflow):
                 ]
                 """
 
-        self._create_json(uniprot_result, opentargets_result, stringdb_results)
-        self.json_factory.save_to_file("output.json")
+        self._create_json(self._search_param, uniprot_result, opentargets_result, stringdb_results)
+        self.json_factory.save_to_file()
 
         self.workflow_state = "stage_1"
 
@@ -439,7 +439,7 @@ class FullWorkflow(IWorkflow):
     def steps_execution(self)-> list[dict]:
       return self.stage_3_pipeline()
     
-    def _create_json(self, uniprot_result, pharos_result, selleckchem_result) -> dict:
+    def _create_json(self,search_term, uniprot_result, pharos_result, selleckchem_result) -> dict:
         """
         Crea una estructura JSON estandarizada a partir de los dataframes específicos.
         
@@ -451,6 +451,9 @@ class FullWorkflow(IWorkflow):
         Returns:
             dict: Estructura JSON con los resultados organizados
         """
+
+        self.json_factory.set_search_term(search_term)
+        self.json_factory.set_date()
         
         # ----- SECCIÓN: DESCRIPCIÓN -----
         # Función molecular de UniProt
