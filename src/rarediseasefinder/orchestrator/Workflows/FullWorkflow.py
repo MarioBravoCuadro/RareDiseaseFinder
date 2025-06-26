@@ -328,12 +328,12 @@ class FullWorkflow(IWorkflow):
         pantherdb_filters = BaseFilter(self._minium_methods_by_step["Panther_Step"]["methods"], "PantherProcessor")
         opentargets_filters = BaseFilter(self._minium_methods_by_step["Opentargets_Step"]["methods"],"OpenTargetsProcessor")
         stringdb_filters = BaseFilter(self._minium_methods_by_step["Stringdb_Step"]["methods"], "StringDbProcessor")
-        selleckchem_filters = BaseFilter(self._optional_methods_by_step["Selleckchem_Step"]["methods"], "SelleckchemProcessor")
-        drugcentral_filters = BaseFilter(self._optional_methods_by_step["DrugCentral_Step"]["methods"], "DrugCentralProcessor")
-        pharmgkb_filters = BaseFilter(self._optional_methods_by_step["Pharmgkb_Step"]["methods"], "PharmGKBProcessor")
-        pharmacology_filters = BaseFilter(self._optional_methods_by_step["Pharmacology_Step"]["methods"], "PharmacologyProcessor")
-        ppiatlas_filters = BaseFilter(self._optional_methods_by_step["PPIAtlas_Step"]["methods"], "PPIAtlasProcessor")
-        pharos_filters = BaseFilter(self._optional_methods_by_step["Pharos_Step"]["methods"], "PharosProcessor")
+        selleckchem_filters = BaseFilter(self._minium_methods_by_step["Selleckchem_Step"]["methods"], "SelleckchemProcessor")
+        drugcentral_filters = BaseFilter(self._minium_methods_by_step["DrugCentral_Step"]["methods"], "DrugCentralProcessor")
+        pharmgkb_filters = BaseFilter(self._minium_methods_by_step["Pharmgkb_Step"]["methods"], "PharmGKBProcessor")
+        pharmacology_filters = BaseFilter(self._minium_methods_by_step["Pharmacology_Step"]["methods"], "PharmacologyProcessor")
+        ppiatlas_filters = BaseFilter(self._minium_methods_by_step["PPIAtlas_Step"]["methods"], "PPIAtlasProcessor")
+        pharos_filters = BaseFilter(self._minium_methods_by_step["Pharos_Step"]["methods"], "PharosProcessor")
 
         # Coger step de la lista de pasos
 
