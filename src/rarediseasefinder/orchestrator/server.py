@@ -12,6 +12,7 @@ from marshmallow import fields, Schema
 from narwhals import Boolean
 
 from src.rarediseasefinder.orchestrator.Orchestrator import Orchestrator
+from src.rarediseasefinder.orchestrator.Workflows.FullWorkflow import FullWorkflow
 from src.rarediseasefinder.orchestrator.Workflows.Workflow import Workflow
 from src.rarediseasefinder.orchestrator.api import workflows
 
@@ -336,6 +337,7 @@ class StartWorkflowCollection(MethodView):
         logger.info(f"POST /stage3/start_workflow - Iniciando ejecución del workflow {workflow_name}")
         try:
             results = orchestrator.start_workflow(workflow_name)
+            logger.info(f"\033[93m{results}\033[0m")
             logger.info(f"POST /stage3/start_workflow - Workflow {workflow_name} iniciado exitosamente")
             return {
                 "workflow_name": workflow_name,
@@ -370,5 +372,5 @@ api.register_blueprint(stage_1)
 api.register_blueprint(stage_2)
 api.register_blueprint(stage_3)
 
-workflows = [Workflow()]
+workflows = [FullWorkflow(),Workflow()]
 orchestrator = Orchestrator(workflows)

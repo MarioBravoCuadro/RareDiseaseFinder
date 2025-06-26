@@ -518,9 +518,7 @@ class FullWorkflow(IWorkflow):
         # Añadir parámetro de búsqueda
         pharos_filters.add_client_search_params(self._search_param)
         pharos_result = pharos_step.process()
-        print(pharos_result.keys())
 
-        print(type(uniprot_result))
         result = self._create_json(self._search_param, uniprot_result, ppiatlas_result, opentargets_result, panther_result, pharos_result, pharmgkb_result, pharmacology_result)
         self.json_factory.save_to_file()
 
@@ -562,7 +560,6 @@ class FullWorkflow(IWorkflow):
 
         # ----- SECCIÓN: DESCRIPCIÓN -----
         # Función molecular de UniProt
-        print(type(uniprot_result))
 
         self.json_factory.add_content(
             section="DESCRIPCIÓN",
