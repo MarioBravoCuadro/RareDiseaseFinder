@@ -4,7 +4,7 @@ import re
 import pandas as pd
 
 from .errors import BaseError, BaseParsingError
-from .constants import NOT_FOUND_MESSAGE
+from .constants import NOT_FOUND_MESSAGE, NO_DATA_MARKER
 
 class BaseParser:
     def __init__(self):
@@ -25,7 +25,7 @@ class BaseParser:
         """
         
         if not data or (isinstance(data, dict) and not data) or (isinstance(data, list) and not data):
-            return pd.DataFrame([{"NO DATA": NOT_FOUND_MESSAGE}])
+            return pd.DataFrame([{NO_DATA_MARKER: NOT_FOUND_MESSAGE}])
     
         try:
             if isinstance(data, list):

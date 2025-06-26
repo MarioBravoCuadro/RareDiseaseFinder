@@ -12,4 +12,5 @@ PUBCHEM_REACTOME_URL_TEMPLATE = "https://pubchem.ncbi.nlm.nih.gov/pathway/Reacto
 
 # Mensajes
 NOT_FOUND_MESSAGE = "⚠️ No se han encontrado datos."
+NO_DATA_MARKER = "NO DATA"
 
