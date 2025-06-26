@@ -19,7 +19,7 @@ class JSONFactory:
         # Definir las secciones principales del documento
         self.sections = [
             "DESCRIPCIÓN",
-            "PROCESOS (Funcionoma)",
+            "PROCESOS",
             "PATHWAYS",
             "INTERACCIONES",
             "ENFERMEDADES",
@@ -51,7 +51,7 @@ class JSONFactory:
         """
         self.json_structure["date"] = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
-    def add_content(self, section: str, title: str, display: str, data: Any) -> bool:
+    def add_content(self, section: str, title: str, display: str, data: dict) -> bool:
         """
         Añade contenido a una sección específica.
         
