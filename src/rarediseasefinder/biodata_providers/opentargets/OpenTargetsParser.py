@@ -80,7 +80,8 @@ class OpenTargetsParser(BaseParser):
         df = self.parse_to_dataframe(drugs_data)
         if not NO_DATA_MARKER in df.columns:
             # Ordenar por fase en orden descendente
-            df = df.sort_values(by="Fase", ascending=False)
+            df = df.sort_values(by="Fase", ascending=False).drop_duplicates(subset=["CHEMBL Link"])
+            df = df.reset_index(drop=True)
         return df
     
     def create_associated_diseases_df(self, data: Dict[str, Any]) -> pd.DataFrame:
