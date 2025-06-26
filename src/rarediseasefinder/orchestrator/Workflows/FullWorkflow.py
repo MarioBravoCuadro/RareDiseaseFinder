@@ -1,6 +1,6 @@
 import json
 from abc import ABC
-from turtle import pd
+import pandas as pd
 from typing import List
 
 from IPython.core.release import description
@@ -397,7 +397,6 @@ class FullWorkflow(IWorkflow):
         print(ensembler_result.keys())
         print(panther_result.keys())
         print("ensembl_id: " + ensembler_result["ensembl_id"].iloc[0][0])
-
         opentargets_step = self.get_step("Opentargets")
         opentargets_filters = opentargets_step.get_filters()
         #Accedemos al ensembl_id que se necesita como entrada en opentargets.
@@ -419,26 +418,30 @@ class FullWorkflow(IWorkflow):
             stringdb_results.append(results["get_annotation"])
 
         stringdb_results = DataframesUtils.create_dataframe(stringdb_results)
-        print(stringdb_results)
-        """
+        #print(stringdb_results)
+
         # Procesar los resultados de OpenTargets para DrugCentral
         # Aquí asumimos que opentargets_result["known_drugs"]["Nombre"] contiene los nombres de los fármacos
         # y que queremos obtener el enlace y descripción de DrugCentral para cada uno.
-        drug_results = []
-        for row, drug in zip(opentargets_result["known_drugs"], opentargets_result["known_drugs"]["Nombre"]):
+        drug_results = ["Description DrugCentral",]
+        for _, row in opentargets_result["known_drugs"].iterrows():
+            row_dict = row.to_dict()
+            drug = row_dict["Nombre"]
             print("Buscando en DrugCentral: " + drug)
             drug_central_step = self.get_step("DrugCentral")
             drug_central_filters = drug_central_step.get_filters()
             drug_central_filters.add_client_search_params(drug)
             results_d = drug_central_step.process()
-            print(results_d.keys())
-            if results_d:
-                row["Description DrugCentral"] = results_d["obtener_links_drugcentral"].iloc[0][0]
-                row["Link DrugCentral"] = results_d["obtener_links_drugcentral"].iloc[0][1]
-                drug_results.append(row)
+            if results_d and not results_d["drug_results"].empty:
+                row_dict["Description DrugCentral"] = results_d["drug_results"].iloc[0, 1]
+                row_dict["Link DrugCentral"] = results_d["drug_results"].iloc[0, 2]
+            drug_results.append(row_dict)
 
         drug_results = DataframesUtils.create_dataframe(drug_results)
-        print(drug_results)
+
+        print(drug_results )
+
+        """
         # Procesar los resultados de OpenTargets para Selleckchem
         # Aquí asumimos que opentargets_result["known_drugs"]["Nombre"] contiene los nombres de los fármacos
         # y que queremos obtener el enlace de Selleckchem para cada uno.
@@ -446,12 +449,13 @@ class FullWorkflow(IWorkflow):
         # Coger step de la lista de pasos Selleckchem
         # Iterar sobre los nombres de los fármacos y buscar en Selleckchem
         selleckchem_and_drugcentral_results = []
-        for row, drug in zip(drug_results, drug_results["Nombre"]):
+        for row, drug in zip(drug_results, drug_results["drug_results"]["DrugName"]):
             print("Buscando en Selleckchem: " + drug)
             selleckchem_step = self.get_step("Selleckchem")
             selleckchem_filters = selleckchem_step.get_filters()
             selleckchem_filters.add_client_search_params(drug)
             results_s = selleckchem_step.process()
+            print(results_s.keys())
             if results_s:
                 row["Link Selleckchem"] = results_s["obtener_links_selleckchem"].iloc[0][0]
                 selleckchem_and_drugcentral_results.append(row)
@@ -616,7 +620,13 @@ class FullWorkflow(IWorkflow):
 
 if __name__ == "__main__":
     workflow = FullWorkflow()
-    workflow._search_param = "FANCA"
+    workflow._search_param = "TTR"
+
+    # Configuración de pandas para mostrar todos los datos de los DataFrames
+    pd.set_option('display.max_rows', None)
+    pd.set_option('display.max_columns', None)
+    pd.set_option('display.width', None)
+    pd.set_option('display.max_colwidth', None)
 
     print(workflow.steps_execution())
     workflow_json = workflow._create_json
