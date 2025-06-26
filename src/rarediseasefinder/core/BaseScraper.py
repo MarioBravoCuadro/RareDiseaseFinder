@@ -1,11 +1,10 @@
-
 from abc import ABC, abstractmethod
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from typing import Dict, Any
+import tempfile
 
 from ..core.BaseRetriever import BaseRetriever
-from ..core.utils import get_unique_directory
 
 
 class BaseScraper(BaseRetriever, ABC):
@@ -20,7 +19,8 @@ class BaseScraper(BaseRetriever, ABC):
             base_url (str): URL base del sitio a scrapear
         """
         self.BASE_URL = base_url
-        self.unique_dir = get_unique_directory()
+        self._tmpdir = tempfile.TemporaryDirectory()
+        self.unique_dir = self._tmpdir.name
         self.chrome_options = self.getOptionsChromeDriver()
         self.chrome_options.add_argument(f"--user-data-dir={self.unique_dir}")
         
@@ -32,10 +32,19 @@ class BaseScraper(BaseRetriever, ABC):
 
     def __del__(self):
         """
-        Destructor para cerrar el navegador al eliminar la instancia.
+        Destructor para cerrar el navegador y eliminar el directorio temporal al eliminar la instancia.
+        Maneja silenciosamente cualquier excepción para evitar errores al finalizar el intérprete.
         """
-        if hasattr(self, 'driver') and self.driver:
-            self.driver.quit()
+        try:
+            if hasattr(self, 'driver') and self.driver:
+                self.driver.quit()
+        except Exception:
+            pass
+        try:
+            if hasattr(self, '_tmpdir'):
+                self._tmpdir.cleanup()
+        except Exception:
+            pass
 
     def getOptionsChromeDriver(self) -> Options:
         """
