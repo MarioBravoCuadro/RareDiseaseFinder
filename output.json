@@ -1,0 +1,396 @@
+{
+  "categories": [
+    {
+      "section": "DESCRIPCI\u00d3N",
+      "content": [
+        {
+          "title": "UniProt: Funci\u00f3n molecular",
+          "display": "table",
+          "data": [
+            {
+              "Function": "Thyroid hormone-binding protein. Probably transports thyroxine from the bloodstream to the brain",
+              "EvidenceCode": "ECO:0000269",
+              "QuickGO": "https://www.ebi.ac.uk/QuickGO/term/ECO:0000269",
+              "Source": "PubMed",
+              "PublicationID": "3714052",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/3714052"
+            }
+          ]
+        },
+        {
+          "title": "UniProt: Localizaci\u00f3n subcelular",
+          "display": "table",
+          "data": [
+            {
+              "Value": "Secreted",
+              "ID": "SL-0243"
+            },
+            {
+              "Value": "Cytoplasm",
+              "ID": "SL-0086"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "PROCESOS (Funcionoma)",
+      "content": []
+    },
+    {
+      "section": "PATHWAYS",
+      "content": []
+    },
+    {
+      "section": "INTERACCIONES",
+      "content": []
+    },
+    {
+      "section": "ENFERMEDADES",
+      "content": [
+        {
+          "title": "UniProt: Enfermedades asociadas",
+          "display": "table",
+          "data": [
+            {
+              "Nombre": "Amyloidosis, hereditary systemic 1",
+              "Acronym": "AMYLD1",
+              "Description": "A form of hereditary systemic amyloidosis, a disorder characterized by amyloid deposition in multiple tissues resulting in a wide clinical spectrum. AMYLD1 is an autosomal dominant form due to transthyretin amyloid deposition. Protein fibrils can form in different tissues leading to amyloid polyneuropathies, amyloidotic cardiomyopathy, carpal tunnel syndrome, systemic senile amyloidosis. The disease includes leptomeningeal amyloidosis that is characterized by primary involvement of the central nervous system. Neuropathologic examination shows amyloid in the walls of leptomeningeal vessels, in pia arachnoid, and subpial deposits. Some patients also develop vitreous amyloid deposition that leads to visual impairment (oculoleptomeningeal amyloidosis). Clinical features include seizures, stroke-like episodes, dementia, psychomotor deterioration, variable amyloid deposition in the vitreous humor.",
+              "OMIM": "https://www.omim.org/entry/105210",
+              "Publications": "10036587, 10071047, 10211412, 10436378, 10439117, 10611950, 10627135, 10694917, 10842705, 10842718, 10882995, 11243784, 11445644, 11866053, 12050338, 12403615, 12557757, 12771253, 1301926, 1351039, 1362222, 1436517, 1517749, 1520326, 1520336, 15214015, 15217993, 1544214, 15478468, 1570831, 15735344, 16185074, 1656975, 16627944, 1734866, 17453626, 17503405, 17577687, 17635579, 19167329, 1932142, 2046936, 2161654, 23317988, 2363717, 2891727, 3022108, 3135807, 3722385, 3818577, 6487335, 6583672, 6651852, 7655883, 7850982, 7910950, 7914929, 7923855, 8019560, 8038017, 8081397, 8095302, 8133316, 8257997, 8352764, 8382610, 8428915, 8579098, 8990019, 9066351, 9605286, 9733771, Ref.91"
+            },
+            {
+              "Nombre": "Hyperthyroxinemia, dystransthyretinemic",
+              "Acronym": "DTTRH",
+              "Description": "A condition characterized by elevation of total and free thyroxine in healthy, euthyroid persons without detectable binding protein abnormalities.",
+              "OMIM": "https://www.omim.org/entry/145680",
+              "Publications": "1979335"
+            },
+            {
+              "Nombre": "Carpal tunnel syndrome 1",
+              "Acronym": "CTS1",
+              "Description": "A condition characterized by entrapment of the median nerve within the carpal tunnel. Symptoms include burning pain and paresthesias involving the ventral surface of the hand and fingers which may radiate proximally. Impairment of sensation in the distribution of the median nerve and thenar muscle atrophy may occur. This condition may be associated with repetitive occupational trauma, wrist injuries, amyloid neuropathies, rheumatoid arthritis.",
+              "OMIM": "https://www.omim.org/entry/115430",
+              "Publications": "8309582"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "TERAP\u00c9UTICA",
+      "content": []
+    },
+    {
+      "section": "REFERENCIAS",
+      "content": [
+        {
+          "title": "UniProt: Publicaciones por enfermedad",
+          "display": "table",
+          "data": [
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10036587"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10071047"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10211412"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10436378"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10439117"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10611950"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10627135"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10694917"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10842705"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10842718"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/10882995"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/11243784"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/11445644"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/11866053"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/12050338"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/12403615"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/12557757"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/12771253"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1301926"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1351039"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1362222"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1436517"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1517749"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1520326"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1520336"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/15214015"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/15217993"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1544214"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/15478468"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1570831"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/15735344"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/16185074"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1656975"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/16627944"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1734866"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/17453626"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/17503405"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/17577687"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/17635579"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/19167329"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1932142"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/2046936"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/2161654"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/23317988"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/2363717"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/2891727"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/3022108"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/3135807"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/3722385"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/3818577"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/6487335"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/6583672"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/6651852"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/7655883"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/7850982"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/7910950"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/7914929"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/7923855"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8019560"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8038017"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8081397"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8095302"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8133316"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8257997"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8352764"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8382610"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8428915"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8579098"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8990019"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/9066351"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/9605286"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/9733771"
+            },
+            {
+              "DiseaseID": "Amyloidosis, hereditary systemic 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/Ref.91"
+            },
+            {
+              "DiseaseID": "Hyperthyroxinemia, dystransthyretinemic",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/1979335"
+            },
+            {
+              "DiseaseID": "Carpal tunnel syndrome 1",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/8309582"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

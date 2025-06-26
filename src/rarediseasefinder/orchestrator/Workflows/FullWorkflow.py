@@ -12,10 +12,12 @@ from src.rarediseasefinder.orchestrator.WorkflowSteps.EnsemblWorkflowStep import
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PantherdbWorkflowStep import PantherdbWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PharosWorkflowStep import PharosWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.SelleckchemWorkflowStep import SelleckchemWorkflowStep
+from src.rarediseasefinder.orchestrator.WorkflowSteps.DrugCentralWorkflowStep import DrugCentralWorkflowStep
 from src.rarediseasefinder.core.BaseFilter import BaseFilter
 from src.rarediseasefinder.orchestrator.WorkflowSteps.StringdbWorkflowStep import StringdbWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.UniprotWorkflowStep import UniprotWorkflowStep
 from src.rarediseasefinder.orchestrator.Workflows.DataframesUtils import DataframesUtils
+from src.rarediseasefinder.orchestrator.Workflows.JSONFactory import JSONFactory
 
 
 class FullWorkflow(IWorkflow):
@@ -76,7 +78,8 @@ class FullWorkflow(IWorkflow):
         self._optional_methods_by_step = value
 
     def __init__(self):
-
+        
+        self.json_factory = JSONFactory()
         self.workflow_state = "stage_1"
         self._search_param = ""
         self._name = "FullWorkflow"
@@ -89,6 +92,7 @@ class FullWorkflow(IWorkflow):
         self.add_step_to_list_of_steps({"Opentargets": OpentargetsWorkflowStep})
         self.add_step_to_list_of_steps({"Stringdb": StringdbWorkflowStep})
         self.add_step_to_list_of_steps({"Selleckchem": SelleckchemWorkflowStep})
+        self.add_step_to_list_of_steps({"DrugCentral": DrugCentralWorkflowStep})
 
 
         self.instantiate_steps()
@@ -193,6 +197,16 @@ class FullWorkflow(IWorkflow):
                         "METHOD_PARSER_FILTERS": ""
                     }
                 ]
+            },
+            "DrugCentral_Step": {
+                "step_name": "DrugCentral",
+                "processor": "DrugCentralProcessor",
+                "methods": [
+                    {
+                        "METHOD_ID": "drug_results",
+                        "METHOD_PARSER_FILTERS": ""
+                    }
+                ]
             }
         }
 
@@ -213,6 +227,7 @@ class FullWorkflow(IWorkflow):
         opentargets_filters = BaseFilter(self._minium_methods_by_step["Opentargets_Step"]["methods"],"OpenTargetsProcessor")
         stringdb_filters = BaseFilter(self._minium_methods_by_step["Stringdb_Step"]["methods"], "StringDbProcessor")
         selleckchem_filters = BaseFilter(self._optional_methods_by_step["Selleckchem_Step"]["methods"], "SelleckchemProcessor")
+        drugcentral_filters = BaseFilter(self._optional_methods_by_step["DrugCentral_Step"]["methods"], "DrugCentralProcessor")
 
         # Coger step de la lista de pasos
 
@@ -222,8 +237,7 @@ class FullWorkflow(IWorkflow):
         opentargets_step = self.get_step("Opentargets")
         stringdb_step = self.get_step("Stringdb")
         selleckchem_step = self.get_step("Selleckchem")
-
-
+        drugcentral_step = self.get_step("DrugCentral")
 
         # Añadir filtro a cada step
 
@@ -233,6 +247,7 @@ class FullWorkflow(IWorkflow):
         opentargets_step.set_filters(opentargets_filters)
         stringdb_step.set_filters(stringdb_filters)
         selleckchem_step.set_filters(selleckchem_filters)
+        drugcentral_step.set_filters(drugcentral_filters)
 
 
 
@@ -291,26 +306,45 @@ class FullWorkflow(IWorkflow):
 
         stringdb_results = DataframesUtils.create_dataframe(stringdb_results)
         print(stringdb_results)
+        """
+        # Procesar los resultados de OpenTargets para DrugCentral
+        # Aquí asumimos que opentargets_result["known_drugs"]["Nombre"] contiene los nombres de los fármacos
+        # y que queremos obtener el enlace y descripción de DrugCentral para cada uno.
+        drug_results = []
+        for row, drug in zip(opentargets_result["known_drugs"], opentargets_result["known_drugs"]["Nombre"]):
+            print("Buscando en DrugCentral: " + drug)
+            drug_central_step = self.get_step("DrugCentral")
+            drug_central_filters = drug_central_step.get_filters()
+            drug_central_filters.add_client_search_params(drug)
+            results_d = drug_central_step.process()
+            print(results_d.keys())
+            if results_d:
+                row["Description DrugCentral"] = results_d["obtener_links_drugcentral"].iloc[0][0]
+                row["Link DrugCentral"] = results_d["obtener_links_drugcentral"].iloc[0][1]
+                drug_results.append(row)
+
+        drug_results = DataframesUtils.create_dataframe(drug_results)
+        print(drug_results)
         # Procesar los resultados de OpenTargets para Selleckchem
         # Aquí asumimos que opentargets_result["known_drugs"]["Nombre"] contiene los nombres de los fármacos
         # y que queremos obtener el enlace de Selleckchem para cada uno.
         # Inicializar una lista para almacenar los resultados de Selleckchem
         # Coger step de la lista de pasos Selleckchem
         # Iterar sobre los nombres de los fármacos y buscar en Selleckchem
-        selleckchem_results = []
-        for row in opentargets_result["known_drugs"]:
-            drug = row[0]
+        selleckchem_and_drugcentral_results = []
+        for row, drug in zip(drug_results, drug_results["Nombre"]):
             print("Buscando en Selleckchem: " + drug)
             selleckchem_step = self.get_step("Selleckchem")
             selleckchem_filters = selleckchem_step.get_filters()
             selleckchem_filters.add_client_search_params(drug)
             results_s = selleckchem_step.process()
             if results_s:
-                row["Link Selleckchem"] = results["obtener_links_selleckchem"].iloc[0][0]
-                selleckchem_results.append(row)
+                row["Link Selleckchem"] = results_s["obtener_links_selleckchem"].iloc[0][0]
+                selleckchem_and_drugcentral_results.append(row)
 
-        selleckchem_results = DataframesUtils.create_dataframe(selleckchem_results)
-        print(selleckchem_results)
+        selleckchem_and_drugcentral_results = DataframesUtils.create_dataframe(selleckchem_and_drugcentral_results)
+        print(selleckchem_and_drugcentral_results)
+        """
 
         """
                 results = [
@@ -394,6 +428,8 @@ class FullWorkflow(IWorkflow):
                 ]
                 """
 
+        self._create_json(uniprot_result, opentargets_result, stringdb_results)
+        self.json_factory.save_to_file("output.json")
 
         self.workflow_state = "stage_1"
 
@@ -402,9 +438,107 @@ class FullWorkflow(IWorkflow):
 
     def steps_execution(self)-> list[dict]:
       return self.stage_3_pipeline()
+    
+    def _create_json(self, uniprot_result, pharos_result, selleckchem_result) -> dict:
+        """
+        Crea una estructura JSON estandarizada a partir de los dataframes específicos.
+        
+        Args:
+            uniprot_result: Resultados de Uniprot
+            pharos_result: Resultados de Pharos
+            selleckchem_result: Resultados de Selleckchem
+            
+        Returns:
+            dict: Estructura JSON con los resultados organizados
+        """
+        
+        # ----- SECCIÓN: DESCRIPCIÓN -----
+        # Función molecular de UniProt
+        self.json_factory.add_content(
+            section="DESCRIPCIÓN",
+            title="UniProt: Función molecular",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(uniprot_result["function"])
+        )
+        
+        # Localización subcelular de UniProt
+        self.json_factory.add_content(
+            section="DESCRIPCIÓN",
+            title="UniProt: Localización subcelular",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(uniprot_result["subcellular_location"])
+        )
+        
+        # Información de Pharos
+        """
+        self.json_factory.add_content(
+            section="DESCRIPCIÓN",
+            title="Pharos: Información del target",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(pharos_result["df_info"])
+        )
+        """
+        
+        # ----- SECCIÓN: PATHWAYS -----
+        """
+        self.json_factory.add_content(
+            section="PATHWAYS",
+            title="Pharos: Vías de señalización",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(pharos_result["df_vias"])
+        )
+        """
+        
+        # ----- SECCIÓN: INTERACCIONES -----
+        """
+        self.json_factory.add_content(
+            section="INTERACCIONES",
+            title="Pharos: Interacciones proteína-proteína",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(pharos_result["create_protein_protein_relations_df"])
+        )
+        """
+        # ----- SECCIÓN: ENFERMEDADES -----
+        # Enfermedades de UniProt
+        self.json_factory.add_content(
+            section="ENFERMEDADES",
+            title="UniProt: Enfermedades asociadas",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(uniprot_result["disease"])
+        )
+        
+        # ----- SECCIÓN: TERAPÉUTICA -----
+        """
+        self.json_factory.add_content(
+            section="TERAPÉUTICA",
+            title="Selleckchem: Información de fármacos",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(selleckchem_result["obtener_links_selleckchem"])
+        )
+        """
+        
+        # ----- SECCIÓN: REFERENCIAS -----
+        self.json_factory.add_content(
+            section="REFERENCIAS",
+            title="UniProt: Publicaciones por enfermedad",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(uniprot_result["disease_publications"])
+        )
+        
+        # ----- SECCIÓN: OPCIONALES -----
+        self.json_factory.add_content(
+            section="Opcionales",
+            title="UniProt: Términos GO",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(uniprot_result["go_terms"])
+        )
+        
+        # Obtener el JSON resultante
+        return self.json_factory.get_json()
 
 if __name__ == "__main__":
     workflow = FullWorkflow()
     workflow._search_param = "TTR"
 
     print(workflow.steps_execution())
+    workflow_json = workflow._create_json

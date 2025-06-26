@@ -101,3 +101,18 @@ class DataframesUtils:
         else:
             # Si son diccionarios u otros tipos, usar el constructor de DataFrame
             return pd.DataFrame(df_list)
+        
+    @staticmethod
+    def dataframe_to_dict(df: pd.DataFrame) -> Dict[str, Any]:
+        """
+        Convierte un DataFrame a un diccionario con una estructura anidada.
+
+        Args:
+            df (pd.DataFrame): DataFrame a convertir.
+
+        Returns:
+            Dict[str, Any]: Diccionario con la estructura anidada del DataFrame.
+        """
+        if df.empty:
+            return {}
+        return df.to_dict(orient='records')
