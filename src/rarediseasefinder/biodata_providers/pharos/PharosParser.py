@@ -130,7 +130,7 @@ class PharosParser(BaseParser):
         """
         info_data = [NOT_FOUND_MESSAGE]
         if data:
-          info_data = [{key: data[key] for key in ["nombre", "uniprot_ID", "descripcion", "claseDiana", "secuencia"]}]
+          info_data = [{key: data[key] for key in ["descripcion", "claseDiana"]}]
         return self.parse_to_dataframe(info_data)
 
     def create_omim_df(self, data: dict) -> pd.DataFrame:
