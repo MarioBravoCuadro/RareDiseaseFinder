@@ -4,7 +4,7 @@ import re
 import pandas as pd
 
 from .errors import BaseError, BaseParsingError
-
+from .constants import NOT_FOUND_MESSAGE
 
 class BaseParser:
     def __init__(self):
@@ -23,6 +23,10 @@ class BaseParser:
         Raises:
             ParseError: Si los datos no pueden convertirse a DataFrame.
         """
+        
+        if not data or (isinstance(data, dict) and not data) or (isinstance(data, list) and not data):
+            return pd.DataFrame([{"NO DATA": NOT_FOUND_MESSAGE}])
+    
         try:
             if isinstance(data, list):
                 return pd.DataFrame(data)
