@@ -6,10 +6,14 @@ from typing import List
 from IPython.core.release import description
 from pandas.core.interchange.dataframe_protocol import DataFrame
 
+from src.rarediseasefinder.biodata_providers.pharmgkb.PharmGKBClient import PharmGKBClient
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
+from src.rarediseasefinder.orchestrator.WorkflowSteps.PharmGKBWorkflowStep import PharmGKBWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.OpentargetsWorkflowStep import OpentargetsWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.EnsemblWorkflowStep import EnsemblerWorkflowStep
+from src.rarediseasefinder.orchestrator.WorkflowSteps.PPIAtlasWorkflowStep import PPIAtlasWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PantherdbWorkflowStep import PantherdbWorkflowStep
+from src.rarediseasefinder.orchestrator.WorkflowSteps.PharmacologyWorkflowStep import PharmacologyWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.PharosWorkflowStep import PharosWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.SelleckchemWorkflowStep import SelleckchemWorkflowStep
 from src.rarediseasefinder.orchestrator.WorkflowSteps.DrugCentralWorkflowStep import DrugCentralWorkflowStep
@@ -93,6 +97,13 @@ class FullWorkflow(IWorkflow):
         self.add_step_to_list_of_steps({"Stringdb": StringdbWorkflowStep})
         self.add_step_to_list_of_steps({"Selleckchem": SelleckchemWorkflowStep})
         self.add_step_to_list_of_steps({"DrugCentral": DrugCentralWorkflowStep})
+        self.add_step_to_list_of_steps({"Pharmacology": PharmacologyWorkflowStep})
+        self.add_step_to_list_of_steps({"Pharmgkb": PharmGKBWorkflowStep})
+        self.add_step_to_list_of_steps({"PPIAtlas": PPIAtlasWorkflowStep})
+        self.add_step_to_list_of_steps({"Pharos": PharosWorkflowStep})
+
+
+
 
 
         self.instantiate_steps()
@@ -207,6 +218,97 @@ class FullWorkflow(IWorkflow):
                         "METHOD_PARSER_FILTERS": ""
                     }
                 ]
+            },
+            "Pharmacology_Step": {
+                "step_name": "Pharmacology",
+                "processor": "PharmacologyProcessor",
+                "methods": [
+                    {
+                        "METHOD_ID": "target_id",
+                        "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "comments",
+                        "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "references",
+                        "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "interactions",
+                        "METHOD_PARSER_FILTERS": ""
+                    }
+                ]
+            },
+            "Pharmgkb_Step": {
+                "step_name": "Pharmgkb",
+                "processor": "PharmGKBProcessor",
+                "methods": [
+                    {
+                        "METHOD_ID": "gene_symbols",
+                        "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "label_annotations",
+                        "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "literature",
+                        "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "pathways",
+                        "METHOD_PARSER_FILTERS": ""
+                    }
+                ]
+            },
+            "PPIAtlas_Step": {
+                "step_name": "PPIAtlas",
+                "processor": "PPIAtlasProcessor",
+                "methods": [
+                    {
+                        "METHOD_ID": "ppi_table",
+                        "METHOD_PARSER_FILTERS": ""
+                    }
+                ]
+            },
+            "Pharos_Step": {
+                "step_name": "Pharos",
+                "processor": "PharosProcessor",
+                "methods": [
+                    {
+                        "METHOD_ID": "df_info",
+                        "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "df_omim",
+                        "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "create_protein_protein_relations_df",
+                        "METHOD_PARSER_FILTERS": {
+                            "PRIORIDAD_CLASES": {
+                                "Tclin": 1,
+                                "Tchem": 2,
+                                "Tbio": 3,
+                                "Tdark": 4
+                            },
+                            "PRIORIDAD_PROPIEDADES": {
+                                "p_wrong": 1,
+                                "p_ni": 2
+                            }
+                        }
+                    },
+                    {
+                        "METHOD_ID": "df_vias",
+                        "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "df_numero_vias_por_fuente",
+                        "METHOD_PARSER_FILTERS": ""
+                    }
+                ]
             }
         }
 
@@ -228,6 +330,10 @@ class FullWorkflow(IWorkflow):
         stringdb_filters = BaseFilter(self._minium_methods_by_step["Stringdb_Step"]["methods"], "StringDbProcessor")
         selleckchem_filters = BaseFilter(self._optional_methods_by_step["Selleckchem_Step"]["methods"], "SelleckchemProcessor")
         drugcentral_filters = BaseFilter(self._optional_methods_by_step["DrugCentral_Step"]["methods"], "DrugCentralProcessor")
+        pharmgkb_filters = BaseFilter(self._optional_methods_by_step["Pharmgkb_Step"]["methods"], "PharmGKBProcessor")
+        pharmacology_filters = BaseFilter(self._optional_methods_by_step["Pharmacology_Step"]["methods"], "PharmacologyProcessor")
+        ppiatlas_filters = BaseFilter(self._optional_methods_by_step["PPIAtlas_Step"]["methods"], "PPIAtlasProcessor")
+        pharos_filters = BaseFilter(self._optional_methods_by_step["Pharos_Step"]["methods"], "PharosProcessor")
 
         # Coger step de la lista de pasos
 
@@ -238,6 +344,10 @@ class FullWorkflow(IWorkflow):
         stringdb_step = self.get_step("Stringdb")
         selleckchem_step = self.get_step("Selleckchem")
         drugcentral_step = self.get_step("DrugCentral")
+        pharmgkb_step = self.get_step("Pharmgkb")
+        pharmacology_step = self.get_step("Pharmacology")
+        ppiatlas_step = self.get_step("PPIAtlas")
+        pharos_step = self.get_step("Pharos")
 
         # Añadir filtro a cada step
 
@@ -248,6 +358,10 @@ class FullWorkflow(IWorkflow):
         stringdb_step.set_filters(stringdb_filters)
         selleckchem_step.set_filters(selleckchem_filters)
         drugcentral_step.set_filters(drugcentral_filters)
+        pharmgkb_step.set_filters(pharmgkb_filters)
+        pharmacology_step.set_filters(pharmacology_filters)
+        ppiatlas_step.set_filters(ppiatlas_filters)
+        pharos_step.set_filters(pharos_filters)
 
 
 
@@ -346,87 +460,48 @@ class FullWorkflow(IWorkflow):
         print(selleckchem_and_drugcentral_results)
         """
 
-        """
-                results = [
-                    {
-                        "Section":"Descripcion",
-                        "Data":[
-                            {
-                             "Fuente": "Uniprot",
-                             "df_info" : uniprot_result["function"]
-                            },
-                            {
-                                "Fuente": "Uniprot",
-                                "df_info": uniprot_result["subcellular_location"]
-                            },
-                            {
-                                "Fuente": "Pharos",
-                                "df_info": pharos_result["df_info"]
-                            }
+
+        # Coger step de la lista de pasos
+        pharmacology_step = self.get_step("Pharmacology")
+        # Coger los filtros
+        pharmacology_filters = pharmacology_step.get_filters()
+        # Añadir parámetro de búsqueda
+        pharmacology_filters.add_client_search_params(self._search_param)
+        pharmacology_result = pharmacology_step.process()
+
+        print(pharmacology_result.keys())
+        print(pharmacology_result)
+
+        # Coger step de la lista de pasos
+        pharmgkb_step = self.get_step("Pharmgkb")
+        # Coger los filtros
+        pharmgkb_filters = pharmgkb_step.get_filters()
+        # Añadir parámetro de búsqueda
+        pharmgkb_filters.add_client_search_params(self._search_param)
+        pharmgkb_result = pharmgkb_step.process()
+        print(pharmgkb_result.keys())
+        print(pharmgkb_result)
+
+        # Coger step de la lista de pasos
+        ppiatlas_step = self.get_step("PPIAtlas")
+        # Coger los filtros
+        ppiatlas_filters = ppiatlas_step.get_filters()
+        # Añadir parámetro de búsqueda
+        ppiatlas_filters.add_client_search_params(self._search_param)
+        ppiatlas_result = ppiatlas_step.process()
+        print(ppiatlas_result.keys())
+        print(ppiatlas_result)
+
+        # Coger step de la lista de pasos
+        pharos_step = self.get_step("Pharos")
+        # Coger los filtros
+        pharos_filters = pharos_step.get_filters()
+        # Añadir parámetro de búsqueda
+        pharos_filters.add_client_search_params(self._search_param)
+        pharos_result = pharos_step.process()
+        print(pharos_result.keys())
+        print(panther_result)
         
-                        ]
-                    },
-                    {
-                        "Section": "PATHWAYS",
-                        "Data": [
-                            {
-                                "Fuente": "Pharos",
-                                "df_info": pharos_result["df_vias"]
-                            }
-                        ]
-                    },
-                    {
-                        "Section": "INTERACCIONES",
-                        "Data": [
-                            {
-                                "Fuente": "Pharos",
-                                "df_info": pharos_result["create_protein_protein_relations_df"]
-                            }
-                        ]
-                    },
-                    {
-                        "Section": "ENFERMEDADES",
-                        "Data": [
-                            {
-                                "Fuente": "Uniprot",
-                                "df_info": uniprot_result["disease"]
-                            },
-                            {
-                                "Fuente": "Pharos",
-                                "df_info": pharos_result["df_info"]
-                            }
-                        ]
-                    },
-                    {
-                        "Section": "TERAPÉUTICA",
-                        "Data": [
-                            {
-                                "Fuente": "Selleckchem",
-                                "df_info": selleckchem_result["obtener_links_selleckchem"]
-                            }
-                        ]
-                    },
-                    {
-                        "Section": "REFERENCIAS",
-                        "Data": [
-                            {
-                                "Fuente": "Uniprot",
-                                "df_info": uniprot_result["disease_publications"]
-                            }
-                        ]
-                    },
-                    {
-                        "Section": "Opcionales",
-                        "Data": [
-                            {
-                                "Fuente": "Uniprot",
-                                "df_info": uniprot_result["go_terms"]
-                            }
-                        ]
-                    }
-        
-                ]
-                """
 
         self._create_json(self._search_param, uniprot_result, opentargets_result, stringdb_results)
         self.json_factory.save_to_file()
@@ -541,7 +616,7 @@ class FullWorkflow(IWorkflow):
 
 if __name__ == "__main__":
     workflow = FullWorkflow()
-    workflow._search_param = "TTR"
+    workflow._search_param = "FANCA"
 
     print(workflow.steps_execution())
     workflow_json = workflow._create_json
