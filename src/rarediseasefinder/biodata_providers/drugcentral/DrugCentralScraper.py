@@ -39,7 +39,7 @@ class DrugCentralScraper(BaseScraper):
             self.driver.get(search_url)
             
             # Esperar a que cargue la tabla de resultados o un mensaje de no resultados
-            WebDriverWait(self.driver, 10).until(
+            WebDriverWait(self.driver, 3).until(
                 lambda d: d.find_element(By.TAG_NAME, "table") or 
                           d.find_element(By.XPATH, "//div[contains(text(), 'No results found')]")
             )
