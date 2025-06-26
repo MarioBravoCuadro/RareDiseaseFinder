@@ -94,6 +94,7 @@ class IWorkflow(ABC):
             for key, step_instance in step.items():
                 if isinstance(step_instance, type):
                     step[key] = step_instance()
+                    print("step: "+str(key)+" instanciado.")
 
     def get_steps(self) -> list[dict]:
         """
