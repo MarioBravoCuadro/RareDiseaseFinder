@@ -4,7 +4,7 @@ Módulo para transformar datos de OpenTargets en DataFrames estructurados.
 from typing import Dict, Any
 
 import pandas as pd
-from rarediseasefinder.core.constants import REACTOME_URL_TEMPLATE, NO_DATA_MARKER
+from rarediseasefinder.core.constants import REACTOME_URL_TEMPLATE, NO_DATA_MARKER, CHEMBL_URL_TEMPLATE
 
 from ...core.BaseParser import BaseParser
 
@@ -69,7 +69,7 @@ class OpenTargetsParser(BaseParser):
         if "knownDrugs" in data and "rows" in data["knownDrugs"]:
             for drug in data["knownDrugs"]["rows"]:
                 drugs_data.append({
-                    "ID del fármaco": drug.get("drugId", ""),
+                    "CHEMBL Link": CHEMBL_URL_TEMPLATE.format(drug.get("drugId", "")),
                     "Nombre": drug.get("prefName", ""),
                     "Mecanismo de acción": drug.get("mechanismOfAction", ""),
                     "Fase": drug.get("phase", ""),

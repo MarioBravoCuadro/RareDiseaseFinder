@@ -9,6 +9,7 @@ OMIM_URL_TEMPLATE = "https://www.omim.org/entry/{}"
 PHAROS_URL_TEMPLATE = "https://pharos.nih.gov/targets/{}"
 REACTOME_URL_TEMPLATE = "https://reactome.org/content/detail/{}"
 PUBCHEM_REACTOME_URL_TEMPLATE = "https://pubchem.ncbi.nlm.nih.gov/pathway/Reactome:{}"
+CHEMBL_URL_TEMPLATE = "https://www.ebi.ac.uk/chembl/explore/compound/{}#DrugIndications"
 
 # Mensajes
 NOT_FOUND_MESSAGE = "⚠️ No se han encontrado datos."
