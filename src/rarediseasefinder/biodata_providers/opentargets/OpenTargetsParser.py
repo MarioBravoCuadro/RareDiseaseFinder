@@ -4,7 +4,7 @@ Módulo para transformar datos de OpenTargets en DataFrames estructurados.
 from typing import Dict, Any
 
 import pandas as pd
-from rarediseasefinder.core.constants import REACTOME_URL_TEMPLATE
+from rarediseasefinder.core.constants import REACTOME_URL_TEMPLATE, NO_DATA_MARKER
 
 from ...core.BaseParser import BaseParser
 
@@ -78,7 +78,7 @@ class OpenTargetsParser(BaseParser):
                 })
         
         df = self.parse_to_dataframe(drugs_data)
-        if not df.empty:
+        if not NO_DATA_MARKER in df.columns:
             # Ordenar por fase en orden descendente
             df = df.sort_values(by="Fase", ascending=False)
         return df
@@ -104,7 +104,7 @@ class OpenTargetsParser(BaseParser):
                 })
         
         df = self.parse_to_dataframe(diseases_data)
-        if not df.empty:
+        if not NO_DATA_MARKER in df.columns:
             # Ordenar por puntuación en orden descendente
             df = df.sort_values(by="Puntuación", ascending=False)
         return df
@@ -121,16 +121,15 @@ class OpenTargetsParser(BaseParser):
         """
         interactions_data = []
         if "interactions" in data and "rows" in data["interactions"]:
-            target_symbol = data.get("approvedSymbol", "")
             for interaction in data["interactions"]["rows"]:
-                interactor = interaction.get("intB") if interaction.get("intA") == target_symbol else interaction.get("intA")
+                interactor = interaction.get("intB")
                 interactions_data.append({
                     "Proteína interactuante": interactor,
                     "Puntuación": interaction.get("score", 0)
                 })
         
         df = self.parse_to_dataframe(interactions_data)
-        if not df.empty:
+        if not NO_DATA_MARKER in df.columns:
             # Filtrar interacciones duplicadas o con el mismo target
             df = df[df["Proteína interactuante"] != data.get("approvedSymbol", "")]
             df = df.drop_duplicates(subset=["Proteína interactuante"])
