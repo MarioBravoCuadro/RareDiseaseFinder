@@ -45,7 +45,7 @@ class SelleckchemScraper(BaseScraper):
             )
             search_box.clear()
             search_box.send_keys(id + Keys.RETURN)
-            WebDriverWait(self.driver, 5).until(
+            WebDriverWait(self.driver, 3).until(
                 EC.presence_of_element_located((By.CSS_SELECTOR, "tr[name='productList']"))
             )
             html = self.driver.page_source
