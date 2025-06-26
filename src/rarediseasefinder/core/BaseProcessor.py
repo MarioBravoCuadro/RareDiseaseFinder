@@ -74,8 +74,6 @@ class BaseProcessor(ABC):
         if not self.parser:
             raise NotImplementedError("El parser no está definido.")
         results = {}
-        print(type(filters))
-        print(type(data))
 
         for processor in filters:
             if processor.get("PROCESSOR") == self.__class__.__name__:

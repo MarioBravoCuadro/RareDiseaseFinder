@@ -1,5 +1,6 @@
 import json
 from abc import ABC
+from turtle import pd
 from typing import List
 
 from IPython.core.release import description
@@ -87,6 +88,7 @@ class FullWorkflow(IWorkflow):
         self.add_step_to_list_of_steps({"Panther": PantherdbWorkflowStep})
         self.add_step_to_list_of_steps({"Opentargets": OpentargetsWorkflowStep})
         self.add_step_to_list_of_steps({"Stringdb": StringdbWorkflowStep})
+        self.add_step_to_list_of_steps({"Selleckchem": SelleckchemWorkflowStep})
 
 
         self.instantiate_steps()
@@ -117,7 +119,7 @@ class FullWorkflow(IWorkflow):
                         "METHOD_PARSER_FILTERS": ""
                     },
                     {
-                        "METHOD_ID": "parse_interactions",
+                        "METHOD_ID": "interactions",
                         "METHOD_PARSER_FILTERS": ""
                     }
                 ]
@@ -181,6 +183,16 @@ class FullWorkflow(IWorkflow):
                         "METHOD_PARSER_FILTERS": ""
                     }
                 ]
+            },
+            "Selleckchem_Step": {
+                "step_name": "Selleckchem",
+                "processor": "SelleckchemProcessor",
+                "methods": [
+                    {
+                        "METHOD_ID": "obtener_links_selleckchem",
+                        "METHOD_PARSER_FILTERS": ""
+                    }
+                ]
             }
         }
 
@@ -200,6 +212,7 @@ class FullWorkflow(IWorkflow):
         pantherdb_filters = BaseFilter(self._minium_methods_by_step["Panther_Step"]["methods"], "PantherProcessor")
         opentargets_filters = BaseFilter(self._minium_methods_by_step["Opentargets_Step"]["methods"],"OpenTargetsProcessor")
         stringdb_filters = BaseFilter(self._minium_methods_by_step["Stringdb_Step"]["methods"], "StringDbProcessor")
+        selleckchem_filters = BaseFilter(self._optional_methods_by_step["Selleckchem_Step"]["methods"], "SelleckchemProcessor")
 
         # Coger step de la lista de pasos
 
@@ -208,6 +221,7 @@ class FullWorkflow(IWorkflow):
         pantherdb_step = self.get_step("Panther")
         opentargets_step = self.get_step("Opentargets")
         stringdb_step = self.get_step("Stringdb")
+        selleckchem_step = self.get_step("Selleckchem")
 
 
 
@@ -218,6 +232,7 @@ class FullWorkflow(IWorkflow):
         pantherdb_step.set_filters(pantherdb_filters)
         opentargets_step.set_filters(opentargets_filters)
         stringdb_step.set_filters(stringdb_filters)
+        selleckchem_step.set_filters(selleckchem_filters)
 
 
 
@@ -262,29 +277,40 @@ class FullWorkflow(IWorkflow):
 
         print(opentargets_result.keys())
 
-
-        #Llamadas a stringdb con id sacado de opentarget
+        # Procesar los resultados de OpenTargets para StringDB
+        # Aquí asumimos que opentargets_result["interactions"]["Proteína interactuante"] contiene los nombres de las proteínas
+        # y opentargets_result["interactions"]["Puntuación"] contiene las puntuaciones
         stringdb_results = []
-        print("Interacciones:" +opentargets_result["interactions"])
-        for prot, puntuacion in zip(opentargets_result["interactions"], opentargets_result["interactions"]["puntuaciones"]):
+        for prot, puntuacion in zip(opentargets_result["interactions"]["Proteína interactuante"], opentargets_result["interactions"]["Puntuación"]):
             stringdb_step = self.get_step("Stringdb")
             stringdb_filters = stringdb_step.get_filters()
             stringdb_filters.add_client_search_params(prot)
             results = stringdb_step.process()
-            # Añadir puntuación
-            if isinstance(results, dict):
-                results["Puntuación"] = puntuacion
-            else:
-                results = {"result": results, "Puntuación": puntuacion}
-            stringdb_results.append(results)
+            results["get_annotation"]["Puntuación"] = puntuacion
+            stringdb_results.append(results["get_annotation"])
 
         stringdb_results = DataframesUtils.create_dataframe(stringdb_results)
-        print(stringdb_results.to_string())
-        stringdb_results.keys()
+        print(stringdb_results)
+        # Procesar los resultados de OpenTargets para Selleckchem
+        # Aquí asumimos que opentargets_result["known_drugs"]["Nombre"] contiene los nombres de los fármacos
+        # y que queremos obtener el enlace de Selleckchem para cada uno.
+        # Inicializar una lista para almacenar los resultados de Selleckchem
+        # Coger step de la lista de pasos Selleckchem
+        # Iterar sobre los nombres de los fármacos y buscar en Selleckchem
+        selleckchem_results = []
+        for row in opentargets_result["known_drugs"]:
+            drug = row[0]
+            print("Buscando en Selleckchem: " + drug)
+            selleckchem_step = self.get_step("Selleckchem")
+            selleckchem_filters = selleckchem_step.get_filters()
+            selleckchem_filters.add_client_search_params(drug)
+            results_s = selleckchem_step.process()
+            if results_s:
+                row["Link Selleckchem"] = results["obtener_links_selleckchem"].iloc[0][0]
+                selleckchem_results.append(row)
 
-
-
-
+        selleckchem_results = DataframesUtils.create_dataframe(selleckchem_results)
+        print(selleckchem_results)
 
         """
                 results = [
@@ -379,6 +405,6 @@ class FullWorkflow(IWorkflow):
 
 if __name__ == "__main__":
     workflow = FullWorkflow()
-    workflow._search_param = "FANCA"
+    workflow._search_param = "TTR"
 
     print(workflow.steps_execution())

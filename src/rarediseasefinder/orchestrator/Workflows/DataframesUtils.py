@@ -78,14 +78,26 @@ class DataframesUtils:
             return data
 
     @staticmethod
-    def create_dataframe(df_list: List[dict]) -> pd.DataFrame:
+    def create_dataframe(df_list: List[Union[dict, pd.DataFrame]]) -> pd.DataFrame:
         """
-        Une múltiples DataFrames en uno solo.
+        Une múltiples elementos en un solo DataFrame.
+        
+        Si recibe una lista de DataFrames, los concatena.
+        Si recibe una lista de diccionarios, crea un nuevo DataFrame.
 
         Args:
-            df_list (List[pd.DataFrame]): Lista de DataFrames a unir.
+            df_list (List[Union[dict, pd.DataFrame]]): Lista de elementos a unir.
 
         Returns:
             pd.DataFrame: DataFrame resultante de la unión.
         """
-        return pd.DataFrame(df_list)
+        if not df_list:
+            return pd.DataFrame()
+            
+        # Verificar si son DataFrames o diccionarios
+        if all(isinstance(item, pd.DataFrame) for item in df_list):
+            # Si son todos DataFrames, concatenarlos
+            return pd.concat(df_list, ignore_index=True)
+        else:
+            # Si son diccionarios u otros tipos, usar el constructor de DataFrame
+            return pd.DataFrame(df_list)
