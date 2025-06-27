@@ -103,10 +103,6 @@ class FullWorkflow(IWorkflow):
         self.add_step_to_list_of_steps({"PPIAtlas": PPIAtlasWorkflowStep})
         self.add_step_to_list_of_steps({"Pharos": PharosWorkflowStep})
 
-
-
-
-
         self.instantiate_steps()
 
         self._minium_methods_by_step = {
