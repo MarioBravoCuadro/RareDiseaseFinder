@@ -523,8 +523,6 @@ class FullWorkflow(IWorkflow):
         result = self._create_json(self._search_param, uniprot_result, ppiatlas_result, opentargets_result, panther_result, pharos_result, pharmgkb_result, pharmacology_result)
         self.json_factory.save_to_file()
 
-        self.workflow_state = "stage_1"
-
         return result
 
 
