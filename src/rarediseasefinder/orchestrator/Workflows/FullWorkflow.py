@@ -5,7 +5,6 @@ from typing import List
 
 from IPython.core.release import description
 from pandas.core.interchange.dataframe_protocol import DataFrame
-from pyarrow import nulls
 
 from src.rarediseasefinder.biodata_providers.pharmgkb.PharmGKBClient import PharmGKBClient
 from src.rarediseasefinder.core.constants import NO_DATA_MARKER
@@ -432,6 +431,7 @@ class FullWorkflow(IWorkflow):
             stringdb_results.append(results["get_annotation"])
 
         stringdb_results = DataframesUtils.create_dataframe(stringdb_results)
+        opentargets_result["interactions"] = stringdb_results
         #print(stringdb_results)
 
         # Procesar los resultados de OpenTargets para DrugCentral
@@ -572,35 +572,31 @@ class FullWorkflow(IWorkflow):
         self.json_factory.add_content(
             section="DESCRIPCIÓN",
             title="UniProt: Localización subcelular",
-            display="table",
+            display="sheet",
             data=DataframesUtils.dataframe_to_dict(uniprot_result["subcellular_location"])
         )
 
         # Información de Pharos
-        """
         self.json_factory.add_content(
             section="DESCRIPCIÓN",
             title="Pharos: Información del target",
-            display="table",
+            display="sheet",
             data=DataframesUtils.dataframe_to_dict(pharos_result["df_info"])
         )
-        """
         # ----- SECCIÓN: PROCESOS -----
         self.json_factory.add_content(
             section="PROCESOS",
             title="Panther: Procesos",
-            display="sheet",
+            display="table",
             data=DataframesUtils.dataframe_to_dict(panther_result["annotations"])
         )
         # ----- SECCIÓN: PATHWAYS -----
-        """
         self.json_factory.add_content(
             section="PATHWAYS",
             title="Pharos: Pathways",
             display="table",
             data=DataframesUtils.dataframe_to_dict(pharos_result["df_vias"])
         )
-        """
         self.json_factory.add_content(
             section="PATHWAYS",
             title="Panther: Pathways",
@@ -610,7 +606,7 @@ class FullWorkflow(IWorkflow):
         self.json_factory.add_content(
             section="PATHWAYS",
             title="OpenTargets: Pathways",
-            display="sheet",
+            display="table",
             data=DataframesUtils.dataframe_to_dict(opentargets_result["pathways"])
         )
 
@@ -632,7 +628,7 @@ class FullWorkflow(IWorkflow):
         self.json_factory.add_content(
             section="INTERACCIONES",
             title="UniProt: Interacciones proteína-proteína",
-            display="sheet",
+            display="table",
             data=DataframesUtils.dataframe_to_dict(uniprot_result["interactions"])
         )
         self.json_factory.add_content(
@@ -645,14 +641,14 @@ class FullWorkflow(IWorkflow):
         self.json_factory.add_content(
             section="INTERACCIONES",
             title="Pharos + Selleckchem : Ligandos asociados",
-            display="sheet",
+            display="table",
             data=DataframesUtils.dataframe_to_dict(pharos_result["ligands"])
         )
 
         self.json_factory.add_content(
             section="INTERACCIONES",
             title="PharmGKB: Genes asociados",
-            display="sheet",
+            display="table",
             data=DataframesUtils.dataframe_to_dict(pharmgkb_result["gene_symbols"])
         )
         # ----- SECCIÓN: ENFERMEDADES -----
@@ -667,7 +663,7 @@ class FullWorkflow(IWorkflow):
         self.json_factory.add_content(
             section="ENFERMEDADES",
             title="Pharos: Información de OMIM",
-            display="sheet",
+            display="table",
             data=DataframesUtils.dataframe_to_dict(pharos_result["df_omim"])
         )
 
@@ -684,7 +680,7 @@ class FullWorkflow(IWorkflow):
         self.json_factory.add_content(
             section="TERAPÉUTICA",
             title="Pharos + Selleckchem + DrugCentral: Fármacos asociados",
-            display="sheet",
+            display="table",
             data=DataframesUtils.dataframe_to_dict(pharos_result["drugs"])
         )
         self.json_factory.add_content(
@@ -703,13 +699,13 @@ class FullWorkflow(IWorkflow):
         self.json_factory.add_content(
             section="TERAPÉUTICA",
             title="GuideToFarmacology: Link",
-            display="sheet",
+            display="table",
             data=DataframesUtils.dataframe_to_dict(guide_to_pharmacology_result["target_id"])
         )
         self.json_factory.add_content(
             section="TERAPÉUTICA",
             title="GuideToFarmacology: Comentarios",
-            display="sheet",
+            display="table",
             data=DataframesUtils.dataframe_to_dict(guide_to_pharmacology_result["comments"])
         )
         # ----- SECCIÓN: REFERENCIAS -----
@@ -747,7 +743,9 @@ class FullWorkflow(IWorkflow):
                     )
 
         # Obtener el JSON resultante
-        return self.json_factory.get_json()
+        result = self.json_factory.get_json()
+        self.json_factory.delete_json()
+        return result
 
 if __name__ == "__main__":
     workflow = FullWorkflow()

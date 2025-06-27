@@ -126,3 +126,27 @@ class JSONFactory:
         except Exception as e:
             print(f"Error al guardar JSON en archivo: {str(e)}")
             return False
+        
+    def delete_json(self) -> bool:
+        """
+        Elimina el JSON actual, reiniciando la estructura a su estado inicial vacío.
+        Mantiene las secciones predefinidas pero vacía todo el contenido.
+        
+        Returns:
+            bool: True si se eliminó correctamente, False en caso contrario
+        """
+        try:
+            self.json_structure = {
+                "search_term": "",
+                "date": "",
+                "categories": [
+                    {"section": section, "content": []} for section in self.sections
+                ]
+            }
+            self.search_term = ""
+            self.date = ""
+            return True
+            
+        except Exception as e:
+            print(f"❌ Error al reiniciar JSON: {str(e)}")
+            return False
