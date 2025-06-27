@@ -337,6 +337,7 @@ class StartWorkflowCollection(MethodView):
         logger.info(f"POST /stage3/start_workflow - Iniciando ejecución del workflow {workflow_name}")
         try:
             results = orchestrator.start_workflow(workflow_name)
+            orchestrator.set_stage_1(workflow_name)
             logger.info(f"\033[93m{results}\033[0m")
             logger.info(f"POST /stage3/start_workflow - Workflow {workflow_name} iniciado exitosamente")
             return {
