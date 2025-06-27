@@ -372,5 +372,5 @@ api.register_blueprint(stage_1)
 api.register_blueprint(stage_2)
 api.register_blueprint(stage_3)
 
-workflows = [FullWorkflow(),Workflow()]
+workflows = [FullWorkflow()]
 orchestrator = Orchestrator(workflows)

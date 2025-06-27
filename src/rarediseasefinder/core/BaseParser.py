@@ -29,11 +29,11 @@ class BaseParser:
     
         try:
             if isinstance(data, list):
-                return pd.DataFrame(data)
+                return pd.DataFrame(data).fillna(NOT_FOUND_MESSAGE)
             elif isinstance(data, dict):
                 if all(isinstance(v, (dict, list)) for v in data.values()):
-                    return pd.json_normalize(data, sep="_")
-                return pd.DataFrame([data])
+                    return pd.json_normalize(data, sep="_").fillna(NOT_FOUND_MESSAGE)
+                return pd.DataFrame([data]).fillna(NOT_FOUND_MESSAGE)
             else:
                 raise BaseParsingError(f"Tipo de dato no soportado: {type(data)}")
                 
@@ -49,8 +49,8 @@ class BaseParser:
         if isinstance(json_data, str):
             json_data = json.loads(json_data)  # Convertir de cadena JSON a diccionario
 
-        return pd.json_normalize(json_data)
-    
+        return pd.json_normalize(json_data).fillna(NOT_FOUND_MESSAGE)
+
     def clean_html(html_text: str) -> str:
         """
         Limpia texto HTML básico para presentación en DataFrame.
