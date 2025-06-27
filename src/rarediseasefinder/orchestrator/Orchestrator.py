@@ -4,6 +4,7 @@ import pandas as pd
 
 from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
 from src.rarediseasefinder.orchestrator.WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
+from src.rarediseasefinder.orchestrator.Workflows.FullWorkflow import FullWorkflow
 from src.rarediseasefinder.orchestrator.Workflows.Workflow import Workflow
 from src.rarediseasefinder.core.errors import IncorrectStageError
 
@@ -150,7 +151,7 @@ class Orchestrator:
 
     def set_stage_2(self,workflow_name) -> None :
          for workflow in self.workflows_list:
-             if workflow_name == workflow_name:
+             if workflow_name == workflow.name:
                  if workflow.workflow_state != "stage_1":
                      raise IncorrectStageError(workflow.workflow_state, "stage_1", f"set_stage_2 para workflow '{workflow_name}'")
                  workflow.workflow_state = "stage_2"
@@ -224,7 +225,7 @@ class Orchestrator:
 
     def set_stage_3(self,workflow_name):
          for workflow in self.workflows_list:
-             if workflow_name == workflow_name:
+             if workflow.name == workflow_name:
                  if workflow.workflow_state != "stage_2":
                      raise IncorrectStageError(workflow.workflow_state, "stage_2", f"set_stage_3 para workflow '{workflow_name}'")
                  workflow.workflow_state = "stage_3"
@@ -297,22 +298,34 @@ class Orchestrator:
 
 
 if __name__ == "__main__":
-    wokflows = [Workflow()]
+    wokflows = [Workflow(),FullWorkflow()]
     orchestrator = Orchestrator(wokflows)
 
 
     print(orchestrator.get_workflows())
-    print(orchestrator.get_list_of_steps_names("WorkflowTFG"))
-    print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step","WorkflowTFG"))
-    print(orchestrator.get_optional_methods_from_workflow("Pharos_Step","WorkflowTFG"))
-    print(orchestrator.get_method_filters("df_numero_vias_por_fuente","Pharos_Step","WorkflowTFG"))
+    print(orchestrator.get_list_of_steps_names("FullWorkflow"))
+    print(orchestrator.get_minium_methods_for_step_from_workflow("Pharos_Step","FullWorkflow"))
+    print(orchestrator.get_optional_methods_from_workflow("Pharos_Step","FullWorkflow"))
+    print(orchestrator.get_method_filters("df_numero_vias_por_fuente","Pharos_Step","FullWorkflow"))
 
+    print(orchestrator.workflows_list[1].workflow_state)
 
-    print("All step available? " + str(orchestrator.get_if_all_steps_available("WorkflowTFG")))
+    print("All step available? " + str(orchestrator.get_if_all_steps_available("FullWorkflow")))
 
+    print(orchestrator.workflows_list[1].workflow_state)
 
-    orchestrator.set_stage_2("WorkflowTFG")
+    orchestrator.set_stage_2("FullWorkflow")
+    print(orchestrator.workflows_list[1].workflow_state)
 
-    orchestrator.set_workflow_search_param("FANCA","WorkflowTFG")
-    orchestrator.set_stage_3("WorkflowTFG")
-    print(orchestrator.start_workflow("WorkflowTFG"))
+    orchestrator.set_workflow_search_param("FANCA","FullWorkflow")
+    print(orchestrator.workflows_list[1].workflow_state)
+
+    orchestrator.set_stage_3("FullWorkflow")
+    print(orchestrator.workflows_list[1].workflow_state)
+
+    orchestrator.start_workflow("FullWorkflow")
+    print(orchestrator.workflows_list[1].workflow_state)
+
+    orchestrator.set_stage_1("FullWorkflow")
+    orchestrator.workflows_list[1].workflow_state = "stage_1"
+    print(orchestrator.workflows_list[1].workflow_state)
