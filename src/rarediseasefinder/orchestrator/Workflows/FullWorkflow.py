@@ -432,6 +432,7 @@ class FullWorkflow(IWorkflow):
 
         stringdb_results = DataframesUtils.create_dataframe(stringdb_results)
         opentargets_result["interactions"] = stringdb_results
+        print(opentargets_result["interactions"].keys())
         #print(stringdb_results)
 
         # Procesar los resultados de OpenTargets para DrugCentral
@@ -685,7 +686,7 @@ class FullWorkflow(IWorkflow):
         )
         self.json_factory.add_content(
             section="TERAPÉUTICA",
-            title="OpenTargets: Fármacos conocidos",
+            title="OpenTargets+ Selleckchem + DrugCentral: Fármacos conocidos",
             display="table",
             data=DataframesUtils.dataframe_to_dict(opentargets_result["known_drugs"])
         )
@@ -729,7 +730,7 @@ class FullWorkflow(IWorkflow):
         )
         self.json_factory.add_content(
             section="REFERENCIAS",
-            title="GuideToFarmacology: Referencias",
+            title="GuideToFarmacology: Interacciones",
             display="table",
             data=DataframesUtils.dataframe_to_dict(guide_to_pharmacology_result["interactions"])
         )
