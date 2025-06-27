@@ -3,7 +3,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 from ...core.BaseParser import BaseParser
-from ...core.constants import NOT_FOUND_MESSAGE, NO_DATA_MARKER
+from ...core.constants import NOT_FOUND_MESSAGE
 
 
 class DrugCentralParser(BaseParser):
@@ -29,9 +29,12 @@ class DrugCentralParser(BaseParser):
             pd.DataFrame: DataFrame con información de medicamentos
         """
         if "error" in data:
-            return self.parse_to_dataframe([
-             {NO_DATA_MARKER: NOT_FOUND_MESSAGE}
-            ])
+            return self.parse_to_dataframe([{
+                "DrugName": NOT_FOUND_MESSAGE,
+                "Description": NOT_FOUND_MESSAGE,
+                "DrugID": NOT_FOUND_MESSAGE,
+                "Link": NOT_FOUND_MESSAGE
+            }])
             
         html = data.get("html", "")
         search_term = data.get("search_term", "")
@@ -98,7 +101,7 @@ class DrugCentralParser(BaseParser):
             
             # Añadir a resultados
             resultados.append({
-                "DrugName": nombre,
+                "DrugName": nombre or NOT_FOUND_MESSAGE,
                 "Description": descripcion or NOT_FOUND_MESSAGE,
                 "Link": link_completo or NOT_FOUND_MESSAGE
             })
