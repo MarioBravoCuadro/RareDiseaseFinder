@@ -3,7 +3,7 @@ from typing import Dict, List, Any
 import pandas as pd
 
 from ...core.BaseParser import BaseParser
-from ...core.constants import NOT_FOUND_MESSAGE
+from ...core.constants import NOT_FOUND_MESSAGE, OMIM_URL_TEMPLATE
 
 
 class PharosParser(BaseParser):
@@ -135,17 +135,36 @@ class PharosParser(BaseParser):
 
     def create_omim_df(self, data: dict) -> pd.DataFrame:
         """
-        Crea un DataFrame con las referencias OMIM.
+        Crea un DataFrame con las referencias OMIM incluyendo solo nombre y enlace formateado.
         
         Args:
             data (dict): Diccionario con los datos del target.
             
         Returns:
-            pd.DataFrame: DataFrame con las referencias OMIM.
+            pd.DataFrame: DataFrame con las referencias OMIM (solo nombre y link).
         """
-        omim_data = [NOT_FOUND_MESSAGE]
-        if data:
-          omim_data = data.get("referenciaOMIM", [])
+        omim_data = []
+        
+        if data and data.get("referenciaOMIM"):
+            for omim_entry in data.get("referenciaOMIM", []):
+
+                omim_link = NOT_FOUND_MESSAGE
+                if "OMIM_ID" in omim_entry and omim_entry["OMIM_ID"]:
+                    omim_link = OMIM_URL_TEMPLATE.format(omim_entry["OMIM_ID"])
+                
+                processed_entry = {
+                    "nombre": omim_entry.get("nombre", NOT_FOUND_MESSAGE),
+                    "OMIM_Link": omim_link
+                }
+                
+                omim_data.append(processed_entry)
+        
+        if not omim_data:
+            omim_data = [{
+                "nombre": NOT_FOUND_MESSAGE,
+                "OMIM_Link": NOT_FOUND_MESSAGE
+            }]
+        
         return self.parse_to_dataframe(omim_data)
 
     def create_protein_protein_relations_df(self, data: dict, filter_params: Dict[str, Any]) -> pd.DataFrame:
