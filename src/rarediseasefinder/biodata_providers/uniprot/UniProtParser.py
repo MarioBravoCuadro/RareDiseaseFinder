@@ -47,18 +47,10 @@ class UniProtParser(BaseParser):
         Returns:
             pd.DataFrame: Información de función estructurada
         """
-        # Extraer el primer resultado
         result = self._get_first_result(data)
         
-        print("Estructura del resultado:", result.keys() if isinstance(result, dict) else "No es un diccionario")
-        
-        # A partir de aquí, usar 'result' en lugar de 'data'
         function_data = [{
             "Function": txt.get("value", ""),
-            "EvidenceCode": ev.get("evidenceCode", NOT_FOUND_MESSAGE),
-            "QuickGO": QUICKGO_URL_TEMPLATE.format(ev.get("evidenceCode")) if ev.get("evidenceCode") else NOT_FOUND_MESSAGE,
-            "Source": ev.get("source", NOT_FOUND_MESSAGE),
-            "PublicationID": ev.get("id", NOT_FOUND_MESSAGE),
             "PubMed": PUBMED_URL_TEMPLATE.format(ev.get("id")) if ev.get("id") else NOT_FOUND_MESSAGE,
         } for comment in result.get("comments", []) if comment.get("commentType") == "FUNCTION"
         for txt in comment.get("texts", [])
