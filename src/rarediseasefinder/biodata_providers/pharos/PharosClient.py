@@ -71,10 +71,8 @@ class PharosClient(BaseClient):
                     }
 
                     vias: pathways {
-                        viaPharos_ID: pwid
                         nombre: name
                         fuente: type
-                        fuente_ID: sourceID
                         url
                     }
                 }
