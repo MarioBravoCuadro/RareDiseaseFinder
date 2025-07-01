@@ -5,7 +5,7 @@ import logging
 from datetime import datetime, timezone
 
 from IPython.core.magic_arguments import argument
-from flask import url_for, Flask, abort, request
+from flask import url_for, Flask, abort, request, Response
 from flask.views import MethodView
 from flask_smorest import Api, Blueprint
 from marshmallow import fields, Schema
@@ -338,14 +338,27 @@ class StartWorkflowCollection(MethodView):
         try:
             results = orchestrator.start_workflow(workflow_name)
             orchestrator.set_stage_1(workflow_name)
-            logger.info(f"\033[93m{results}\033[0m")
             logger.info(f"POST /stage3/start_workflow - Workflow {workflow_name} iniciado exitosamente")
-            return {
+            
+            response_data = {
                 "workflow_name": workflow_name,
                 "message": f"Workflow {workflow_name} started successfully",
                 "status": "completed",
                 "results": results,
-            }, 200
+            }
+            
+            # Serializar manualmente con sort_keys=False para preservar el orden
+            json_response = json.dumps(response_data, sort_keys=False, ensure_ascii=False)
+            
+            # Crear respuesta con el Content-Type adecuado
+            response = Response(
+                json_response,
+                status=200,
+                mimetype='application/json'
+            )
+            
+            return response
+            
         except Exception as e:
             logger.error(f"POST /stage3/start_workflow - Error al iniciar workflow {workflow_name}: {str(e)}")
             return {
