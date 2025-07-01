@@ -578,6 +578,13 @@ class FullWorkflow(IWorkflow):
             display="sheet",
             data=DataframesUtils.dataframe_to_dict(pharos_result["df_info"])
         )
+
+        self.json_factory.add_content(
+            section="DESCRIPCIÓN",
+            title="Pharos: Información de OMIM",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(pharos_result["df_omim"])
+        )
         # ----- SECCIÓN: PROCESOS -----
         self.json_factory.add_content(
             section="PROCESOS",
@@ -653,13 +660,6 @@ class FullWorkflow(IWorkflow):
             title="UniProt: Enfermedades asociadas",
             display="table",
             data=DataframesUtils.dataframe_to_dict(uniprot_result["disease"])
-        )
-
-        self.json_factory.add_content(
-            section="ENFERMEDADES",
-            title="Pharos: Información de OMIM",
-            display="table",
-            data=DataframesUtils.dataframe_to_dict(pharos_result["df_omim"])
         )
 
         self.json_factory.add_content(
