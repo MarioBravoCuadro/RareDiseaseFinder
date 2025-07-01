@@ -346,11 +346,7 @@ class StartWorkflowCollection(MethodView):
                 "status": "completed",
                 "results": results,
             }
-            
-            # Serializar manualmente con sort_keys=False para preservar el orden
             json_response = json.dumps(response_data, sort_keys=False, ensure_ascii=False)
-            
-            # Crear respuesta con el Content-Type adecuado
             response = Response(
                 json_response,
                 status=200,
