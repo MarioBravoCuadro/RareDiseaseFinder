@@ -44,12 +44,10 @@ class PharosClient(BaseClient):
 
                     ligandosConocidos: ligands {
                         nombre: name
-                        ligando_ID: ligid
                     }
 
                     deLosCualesSonFarmacosAprobados: ligands(isdrug: true) {
                         nombre: name
-                        ligando_ID: ligid
                     }
 
                     relacionProteinaProteina: ppis {
