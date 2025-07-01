@@ -321,7 +321,6 @@ class UniProtParser(BaseParser):
         interactions_data = [{
             "Interactor": inter.get("interactantTwo", {}).get("uniProtKBAccession", ""),
             "GeneName": inter.get("interactantTwo", {}).get("geneName", ""),
-            "NumExperiments": inter.get("numberOfExperiments", 0)
         } for comment in result.get("comments", []) if comment.get("commentType") == "INTERACTION"
           for inter in comment.get("interactions", [])
         ]
@@ -331,7 +330,6 @@ class UniProtParser(BaseParser):
             interactions_data = [{
                 "Interactor": NOT_FOUND_MESSAGE,
                 "GeneName": NOT_FOUND_MESSAGE,
-                "NumExperiments": 0
             }]
         
         return self.parse_to_dataframe(interactions_data)
