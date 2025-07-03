@@ -1,12 +1,5 @@
-import enum
-import uuid
-from datetime import datetime, timezone
-
-from flask import url_for, Flask, abort
-from flask.views import MethodView
+from flask import Flask
 from flask_smorest import Api, Blueprint
-from marshmallow import fields, Schema
-from marshmallow.fields import Boolean
 
 server = Flask(__name__)
 

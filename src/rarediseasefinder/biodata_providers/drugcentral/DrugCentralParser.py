@@ -3,7 +3,7 @@ import pandas as pd
 from bs4 import BeautifulSoup
 
 from ...core.BaseParser import BaseParser
-from ...core.constants import NOT_FOUND_MESSAGE
+from ...core.constants import NOT_FOUND_MESSAGE, DRUG_CENTRAL_BASE_URL
 
 
 class DrugCentralParser(BaseParser):
@@ -58,7 +58,7 @@ class DrugCentralParser(BaseParser):
             }])
             
         return self.parse_to_dataframe(drugs_data)
-    
+
     def _extract_drugs_from_html(self, html: str, search_term: str) -> List[Dict[str, str]]:
         """
         Extrae información de medicamentos del HTML de DrugCentral.
@@ -94,8 +94,8 @@ class DrugCentralParser(BaseParser):
             # Obtener datos estructurados
             nombre = enlace.get_text().strip()
             href = enlace.get('href', '')
-            link_completo = f"https://drugcentral.org{href}" if href else NOT_FOUND_MESSAGE
-            
+            link_completo = DRUG_CENTRAL_BASE_URL.format(href) if href else NOT_FOUND_MESSAGE
+
             # Obtener descripción
             descripcion = celdas[1].get_text().strip() if len(celdas) > 1 else NOT_FOUND_MESSAGE
             

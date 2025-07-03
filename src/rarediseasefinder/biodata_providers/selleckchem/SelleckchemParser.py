@@ -1,19 +1,18 @@
 from typing import Dict, Any
-from xml.dom.minidom import parse
 
 import pandas as pd
 from bs4 import BeautifulSoup
 
 from ...core.BaseParser import BaseParser
-from ...core.constants import NO_DATA_MARKER, NOT_FOUND_MESSAGE
+from ...core.constants import (NO_DATA_MARKER, 
+                               NOT_FOUND_MESSAGE, 
+                               SELLECKCHEM_BASE_URL)
 
 
 class SelleckchemParser(BaseParser):
     """
     Clase para parsear la información de medicamentos de Selleckchem.
     """
-    
-    BASE_URL = "https://www.selleckchem.com"
 
     def __init__(self):
         super().__init__()
@@ -58,14 +57,14 @@ class SelleckchemParser(BaseParser):
             pd.DataFrame: DataFrame con el primer enlace completo o vacío si no hay productos.
         """
         if "error" in data:
-            return self.parse_to_dataframe([
-             {NO_DATA_MARKER: NOT_FOUND_MESSAGE}
-            ])
+            return self.parse_to_dataframe([{
+             NO_DATA_MARKER: NOT_FOUND_MESSAGE
+            }])
 
         productos = self.extraer_medicamentos(data)
         if not productos.empty:
-            primer_link = f"{self.BASE_URL}{productos.loc[0]['Link']}"
-            return self.parse_to_dataframe([{"Link":primer_link}])
+            primer_link = f"{SELLECKCHEM_BASE_URL}{productos.loc[0]['Link']}"
+            return self.parse_to_dataframe([{"Link": primer_link}])
         return self.parse_to_dataframe([])
 
     def obtener_links_selleckchem(self, data: Dict[str, Any]) -> pd.DataFrame:
@@ -89,6 +88,6 @@ class SelleckchemParser(BaseParser):
             for i in rango:
                 link = productos.loc[i]['Link']
                 if link and link != "N/A":
-                    links.append(f"{self.BASE_URL}{link}")
+                    links.append(f"{SELLECKCHEM_BASE_URL}{link}")
 
         return self.parse_to_dataframe({"Links":links})

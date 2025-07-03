@@ -32,5 +32,6 @@ class EnsemblProcessor(BaseProcessor):
             Dict[str, str]: Diccionario mapping 'ensembl_id' a 'parse_id'.
         """
         return {
-            "ensembl_id": "parse_id"
+            "ensembl_id": "parse_id",
+            "external_links": "parse_external_links",
         }

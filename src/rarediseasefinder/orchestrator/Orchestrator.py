@@ -1,12 +1,10 @@
-from typing import List, Dict, Any
-import logging
-import pandas as pd
+from typing import Any
 
-from src.rarediseasefinder.orchestrator.IWorkflow import IWorkflow
-from src.rarediseasefinder.orchestrator.WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
-from src.rarediseasefinder.orchestrator.Workflows.FullWorkflow import FullWorkflow
-from src.rarediseasefinder.orchestrator.Workflows.Workflow import Workflow
-from src.rarediseasefinder.core.errors import IncorrectStageError
+from .IWorkflow import IWorkflow
+from .WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
+from .Workflows.FullWorkflow import FullWorkflow
+from .Workflows.NoPharosWorkflow import NoPharosWorkflow
+from ..core.errors import IncorrectStageError
 
 class Orchestrator:
     server = None
@@ -298,7 +296,7 @@ class Orchestrator:
 
 
 if __name__ == "__main__":
-    wokflows = [Workflow(),FullWorkflow()]
+    wokflows = [FullWorkflow(),NoPharosWorkflow()]
     orchestrator = Orchestrator(wokflows)
 
 

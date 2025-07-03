@@ -1,0 +1,856 @@
+{
+  "search_term": "DOHH",
+  "date": "2025-07-03 05:35:57",
+  "categories": [
+    {
+      "section": "DESCRIPCIÓN",
+      "content": [
+        {
+          "title": "UniProt: Función molecular",
+          "display": "table",
+          "data": [
+            {
+              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/Q99LN9"
+            },
+            {
+              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/MF_03101"
+            },
+            {
+              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/16371467"
+            },
+            {
+              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/16533814"
+            },
+            {
+              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/19706422"
+            }
+          ]
+        },
+        {
+          "title": "UniProt: Localización subcelular",
+          "display": "sheet",
+          "data": [
+            {
+              "Value": "Localización no disponible",
+              "ID": "⚠️ No se han encontrado datos."
+            }
+          ]
+        },
+        {
+          "title": "Pharos: Información del target",
+          "display": "sheet",
+          "data": [
+            {
+              "descripcion": "This gene encodes a metalloenzyme that catalyzes the last step in the conversion of lysine to the unique amino acid hypusine in eukaryotic initiation factor 5A. The encoded protein hydroxylates deoxyhypusine to form hypusine in the mature eukaryotic initiation factor 5A protein. Alternative splicing results in multiple transcript variants.[provided by RefSeq, Feb 2009]",
+              "claseDiana": "Tbio"
+            }
+          ]
+        },
+        {
+          "title": "Pharos: Información de OMIM",
+          "display": "table",
+          "data": [
+            {
+              "nombre": "DEOXYHYPUSINE HYDROXYLASE",
+              "OMIM_Link": "https://www.omim.org/entry/611262"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "PROCESOS",
+      "content": [
+        {
+          "title": "Panther: Procesos",
+          "display": "table",
+          "data": [
+            {
+              "Annotation_Type": "PANTHER GO-slim Molecular Function",
+              "Annotation_Name": "oxidoreductase activity",
+              "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=GO:0016491"
+            },
+            {
+              "Annotation_Type": "PANTHER protein class",
+              "Annotation_Name": "lyase",
+              "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=PC00144"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "PATHWAYS",
+      "content": [
+        {
+          "title": "Pharos: Pathways",
+          "display": "table",
+          "data": [
+            {
+              "nombre": "Protein modification; eIF5A hypusination.",
+              "fuente": "UniProt",
+              "url": "⚠️ No se han encontrado datos."
+            },
+            {
+              "nombre": "Gamma carboxylation, hypusine formation and arylsulfatase activation",
+              "fuente": "Reactome",
+              "url": "https://idg.reactome.org/PathwayBrowser/#/R-HSA-163841&FLG=DOHH"
+            },
+            {
+              "nombre": "Hypusine synthesis from eIF5A-lysine",
+              "fuente": "Reactome",
+              "url": "https://idg.reactome.org/PathwayBrowser/#/R-HSA-204626&FLG=DOHH"
+            },
+            {
+              "nombre": "Metabolism of proteins",
+              "fuente": "Reactome",
+              "url": "https://idg.reactome.org/PathwayBrowser/#/R-HSA-392499&FLG=DOHH"
+            },
+            {
+              "nombre": "Post-translational protein modification",
+              "fuente": "Reactome",
+              "url": "https://idg.reactome.org/PathwayBrowser/#/R-HSA-597592&FLG=DOHH"
+            }
+          ]
+        },
+        {
+          "title": "Panther: Pathways",
+          "display": "table",
+          "data": [
+            {
+              "Pathway": "⚠️ No se han encontrado datos.",
+              "Link": "⚠️ No se han encontrado datos."
+            }
+          ]
+        },
+        {
+          "title": "OpenTargets: Pathways",
+          "display": "table",
+          "data": [
+            {
+              "Link": "https://reactome.org/content/detail/R-HSA-204626",
+              "Vía": "Hypusine synthesis from eIF5A-lysine",
+              "Término de nivel superior": "Metabolism of proteins"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "INTERACCIONES",
+      "content": [
+        {
+          "title": "Pharos: Interacciones proteína-proteína",
+          "display": "table",
+          "data": [
+            {
+              "Proteina": "Insulin-degrading enzyme",
+              "Proteina_ID": "IDE",
+              "Clase Diana": "Tchem",
+              "Propiedad": "p_ni",
+              "Valor": "0.082579256"
+            },
+            {
+              "Proteina": "Eukaryotic translation initiation factor 5A-2",
+              "Proteina_ID": "EIF5A2",
+              "Clase Diana": "Tbio",
+              "Propiedad": "p_ni",
+              "Valor": "5.05e-7"
+            },
+            {
+              "Proteina": "Eukaryotic translation initiation factor 5A-1",
+              "Proteina_ID": "EIF5A",
+              "Clase Diana": "Tbio",
+              "Propiedad": "p_ni",
+              "Valor": "0.008130423"
+            },
+            {
+              "Proteina": "Ketosamine-3-kinase",
+              "Proteina_ID": "FN3KRP",
+              "Clase Diana": "Tbio",
+              "Propiedad": "p_ni",
+              "Valor": "0.102688378"
+            },
+            {
+              "Proteina": "StAR-related lipid transfer protein 7, mitochondrial",
+              "Proteina_ID": "STARD7",
+              "Clase Diana": "Tbio",
+              "Propiedad": "p_wrong",
+              "Valor": "1e-9"
+            },
+            {
+              "Proteina": "StAR-related lipid transfer protein 7, mitochondrial",
+              "Proteina_ID": "STARD7",
+              "Clase Diana": "Tbio",
+              "Propiedad": "p_ni",
+              "Valor": "0.133034088"
+            },
+            {
+              "Proteina": "Sodium channel modifier 1",
+              "Proteina_ID": "SCNM1",
+              "Clase Diana": "Tbio",
+              "Propiedad": "p_wrong",
+              "Valor": "0.000002882"
+            },
+            {
+              "Proteina": "Sodium channel modifier 1",
+              "Proteina_ID": "SCNM1",
+              "Clase Diana": "Tbio",
+              "Propiedad": "p_ni",
+              "Valor": "0.166607223"
+            },
+            {
+              "Proteina": "Uncharacterized protein C14orf119",
+              "Proteina_ID": "C14orf119",
+              "Clase Diana": "Tdark",
+              "Propiedad": "p_wrong",
+              "Valor": "0.000067983"
+            },
+            {
+              "Proteina": "Uncharacterized protein C14orf119",
+              "Proteina_ID": "C14orf119",
+              "Clase Diana": "Tdark",
+              "Propiedad": "p_ni",
+              "Valor": "0.087505851"
+            }
+          ]
+        },
+        {
+          "title": "OpenTargets + StringDB: Interacciones proteína-proteína",
+          "display": "table",
+          "data": [
+            {
+              "Prefered name": "EIF5A",
+              "Annotation": "Eukaryotic translation initiation factor 5A-1; mRNA-binding protein involved in translation elongation. Has an important function at the level of mRNA turnover, probably acting downstream of decapping. Involved in actin dynamics and cell cycle progression, mRNA decay and probably in a pathway involved in stress response and maintenance of cell wall integrity. With syntenin SDCBP, functions as a regulator of p53/TP53 and p53/TP53-dependent apoptosis. Regulates also TNF-alpha-mediated apoptosis. Mediates effects of polyamines on neuronal process extension and survival. May play an import [...] ",
+              "Puntuación": 0.999
+            },
+            {
+              "Prefered name": "DHPS",
+              "Annotation": "Deoxyhypusine synthase; Catalyzes the NAD-dependent oxidative cleavage of spermidine and the subsequent transfer of the butylamine moiety of spermidine to the epsilon-amino group of a critical lysine residue of the eIF-5A precursor protein to form the intermediate deoxyhypusine residue. This is the first step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine. Hypusination is unique to mature eIF-5A factor and is essential for its function.",
+              "Puntuación": 0.999
+            },
+            {
+              "Prefered name": "EIF5A2",
+              "Annotation": "Eukaryotic translation initiation factor 5A-2; mRNA-binding protein involved in translation elongation. Has an important function at the level of mRNA turnover, probably acting downstream of decapping. Involved in actin dynamics and cell cycle progression, mRNA decay and probably in a pathway involved in stress response and maintenance of cell wall integrity. Functions as a regulator of apoptosis. Mediates effects of polyamines on neuronal process extension and survival. May play an important role in brain development and function, and in skeletal muscle stem cell differentiation (By s [...] ",
+              "Puntuación": 0.98
+            },
+            {
+              "Prefered name": "EIF5AL1",
+              "Annotation": "Eukaryotic translation initiation factor 5A-1-like; mRNA-binding protein involved in translation elongation. Has an important function at the level of mRNA turnover, probably acting downstream of decapping. Involved in actin dynamics and cell cycle progression, mRNA decay and probably in a pathway involved in stress response and maintenance of cell wall integrity. Functions as a regulator of apoptosis. Mediates effects of polyamines on neuronal process extension and survival. May play an important role in brain development and function, and in skeletal muscle stem cell differentiation  [...] ",
+              "Puntuación": 0.87
+            },
+            {
+              "Prefered name": "GPD2",
+              "Annotation": "Glycerol-3-phosphate dehydrogenase, mitochondrial; Glycerol-3-phosphate dehydrogenase 2; Belongs to the FAD-dependent glycerol-3-phosphate dehydrogenase family.",
+              "Puntuación": 0.823
+            },
+            {
+              "Prefered name": "PAICS",
+              "Annotation": "Phosphoribosylaminoimidazole carboxylase and phosphoribosylaminoimidazolesuccinocarboxamide synthase; In the C-terminal section; belongs to the AIR carboxylase family. Class II subfamily.",
+              "Puntuación": 0.814
+            },
+            {
+              "Prefered name": "FH",
+              "Annotation": "Fumarate hydratase, mitochondrial; Catalyzes the reversible stereospecific interconversion of fumarate to L-malate. Experiments in other species have demonstrated that specific isoforms of this protein act in defined pathways and favor one direction over the other (Probable).  [Isoform Cytoplasmic]: Catalyzes the dehydration of L-malate to fumarate (By similarity). Fumarate metabolism in the cytosol plays a role during urea cycle and arginine metabolism; fumarate being a by- product of the urea cycle and amino-acid catabolism (By similarity). Also plays a role in DNA repair by promotin [...] ",
+              "Puntuación": 0.813
+            },
+            {
+              "Prefered name": "ATIC",
+              "Annotation": "Bifunctional purine biosynthesis protein PURH, N-terminally processed; Bifunctional enzyme that catalyzes 2 steps in purine biosynthesis; Belongs to the PurH family.",
+              "Puntuación": 0.81
+            },
+            {
+              "Prefered name": "ADSS2",
+              "Annotation": "Adenylosuccinate synthetase isozyme 2; Plays an important role in the de novo pathway and in the salvage pathway of purine nucleotide biosynthesis. Catalyzes the first committed step in the biosynthesis of AMP from IMP. Belongs to the adenylosuccinate synthetase family.",
+              "Puntuación": 0.804
+            },
+            {
+              "Prefered name": "ADSS1",
+              "Annotation": "Adenylosuccinate synthetase isozyme 1; Component of the purine nucleotide cycle (PNC), which interconverts IMP and AMP to regulate the nucleotide levels in various tissues, and which contributes to glycolysis and ammoniagenesis. Catalyzes the first committed step in the biosynthesis of AMP from IMP.",
+              "Puntuación": 0.803
+            },
+            {
+              "Prefered name": "EIF5A",
+              "Annotation": "Eukaryotic translation initiation factor 5A-1; mRNA-binding protein involved in translation elongation. Has an important function at the level of mRNA turnover, probably acting downstream of decapping. Involved in actin dynamics and cell cycle progression, mRNA decay and probably in a pathway involved in stress response and maintenance of cell wall integrity. With syntenin SDCBP, functions as a regulator of p53/TP53 and p53/TP53-dependent apoptosis. Regulates also TNF-alpha-mediated apoptosis. Mediates effects of polyamines on neuronal process extension and survival. May play an import [...] ",
+              "Puntuación": "⚠️ No se han encontrado datos."
+            },
+            {
+              "Prefered name": "EIF5A2",
+              "Annotation": "Eukaryotic translation initiation factor 5A-2; mRNA-binding protein involved in translation elongation. Has an important function at the level of mRNA turnover, probably acting downstream of decapping. Involved in actin dynamics and cell cycle progression, mRNA decay and probably in a pathway involved in stress response and maintenance of cell wall integrity. Functions as a regulator of apoptosis. Mediates effects of polyamines on neuronal process extension and survival. May play an important role in brain development and function, and in skeletal muscle stem cell differentiation (By s [...] ",
+              "Puntuación": "⚠️ No se han encontrado datos."
+            }
+          ]
+        },
+        {
+          "title": "UniProt: Interacciones proteína-proteína",
+          "display": "table",
+          "data": [
+            {
+              "GeneName": "EIF5A",
+              "Interactor": "https://www.uniprot.org/uniprotkb/P63241/entry"
+            }
+          ]
+        },
+        {
+          "title": "PPI Atlas: Interacciones proteína-proteína",
+          "display": "table",
+          "data": [
+            {
+              "protein": "TMEM252",
+              "avg_association_score": 0.953229,
+              "blood": "-",
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": 0.953229,
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "AKR7L",
+              "avg_association_score": 0.894205,
+              "blood": "-",
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": 0.894205,
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "LRRC9",
+              "avg_association_score": 0.869156,
+              "blood": "-",
+              "brain": "-",
+              "breast": 0.869156,
+              "colon": "-",
+              "kidney": "-",
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "LYNX1-SLURP2",
+              "avg_association_score": 0.862569,
+              "blood": "-",
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": "-",
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": 0.862569,
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "TGIF2LX",
+              "avg_association_score": 0.860398,
+              "blood": "-",
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": "-",
+              "liver": 0.860398,
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "STPG4",
+              "avg_association_score": 0.858779,
+              "blood": "-",
+              "brain": 0.858779,
+              "breast": "-",
+              "colon": "-",
+              "kidney": "-",
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "AGBL1",
+              "avg_association_score": 0.832668,
+              "blood": "-",
+              "brain": "-",
+              "breast": 0.832668,
+              "colon": "-",
+              "kidney": "-",
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "LCE3D",
+              "avg_association_score": 0.82162,
+              "blood": "-",
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": "-",
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": 0.82162,
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "PLB1",
+              "avg_association_score": 0.821559,
+              "blood": "-",
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": 0.821559,
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "TSBP1",
+              "avg_association_score": 0.817836,
+              "blood": "-",
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": 0.817836,
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "CCER2",
+              "avg_association_score": 0.816292,
+              "blood": "-",
+              "brain": 0.816292,
+              "breast": "-",
+              "colon": "-",
+              "kidney": "-",
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "SPECC1L-ADORA2A",
+              "avg_association_score": 0.814174,
+              "blood": 0.814174,
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": "-",
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "FAAP24",
+              "avg_association_score": 0.812399,
+              "blood": "-",
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": "-",
+              "liver": "-",
+              "lung": 0.812399,
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": "-",
+              "bioplex": "-",
+              "intact_humap": "-"
+            },
+            {
+              "protein": "TREX2",
+              "avg_association_score": 0.803743,
+              "blood": "-",
+              "brain": "-",
+              "breast": "-",
+              "colon": "-",
+              "kidney": "-",
+              "liver": "-",
+              "lung": "-",
+              "ovary": "-",
+              "pancreas": "-",
+              "stomach": "-",
+              "throat": 0.803743,
+              "bioplex": "-",
+              "intact_humap": "-"
+            }
+          ]
+        },
+        {
+          "title": "Pharos + Selleckchem : Ligandos asociados",
+          "display": "table",
+          "data": {}
+        },
+        {
+          "title": "PharmGKB: Genes asociados",
+          "display": "table",
+          "data": [
+            {
+              "Gene_Symbol": "⚠️ No se han encontrado datos.",
+              "Gene_Name": "No gene data available"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "ENFERMEDADES",
+      "content": [
+        {
+          "title": "UniProt: Enfermedades asociadas",
+          "display": "table",
+          "data": [
+            {
+              "Nombre": "Neurodevelopmental disorder with microcephaly, cerebral atrophy, and visual impairment",
+              "Acronym": "NEDMVIC",
+              "Description": "An autosomal recessive disorder characterized by global developmental delay, intellectual disability, facial dysmorphism, and microcephaly.",
+              "OMIM": "https://www.omim.org/entry/620066",
+              "Publications": "35858628"
+            }
+          ]
+        },
+        {
+          "title": "OpenTargets: Enfermedades asociadas",
+          "display": "table",
+          "data": [
+            {
+              "Nombre": "neurodevelopmental disorder with microcephaly, cerebral atrophy, and visual impairment",
+              "Descripción": "⚠️ No se han encontrado datos.",
+              "Puntuación": 0.6981
+            },
+            {
+              "Nombre": "uric acid measurement",
+              "Descripción": "Is a quantification of uric acid, typically in blood. Uric acid is associated with gout, insulin resistance and cardivascular disease.",
+              "Puntuación": 0.4187
+            },
+            {
+              "Nombre": "glomerular filtration rate",
+              "Descripción": "The rate of a glomerular filtration.",
+              "Puntuación": 0.3711
+            },
+            {
+              "Nombre": "complex neurodevelopmental disorder",
+              "Descripción": "A disorder that involves more than one phenotype associated with the central nervous system, including but not limited to intellectual disability, autism, and seizures (epilepsy).",
+              "Puntuación": 0.3696
+            },
+            {
+              "Nombre": "neurodegenerative disease",
+              "Descripción": "A disorder of the central nervous system characterized by gradual and progressive loss of neural tissue and neurologic function.",
+              "Puntuación": 0.3595
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "TERAPÉUTICA",
+      "content": [
+        {
+          "title": "DrugCentral + Selleckchem: Resultados de fármacos",
+          "display": "table",
+          "data": [
+            {
+              "DrugName": "deferoxamine",
+              "Description": "Natural product isolated from Streptomyces pilosus. It forms iron complexes and is used as a chelating agent, particularly in the mesylate form.",
+              "Link": "https://drugcentral.org/drugcard/792?q=DOHH",
+              "Link Selleckchem": "https://www.selleckchem.com/products/deferoxamine.html"
+            },
+            {
+              "DrugName": "deferoxamine",
+              "Description": "Natural product isolated from Streptomyces pilosus. It forms iron complexes and is used as a chelating agent, particularly in the mesylate form.",
+              "Link": "https://drugcentral.org/drugcard/792?q=DOHH",
+              "Link Selleckchem": "https://www.selleckchem.com/products/deferoxamine-mesylate.html"
+            },
+            {
+              "DrugName": "ciclopirox",
+              "Description": "The mechanism of action of ciclopirox has been investigated using various in vitro and in vivo infection models. One in vitro study suggested that ciclopirox acts by chelation of polyvalent cations (Fe+3 or Al+3) resulting in the inhibition of the metal-dependent enzymes that are responsible for the degradation of peroxides within the fungal cell. The clinical significance of this observation is not known.",
+              "Link": "https://drugcentral.org/drugcard/636?q=DOHH",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Ciclopirox-Penlac.html"
+            },
+            {
+              "DrugName": "ciclopirox",
+              "Description": "The mechanism of action of ciclopirox has been investigated using various in vitro and in vivo infection models. One in vitro study suggested that ciclopirox acts by chelation of polyvalent cations (Fe+3 or Al+3) resulting in the inhibition of the metal-dependent enzymes that are responsible for the degradation of peroxides within the fungal cell. The clinical significance of this observation is not known.",
+              "Link": "https://drugcentral.org/drugcard/636?q=DOHH",
+              "Link Selleckchem": "https://www.selleckchem.com/products/ciclopirox-ethanolamine.html"
+            },
+            {
+              "DrugName": "ciclopirox",
+              "Description": "The mechanism of action of ciclopirox has been investigated using various in vitro and in vivo infection models. One in vitro study suggested that ciclopirox acts by chelation of polyvalent cations (Fe+3 or Al+3) resulting in the inhibition of the metal-dependent enzymes that are responsible for the degradation of peroxides within the fungal cell. The clinical significance of this observation is not known.",
+              "Link": "https://drugcentral.org/drugcard/636?q=DOHH",
+              "Link Selleckchem": "https://www.selleckchem.com/products/fosciclopirox.html"
+            },
+            {
+              "DrugName": "deferiprone",
+              "Description": "a chelating agent with an affinity for ferric ion (iron III) indicated for the treatment of patients with transfusional iron overload due to thalassemia syndromes",
+              "Link": "https://drugcentral.org/drugcard/4188?q=DOHH",
+              "Link Selleckchem": "https://www.selleckchem.com/products/deferiprone.html"
+            },
+            {
+              "DrugName": "mimosine",
+              "Description": "3-Hydroxy-4-oxo-1(4H)-pyridinealanine. An antineoplastic alanine-substituted pyridine derivative isolated from Leucena glauca.",
+              "Link": "https://drugcentral.org/drugcard/1811?q=DOHH",
+              "Link Selleckchem": "https://www.selleckchem.com/products/l-mimosine.html"
+            }
+          ]
+        },
+        {
+          "title": "Pharos: Fármacos asociados",
+          "display": "table",
+          "data": [
+            {
+              "NO DATA": "⚠️ No se han encontrado datos."
+            }
+          ]
+        },
+        {
+          "title": "OpenTargets: Fármacos conocidos",
+          "display": "table",
+          "data": [
+            {
+              "NO DATA": "⚠️ No se han encontrado datos."
+            }
+          ]
+        },
+        {
+          "title": "PharmGKB: Label Annotations",
+          "display": "table",
+          "data": [
+            {
+              "NO DATA": "⚠️ No se han encontrado datos."
+            }
+          ]
+        },
+        {
+          "title": "GuideToFarmacology: Link",
+          "display": "table",
+          "data": [
+            {
+              "TargetID": "⚠️ No se han encontrado datos.",
+              "Message": "No se encontró el símbolo de gen 'DOHH' en Guide to Pharmacology."
+            }
+          ]
+        },
+        {
+          "title": "GuideToFarmacology: Comentarios",
+          "display": "table",
+          "data": [
+            {
+              "GeneralComments": "⚠️ No se han encontrado datos.",
+              "GeneExpressionAndPathophysiologyComments": "⚠️ No se han encontrado datos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "REFERENCIAS",
+      "content": [
+        {
+          "title": "UniProt: Publicaciones por enfermedad",
+          "display": "table",
+          "data": [
+            {
+              "DiseaseID": "Neurodevelopmental disorder with microcephaly, cerebral atrophy, and visual impairment",
+              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/35858628"
+            }
+          ]
+        },
+        {
+          "title": "PharmGKB: Literatura asociada",
+          "display": "table",
+          "data": [
+            {
+              "Title": "No literature data available",
+              "Type": "⚠️ No se han encontrado datos.",
+              "Publication_Date": "⚠️ No se han encontrado datos.",
+              "References": "⚠️ No se han encontrado datos.",
+              "Terms": "⚠️ No se han encontrado datos."
+            }
+          ]
+        },
+        {
+          "title": "GuideToFarmacology: Referencias",
+          "display": "table",
+          "data": [
+            {
+              "Link": "⚠️ No se han encontrado datos.",
+              "Fuente": "⚠️ No se han encontrado datos.",
+              "ArticleTitle": "⚠️ No se han encontrado datos.",
+              "Authors": "⚠️ No se han encontrado datos."
+            }
+          ]
+        },
+        {
+          "title": "GuideToFarmacology: Interacciones",
+          "display": "table",
+          "data": [
+            {
+              "LigandName": "⚠️ No se han encontrado datos.",
+              "ActionType": "⚠️ No se han encontrado datos.",
+              "Affinity": "⚠️ No se han encontrado datos."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "MÉTODOS OPCIONALES",
+      "content": [
+        {
+          "title": "UniProt: Términos GO",
+          "display": "table",
+          "data": [
+            {
+              "GO_TERM and Evidence": "C:cytosol (TAS:Reactome)",
+              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0005829"
+            },
+            {
+              "GO_TERM and Evidence": "F:deoxyhypusine monooxygenase activity (IMP:UniProtKB)",
+              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0019135"
+            },
+            {
+              "GO_TERM and Evidence": "F:iron ion binding (IDA:UniProtKB)",
+              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0005506"
+            },
+            {
+              "GO_TERM and Evidence": "P:peptidyl-lysine modification to peptidyl-hypusine (IMP:UniProtKB)",
+              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0008612"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "section": "ENLACES EXTERNOS",
+      "content": [
+        {
+          "title": "Fuentes variadas: Enlaces Externos",
+          "display": "table",
+          "data": [
+            {
+              "Nombre": "PathwayCommons",
+              "Enlace": "https://apps.pathwaycommons.org/search?type=Pathway&q=DOHH",
+              "Descripción": "Base de datos de vías de señalización biológicas"
+            },
+            {
+              "Nombre": "MalaCards",
+              "Enlace": "https://www.malacards.org/search/results?q=DOHH",
+              "Descripción": "Base de datos de enfermedades humanas"
+            },
+            {
+              "Nombre": "Orphanet",
+              "Enlace": "https://www.orpha.net/es/disease/gene/DOHH",
+              "Descripción": "Portal de enfermedades raras y medicamentos huérfanos"
+            },
+            {
+              "Nombre": "PharmGKB",
+              "Enlace": "https://www.pharmgkb.org/search?query=DOHH",
+              "Descripción": "Base de datos de farmacogenómica (búsqueda general)"
+            }
+          ]
+        },
+        {
+          "title": "Uniprot: Enlaces Externos",
+          "display": "table",
+          "data": [
+            {
+              "Nombre": "IntAct (UniProt)",
+              "Enlace": "https://www.uniprot.org/uniprotkb/Q9BU89/publications?facets=categories%3AInteraction",
+              "Descripción": "Base de datos de interacciones moleculares - UniProt"
+            },
+            {
+              "Nombre": "IntAct (EBI)",
+              "Enlace": "https://www.ebi.ac.uk/intact/search?query=Q9BU89&interactionTypesFilter=direct%20interaction",
+              "Descripción": "Base de datos de interacciones moleculares - EBI"
+            },
+            {
+              "Nombre": "FunctiOnome",
+              "Enlace": "https://functionome.geneontology.org/gene/UniProtKB:Q9BU89",
+              "Descripción": "Análisis funcional basado en Gene Ontology"
+            },
+            {
+              "Nombre": "AlphaFold",
+              "Enlace": "https://alphafold.ebi.ac.uk/entry/Q9BU89",
+              "Descripción": "Base de datos de estructuras proteicas predichas por IA"
+            }
+          ]
+        },
+        {
+          "title": "Ensembl: Enlaces Externos",
+          "display": "table",
+          "data": [
+            {
+              "Nombre": "STRING DB",
+              "Enlace": "https://string-db.org/network/9606.ENSG00000129932",
+              "Descripción": "Base de datos de interacciones proteína-proteína."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

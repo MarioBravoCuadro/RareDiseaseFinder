@@ -1,20 +1,14 @@
-import enum
 import json
-import uuid
 import logging
-from datetime import datetime, timezone
 
-from IPython.core.magic_arguments import argument
-from flask import url_for, Flask, abort, request, Response
+from flask import Flask, abort, Response
 from flask.views import MethodView
 from flask_smorest import Api, Blueprint
 from marshmallow import fields, Schema
-from narwhals import Boolean
 
-from src.rarediseasefinder.orchestrator.Orchestrator import Orchestrator
-from src.rarediseasefinder.orchestrator.Workflows.FullWorkflow import FullWorkflow
-from src.rarediseasefinder.orchestrator.Workflows.Workflow import Workflow
-from src.rarediseasefinder.orchestrator.api import workflows
+from .Orchestrator import Orchestrator
+from .Workflows.FullWorkflow import FullWorkflow
+from .Workflows.NoPharosWorkflow import NoPharosWorkflow
 
 server = Flask(__name__)
 
@@ -382,5 +376,5 @@ api.register_blueprint(stage_1)
 api.register_blueprint(stage_2)
 api.register_blueprint(stage_3)
 
-workflows = [FullWorkflow()]
-orchestrator = Orchestrator(workflows)
+workflows_instances = [FullWorkflow(),NoPharosWorkflow()]
+orchestrator = Orchestrator(workflows_instances)

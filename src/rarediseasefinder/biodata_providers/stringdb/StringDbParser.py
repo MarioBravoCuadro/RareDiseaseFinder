@@ -1,8 +1,5 @@
 import pandas as pd
-
-from src.rarediseasefinder.biodata_providers.stringdb.StringDbClient import StringDbClient
-from src.rarediseasefinder.core.BaseParser import BaseParser
-
+from ...core.BaseParser import BaseParser
 
 class StringDbParser(BaseParser):
     """

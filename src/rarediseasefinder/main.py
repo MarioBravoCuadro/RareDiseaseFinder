@@ -149,6 +149,10 @@ if __name__ == "__main__":
             {
                 "NOMBRE_METODO": "omim_references",
                 "FILTROS_METODO_PARSER": {}
+            },
+            {
+                "NOMBRE_METODO": "external_links",
+                "FILTROS_METODO_PARSER": {}
             }
         ]
     },
@@ -181,6 +185,10 @@ if __name__ == "__main__":
             {
                 "NOMBRE_METODO": "ensembl_id",
                 "FILTROS_METODO_PARSER": {}
+            },
+            {
+                "NOMBRE_METODO": "external_links",
+                "FILTROS_METODO_PARSER": ""
             }
         ]
     },
@@ -299,7 +307,7 @@ if __name__ == "__main__":
     {
         "PROCESSOR": "DrugCentralProcessor",
         "CLIENT_SEARCH_PARAMS": [
-            {"search_id": "tafamidis"}
+            {"search_id": "DOHH"}
         ],
         "METODOS_PARSER": [
             {
@@ -328,14 +336,14 @@ if __name__ == "__main__":
     filters_json = json.loads(filters_json)
 
     # Procesar todas las fuentes de datos usando la función
+    process_data_source("Ensembl", EnsemblProcessor, filters_json)
+    process_data_source("DrugCentral", DrugCentralProcessor, filters_json)
     process_data_source("OpenTargets", OpenTargetsProcessor, filters_json)
     process_data_source("StringDB", StringDbProcessor, filters_json)
     process_data_source("SelleckChem", SelleckchemProcessor, filters_json)
     process_data_source("Pharos", PharosProcessor, filters_json)
     process_data_source("UniProt", UniprotProcessor, filters_json)
-    process_data_source("Ensembl", EnsemblProcessor, filters_json)
     process_data_source("PantherDB", PantherProcessor, filters_json)
     process_data_source("PharmGKB", PharmGKBProcessor, filters_json)
     process_data_source("Pharmacology", PharmacologyProcessor, filters_json)
-    process_data_source("DrugCentral", DrugCentralProcessor, filters_json)
     process_data_source("PPIAtlas", PPIAtlasProcessor, filters_json)

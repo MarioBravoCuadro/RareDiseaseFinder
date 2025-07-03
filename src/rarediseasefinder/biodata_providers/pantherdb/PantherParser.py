@@ -2,7 +2,9 @@ import pandas as pd
 from typing import Dict, Any
 
 from ...core.BaseParser import BaseParser
-from ...core.constants import NOT_FOUND_MESSAGE
+from ...core.constants import (NOT_FOUND_MESSAGE, 
+                               PANTHER_GO_URL_TEMPLATE, 
+                               PANTHER_PATHWAY_URL_TEMPLATE)
 
 
 class PantherParser(BaseParser):
@@ -86,7 +88,7 @@ class PantherParser(BaseParser):
                     parsed_annotations.append({
                         "Annotation_Type": readable_type,
                         "Annotation_Name": ann.get("name", "N/A"),
-                        "Annotation_ID": f"https://pantherdb.org/panther/category.do?categoryAcc={ann.get('id', 'N/A')}",
+                        "Annotation_ID": PANTHER_GO_URL_TEMPLATE.format(ann.get("id", "N/A"))
                     })
 
         if not parsed_annotations:
@@ -126,7 +128,7 @@ class PantherParser(BaseParser):
                 for ann in annotations:
                     pathway_entries.append({
                         "Pathway": ann.get("name", "N/A"),
-                        "Link": f"https://pantherdb.org/pathway/pathwayDiagram.jsp?catAccession={ann.get('id', 'N/A')}"
+                        "Link": PANTHER_PATHWAY_URL_TEMPLATE.format(ann.get("id", "N/A"))
                     })
 
         if not pathway_entries:

@@ -73,8 +73,7 @@ class OpenTargetsParser(BaseParser):
                     "Nombre": drug.get("prefName", ""),
                     "Mecanismo de acción": drug.get("mechanismOfAction", ""),
                     "Fase": drug.get("phase", ""),
-                    "Enfermedad": drug.get("disease", {}).get("name", ""),
-                    "ID de enfermedad": drug.get("disease", {}).get("id", "")
+                    "Enfermedad": drug.get("disease", {}).get("name", "")
                 })
         
         df = self.parse_to_dataframe(drugs_data)
@@ -98,17 +97,12 @@ class OpenTargetsParser(BaseParser):
         if "associatedDiseases" in data and "rows" in data["associatedDiseases"]:
             for disease in data["associatedDiseases"]["rows"]:
                 diseases_data.append({
-                    "ID de enfermedad": disease.get("disease", {}).get("id", ""),
                     "Nombre": disease.get("disease", {}).get("name", ""),
                     "Descripción": disease.get("disease", {}).get("description", ""),
                     "Puntuación": round(disease.get("score", 0), 4)
                 })
         
-        df = self.parse_to_dataframe(diseases_data)
-        if not NO_DATA_MARKER in df.columns:
-            # Ordenar por puntuación en orden descendente
-            df = df.sort_values(by="Puntuación", ascending=False)
-        return df
+        return self.parse_to_dataframe(diseases_data)
     
     def create_interactions_df(self, data: Dict[str, Any]) -> pd.DataFrame:
         """
@@ -134,7 +128,6 @@ class OpenTargetsParser(BaseParser):
             # Filtrar interacciones duplicadas o con el mismo target
             df = df[df["Proteína interactuante"] != data.get("approvedSymbol", "")]
             df = df.drop_duplicates(subset=["Proteína interactuante"])
-            df = df.sort_values(by="Puntuación", ascending=False)
             df = df.reset_index(drop=True)
         return df
     

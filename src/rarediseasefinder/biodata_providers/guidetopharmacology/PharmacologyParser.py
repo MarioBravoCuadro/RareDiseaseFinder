@@ -2,7 +2,10 @@ from typing import Dict, Any
 import pandas as pd
 
 from ...core.BaseParser import BaseParser
-from ...core.constants import NOT_FOUND_MESSAGE
+from ...core.constants import (NOT_FOUND_MESSAGE, 
+                               GUIDETOPHARMACOLOGY_LIGAND_URL_TEMPLATE, 
+                               GUIDETOPHARMACOLOGY_TARGET_URL_TEMPLATE, 
+                               PUBMED_URL_TEMPLATE)
 
 
 class PharmacologyParser(BaseParser):
@@ -37,7 +40,7 @@ class PharmacologyParser(BaseParser):
         
         return self.parse_to_dataframe([{
             "TargetID": target_id,
-            "URL": f"https://www.guidetopharmacology.org/GRAC/ObjectDisplayForward?objectId={target_id}"
+            "URL": GUIDETOPHARMACOLOGY_TARGET_URL_TEMPLATE.format(target_id)
         }])
     
     def parse_comments(self, data: Dict[str, Any]) -> pd.DataFrame:
@@ -97,7 +100,7 @@ class PharmacologyParser(BaseParser):
             for ref in interaction.get("refs", []):
                 pmid = ref.get("pmid")
                 reference_info = {
-                    "Link": f"https://pubmed.ncbi.nlm.nih.gov/{pmid}" if pmid else NOT_FOUND_MESSAGE,
+                    "Link": PUBMED_URL_TEMPLATE.format(pmid) if pmid else NOT_FOUND_MESSAGE,
                     "Fuente": ref.get("title", NOT_FOUND_MESSAGE),
                     "ArticleTitle": ref.get("articleTitle", NOT_FOUND_MESSAGE),
                     "Authors": ref.get("authors", NOT_FOUND_MESSAGE)
@@ -128,7 +131,6 @@ class PharmacologyParser(BaseParser):
         if "error" in data:
             return self.parse_to_dataframe([{
                 "LigandName": NOT_FOUND_MESSAGE,
-                "LigandType": NOT_FOUND_MESSAGE,
                 "ActionType": NOT_FOUND_MESSAGE,
                 "Affinity": NOT_FOUND_MESSAGE
             }])
@@ -139,12 +141,10 @@ class PharmacologyParser(BaseParser):
         for interaction in interactions:
             ligand = interaction.get("ligand", {})
             interaction_info = {
-                "LigandName": ligand.get("name", NOT_FOUND_MESSAGE),
-                "LigandType": ligand.get("type", NOT_FOUND_MESSAGE),
-                "ActionType": interaction.get("type", NOT_FOUND_MESSAGE),
+                "LigandName": ligand.get("ligandName", NOT_FOUND_MESSAGE),
+                "ActionType": interaction.get("action", NOT_FOUND_MESSAGE),
                 "Affinity": interaction.get("affinity", NOT_FOUND_MESSAGE),
-                "AffinityParameter": interaction.get("parameterName", NOT_FOUND_MESSAGE),
-                "EndogenousCompound": "Yes" if ligand.get("isEndogenous", False) else "No"
+                "LigandURL": GUIDETOPHARMACOLOGY_LIGAND_URL_TEMPLATE.format(ligand.get("ligandId", NOT_FOUND_MESSAGE)),
             }
             interactions_data.append(interaction_info)
         
@@ -153,10 +153,7 @@ class PharmacologyParser(BaseParser):
             interactions_data = [{
                 "LigandName": NOT_FOUND_MESSAGE,
                 "LigandType": NOT_FOUND_MESSAGE,
-                "ActionType": NOT_FOUND_MESSAGE,
                 "Affinity": NOT_FOUND_MESSAGE,
-                "AffinityParameter": NOT_FOUND_MESSAGE,
-                "EndogenousCompound": NOT_FOUND_MESSAGE
             }]
         
         return self.parse_to_dataframe(interactions_data)

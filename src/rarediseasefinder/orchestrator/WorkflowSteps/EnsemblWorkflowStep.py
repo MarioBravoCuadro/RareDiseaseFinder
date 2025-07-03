@@ -1,7 +1,7 @@
 from ...biodata_providers.ensembl.EnsemblProcessor import EnsemblProcessor
 from .BaseWorkflowStep import BaseWorkflowStep
 
-class EnsemblerWorkflowStep(BaseWorkflowStep):
+class EnsemblWorkflowStep(BaseWorkflowStep):
     """
     Paso de flujo de trabajo que interactúa con la API de Ensembl.
     Este paso recupera datos genómicos desde Ensembl basándose en los filtros proporcionados.

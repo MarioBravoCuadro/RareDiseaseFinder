@@ -116,3 +116,50 @@ class DataframesUtils:
         if df.empty:
             return {}
         return df.to_dict(orient='records')
+
+    # ...existing code...
+
+    @staticmethod
+    def expand_comma_separated_column(df: pd.DataFrame, column_to_expand: str) -> pd.DataFrame:
+        """
+        Expande una columna que contiene valores separados por comas O listas en filas separadas.
+        
+        Args:
+            df (pd.DataFrame): DataFrame original
+            column_to_expand (str): Nombre de la columna que contiene valores separados por comas o listas
+            
+        Returns:
+            pd.DataFrame: DataFrame expandido con una fila por cada valor separado por coma o elemento de lista
+        """
+        if df.empty or column_to_expand not in df.columns:
+            return df
+        
+        expanded_rows = []
+        
+        for _, row in df.iterrows():
+            comma_separated_value = row[column_to_expand]
+            
+            if isinstance(comma_separated_value, (list, tuple)):
+                # Si es una lista, iterar directamente sobre sus elementos
+                for value in comma_separated_value:
+                    if value and str(value).strip():  # Solo añadir si el valor no está vacío
+                        new_row = row.to_dict().copy()
+                        new_row[column_to_expand] = str(value).strip()
+                        expanded_rows.append(new_row)
+                continue
+            
+            # Si el valor es NaN, None o vacío, mantener la fila original
+            if pd.isna(comma_separated_value) or not str(comma_separated_value).strip():
+                expanded_rows.append(row.to_dict())
+                continue
+            
+            # Dividir por comas y crear una fila por cada valor (comportamiento original)
+            values = [value.strip() for value in str(comma_separated_value).split(',')]
+            
+            for value in values:
+                if value:  # Solo añadir si el valor no está vacío
+                    new_row = row.to_dict().copy()
+                    new_row[column_to_expand] = value
+                    expanded_rows.append(new_row)
+        
+        return pd.DataFrame(expanded_rows) if expanded_rows else df

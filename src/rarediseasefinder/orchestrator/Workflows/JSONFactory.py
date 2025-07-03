@@ -1,8 +1,6 @@
 import json
-from typing import Dict, List, Any, Union
+from typing import Dict
 import datetime
-import os
-from datetime import datetime as dt
 
 class JSONFactory:
     """
@@ -24,7 +22,9 @@ class JSONFactory:
             "INTERACCIONES",
             "ENFERMEDADES",
             "TERAPÉUTICA",
-            "REFERENCIAS"
+            "REFERENCIAS",
+            "MÉTODOS OPCIONALES",
+            "ENLACES EXTERNOS",
         ]
         
         # Inicializar estructura JSON
@@ -117,10 +117,12 @@ class JSONFactory:
                 fecha = datetime.now().strftime('%Y-%m-%d_%H-%M-%S')
                 # Detectar la raíz del proyecto automáticamente
                 base_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), '../../../..'))
+                tests_dir = os.path.join(base_dir, 'tests')
                 filename = f"{searchterm}_{fecha}.json"
-                filepath = os.path.join(base_dir, filename)
+                filepath = os.path.join(tests_dir, filename)
             with open(filepath, 'w', encoding='utf-8') as f:
                 json.dump(self.json_structure, f, indent=2, ensure_ascii=False, default=str)
+                self.delete_json()  # Reiniciar la estructura después de guardar
             print(f"\033[92mResultado guardado en: {filepath}\033[0m")
             return True
         except Exception as e:

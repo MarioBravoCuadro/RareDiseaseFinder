@@ -5,9 +5,11 @@ import pandas as pd
 from ...core.constants import (
     QUICKGO_URL_TEMPLATE,
     PUBMED_URL_TEMPLATE,
+    UNIPROT_URL_TEMPLATE,
     OMIM_URL_TEMPLATE,
     PHAROS_URL_TEMPLATE,
-    NOT_FOUND_MESSAGE
+    NOT_FOUND_MESSAGE,
+    get_uniprot_external_links
 )
 from ...core.BaseParser import BaseParser
 """Módulo para transformar datos de UniProt en DataFrames estructurados y proporcionar métodos de parseo."""
@@ -114,7 +116,6 @@ class UniProtParser(BaseParser):
         
         go_terms_data = [
             {
-                "GO_ID": reference.get("id", ""),
                 "GO_TERM and Evidence": f"{go_term} ({evidence})" if go_term else "",
                 "Link source": QUICKGO_URL_TEMPLATE.format(reference.get("id", "")) if reference.get("id") else NOT_FOUND_MESSAGE
             }
@@ -319,8 +320,8 @@ class UniProtParser(BaseParser):
         result = self._get_first_result(data)
         
         interactions_data = [{
-            "Interactor": inter.get("interactantTwo", {}).get("uniProtKBAccession", ""),
             "GeneName": inter.get("interactantTwo", {}).get("geneName", ""),
+                        "Interactor": UNIPROT_URL_TEMPLATE.format(inter.get("interactantTwo", {}).get("uniProtKBAccession", "")),
         } for comment in result.get("comments", []) if comment.get("commentType") == "INTERACTION"
           for inter in comment.get("interactions", [])
         ]
@@ -328,8 +329,26 @@ class UniProtParser(BaseParser):
         # Si no hay datos, usar datos de prueba
         if not interactions_data:
             interactions_data = [{
-                "Interactor": NOT_FOUND_MESSAGE,
                 "GeneName": NOT_FOUND_MESSAGE,
+                "Interactor": NOT_FOUND_MESSAGE,
             }]
         
         return self.parse_to_dataframe(interactions_data)
+    
+    def parse_external_links(self, data: Dict[str, Any]) -> pd.DataFrame:
+        """
+        Extrae enlaces externos asociados a UniProt
+        
+        Args:
+            data (Dict[str, Any]): Datos crudos de UniProt
+            
+        Returns:
+            pd.DataFrame: Enlaces externos estructurados con nombre y URL
+        """
+        result = self._get_first_result(data)
+        uniprot_id = result.get("primaryAccession", "")
+        
+        # Usar la función de constants para generar enlaces
+        external_links_data = get_uniprot_external_links(uniprot_id)
+        
+        return self.parse_to_dataframe(external_links_data)

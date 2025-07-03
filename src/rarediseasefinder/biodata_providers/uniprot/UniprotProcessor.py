@@ -24,5 +24,6 @@ class UniprotProcessor(BaseProcessor):
             "go_terms": "parse_go_terms",
             "disease": "parse_disease",
             "disease_publications": "parse_disease_publications",
-            "interactions": "parse_interactions"
+            "interactions": "parse_interactions",
+            "external_links": "parse_external_links",
         }

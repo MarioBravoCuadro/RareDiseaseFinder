@@ -48,7 +48,7 @@ class BaseRetriever(ABC):
             BaseError: Para cualquier otro error inesperado
         """
         try:
-            response = requests.get(url, stream=stream, timeout=15)
+            response = requests.get(url, stream=stream, timeout=30)
             #response.raise_for_status() check the status code
             return response
         except requests.exceptions.HTTPError as http_err:
@@ -59,7 +59,7 @@ class BaseRetriever(ABC):
     @staticmethod
     def _try_connection(url:str) -> bool:
         try:
-            requests.get(url,timeout=15)
+            requests.get(url,timeout=30)
             return True
         except requests.exceptions.ConnectionError:
             return False

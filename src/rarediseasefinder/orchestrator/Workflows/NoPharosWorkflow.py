@@ -1,7 +1,6 @@
 from ..IWorkflow import IWorkflow
 
 from ..WorkflowSteps.PharmGKBWorkflowStep import PharmGKBWorkflowStep
-from ..WorkflowSteps.PharosWorkflowStep import PharosWorkflowStep
 from ..WorkflowSteps.OpentargetsWorkflowStep import OpentargetsWorkflowStep
 from ..WorkflowSteps.EnsemblWorkflowStep import EnsemblWorkflowStep
 from ..WorkflowSteps.PPIAtlasWorkflowStep import PPIAtlasWorkflowStep
@@ -19,7 +18,7 @@ from..Workflows.DataframesUtils import DataframesUtils
 from ..Workflows.JSONFactory import JSONFactory
 
 
-class FullWorkflow(IWorkflow):
+class NoPharosWorkflow(IWorkflow):
     @property
     def workflow_state(self):
         return self._workflow_state
@@ -81,8 +80,8 @@ class FullWorkflow(IWorkflow):
         self.json_factory = JSONFactory()
         self.workflow_state = "stage_1"
         self._search_param = ""
-        self._name = "FullWorkflow"
-        self._description = "Workflow con secciones; DESCRIPCIÓN,PROCESOS (Funcionoma),PATHWAYS,INTERACCIONES,ENFERMEDADES,TERAPÉUTICA,REFERENCIAS."
+        self._name = "NoPharosWorkflow"
+        self._description = "Workflow con secciones SIN PHAROS; DESCRIPCIÓN,PROCESOS,PATHWAYS,INTERACCIONES,ENFERMEDADES,TERAPÉUTICA,REFERENCIAS."
         self._listOfSteps = []
 
         self.add_step_to_list_of_steps({"Uniprot": UniprotWorkflowStep})
@@ -95,7 +94,6 @@ class FullWorkflow(IWorkflow):
         self.add_step_to_list_of_steps({"Pharmacology": PharmacologyWorkflowStep})
         self.add_step_to_list_of_steps({"Pharmgkb": PharmGKBWorkflowStep})
         self.add_step_to_list_of_steps({"PPIAtlas": PPIAtlasWorkflowStep})
-        self.add_step_to_list_of_steps({"Pharos": PharosWorkflowStep})
 
         self.instantiate_steps()
 
@@ -127,10 +125,6 @@ class FullWorkflow(IWorkflow):
                     {
                         "METHOD_ID": "interactions",
                         "METHOD_PARSER_FILTERS": ""
-                    },
-                    {
-                        "METHOD_ID": "external_links",
-                        "METHOD_PARSER_FILTERS": ""
                     }
                 ]
             },
@@ -140,10 +134,6 @@ class FullWorkflow(IWorkflow):
                 "methods": [
                     {
                         "METHOD_ID": "ensembl_id",
-                        "METHOD_PARSER_FILTERS": ""
-                    },
-                    {
-                        "METHOD_ID": "external_links",
                         "METHOD_PARSER_FILTERS": ""
                     }
                 ]
@@ -275,51 +265,6 @@ class FullWorkflow(IWorkflow):
                         "METHOD_PARSER_FILTERS": ""
                     }
                 ]
-            },
-            "Pharos_Step": {
-                "step_name": "Pharos",
-                "processor": "PharosProcessor",
-                "methods": [
-                    {
-                        "METHOD_ID": "df_info",
-                        "METHOD_PARSER_FILTERS": ""
-                    },
-                    {
-                        "METHOD_ID": "df_omim",
-                        "METHOD_PARSER_FILTERS": ""
-                    },
-                    {
-                        "METHOD_ID": "create_protein_protein_relations_df",
-                        "METHOD_PARSER_FILTERS": {
-                            "PRIORIDAD_CLASES": {
-                                "Tclin": 1,
-                                "Tchem": 2,
-                                "Tbio": 3,
-                                "Tdark": 4
-                            },
-                            "PRIORIDAD_PROPIEDADES": {
-                                "p_wrong": 1,
-                                "p_ni": 2
-                            }
-                        }
-                    },
-                    {
-                        "METHOD_ID": "df_vias",
-                        "METHOD_PARSER_FILTERS": ""
-                    },
-                    {
-                        "METHOD_ID": "df_numero_vias_por_fuente",
-                        "METHOD_PARSER_FILTERS": ""
-                    },
-                    {
-                        "METHOD_ID": "ligands",
-                        "METHOD_PARSER_FILTERS": ""
-                    },
-                    {
-                        "METHOD_ID": "drugs",
-                        "METHOD_PARSER_FILTERS": ""
-                    }
-                ]
             }
         }
 
@@ -344,7 +289,6 @@ class FullWorkflow(IWorkflow):
         pharmgkb_filters = BaseFilter(self._minium_methods_by_step["Pharmgkb_Step"]["methods"], "PharmGKBProcessor")
         pharmacology_filters = BaseFilter(self._minium_methods_by_step["Pharmacology_Step"]["methods"], "PharmacologyProcessor")
         ppiatlas_filters = BaseFilter(self._minium_methods_by_step["PPIAtlas_Step"]["methods"], "PPIAtlasProcessor")
-        pharos_filters = BaseFilter(self._minium_methods_by_step["Pharos_Step"]["methods"], "PharosProcessor")
 
         # Coger step de la lista de pasos
 
@@ -358,7 +302,6 @@ class FullWorkflow(IWorkflow):
         pharmgkb_step = self.get_step("Pharmgkb")
         pharmacology_step = self.get_step("Pharmacology")
         ppiatlas_step = self.get_step("PPIAtlas")
-        pharos_step = self.get_step("Pharos")
 
         # Añadir filtro a cada step
 
@@ -372,7 +315,6 @@ class FullWorkflow(IWorkflow):
         pharmgkb_step.set_filters(pharmgkb_filters)
         pharmacology_step.set_filters(pharmacology_filters)
         ppiatlas_step.set_filters(ppiatlas_filters)
-        pharos_step.set_filters(pharos_filters)
 
 
 
@@ -389,32 +331,28 @@ class FullWorkflow(IWorkflow):
         ensembl_step = self.get_step("Ensembl")
         pantherdb_step = self.get_step("Panther")
         drugcentral_step = self.get_step("DrugCentral")
-        pharos_step = self.get_step("Pharos")
 
         #Coger los filtros
         uniprot_filters =  uniprot_step.get_filters()
         ensembl_filters =  ensembl_step.get_filters()
         pantherdb_filters =  pantherdb_step.get_filters()
-        drugcentral_filters = drugcentral_step.get_filters() 
-        pharos_filters = pharos_step.get_filters()   
+        drugcentral_filters = drugcentral_step.get_filters()
 
         #Añadir parametro de búsqueda
         uniprot_filters.add_client_search_params(self._search_param)
         ensembl_filters.add_client_search_params(self._search_param)
         pantherdb_filters.add_client_search_params(self._search_param)
         drugcentral_filters.add_client_search_params(self._search_param)
-        pharos_filters.add_client_search_params(self._search_param)
-
         #Ejecutar cada step
         uniprot_result = uniprot_step.process()
         ensembl_result = ensembl_step.process()
         panther_result = pantherdb_step.process()
         drugcentral_result = drugcentral_step.process()
-        pharos_result = pharos_step.process()
 
         print(uniprot_result.keys())
         print(ensembl_result.keys())
         print(panther_result.keys())
+        print(drugcentral_result.keys())
         print("ensembl_id: " + ensembl_result["ensembl_id"].iloc[0][0])
         opentargets_step = self.get_step("Opentargets")
         opentargets_filters = opentargets_step.get_filters()
@@ -447,7 +385,6 @@ class FullWorkflow(IWorkflow):
         # Inicializar una lista para almacenar los resultados de Selleckchem
         # Coger step de la lista de pasos Selleckchem
         # Iterar sobre los nombres de los fármacos y buscar en Selleckchem
-        # Excluir datos que no devuelvan resultado
         selleckchem_and_drugcentral_results = []
         print("DrugCentral: " + str(drugcentral_result["drug_results"].shape[0]) + " resultados")
         for row_dict in drugcentral_result["drug_results"].to_dict(orient="records"):
@@ -466,37 +403,12 @@ class FullWorkflow(IWorkflow):
 
         selleckchem_and_drugcentral_results = DataframesUtils.create_dataframe(selleckchem_and_drugcentral_results)
         selleckchem_and_drugcentral_results = DataframesUtils.expand_comma_separated_column(
-            selleckchem_and_drugcentral_results, 
+            selleckchem_and_drugcentral_results,
             "Link Selleckchem"
         )
         print(selleckchem_and_drugcentral_results)
 
         drugcentral_result["drug_results"] = selleckchem_and_drugcentral_results
-
-        selleckchem_and_pharos_results = []
-        print("DrugCentral: " + str(pharos_result["ligands"].shape[0]) + " resultados")
-        for row_dict in pharos_result["ligands"].to_dict(orient="records"):
-            if "name" in row_dict:
-                drug = row_dict["name"]
-                print("Buscando en Selleckchem: " + drug)
-
-                selleckchem_step = self.get_step("Selleckchem")
-                selleckchem_filters = selleckchem_step.get_filters()
-                selleckchem_filters.add_client_search_params(drug)
-                results_s = selleckchem_step.process()
-
-                if results_s and not NO_DATA_MARKER in results_s["obtener_links_selleckchem"]:
-                    row_dict["Link Selleckchem"] = results_s["obtener_links_selleckchem"].iloc[0, 0]
-                    selleckchem_and_pharos_results.append(row_dict)
-
-        selleckchem_and_pharos_results = DataframesUtils.create_dataframe(selleckchem_and_pharos_results)
-        selleckchem_and_pharos_results = DataframesUtils.expand_comma_separated_column(
-            selleckchem_and_pharos_results,
-            "Link Selleckchem"
-        )
-        print(selleckchem_and_pharos_results)
-
-        pharos_result["ligands"] = selleckchem_and_pharos_results
 
         # Coger step de la lista de pasos
         pharmacology_step = self.get_step("Pharmacology")
@@ -531,12 +443,11 @@ class FullWorkflow(IWorkflow):
                                    ppiatlas_result, 
                                    opentargets_result, 
                                    panther_result, 
-                                   pharos_result, 
+                                   None, 
                                    pharmgkb_result, 
                                    pharmacology_result, 
                                    drugcentral_result,
                                    ensembl_result)
-        self.json_factory.save_to_file()
 
         return result
 
@@ -591,21 +502,6 @@ class FullWorkflow(IWorkflow):
             display="sheet",
             data=DataframesUtils.dataframe_to_dict(uniprot_result["subcellular_location"])
         )
-
-        # Información de Pharos
-        self.json_factory.add_content(
-            section="DESCRIPCIÓN",
-            title="Pharos: Información del target",
-            display="sheet",
-            data=DataframesUtils.dataframe_to_dict(pharos_result["df_info"])
-        )
-
-        self.json_factory.add_content(
-            section="DESCRIPCIÓN",
-            title="Pharos: Información de OMIM",
-            display="table",
-            data=DataframesUtils.dataframe_to_dict(pharos_result["df_omim"])
-        )
         # ----- SECCIÓN: PROCESOS -----
         self.json_factory.add_content(
             section="PROCESOS",
@@ -614,12 +510,6 @@ class FullWorkflow(IWorkflow):
             data=DataframesUtils.dataframe_to_dict(panther_result["annotations"])
         )
         # ----- SECCIÓN: PATHWAYS -----
-        self.json_factory.add_content(
-            section="PATHWAYS",
-            title="Pharos: Pathways",
-            display="table",
-            data=DataframesUtils.dataframe_to_dict(pharos_result["df_vias"])
-        )
         self.json_factory.add_content(
             section="PATHWAYS",
             title="Panther: Pathways",
@@ -634,13 +524,6 @@ class FullWorkflow(IWorkflow):
         )
 
         # ----- SECCIÓN: INTERACCIONES -----
-        self.json_factory.add_content(
-            section="INTERACCIONES",
-            title="Pharos: Interacciones proteína-proteína",
-            display="table",
-            data=DataframesUtils.dataframe_to_dict(pharos_result["create_protein_protein_relations_df"])
-        )
-
         self.json_factory.add_content(
             section="INTERACCIONES",
             title="OpenTargets + StringDB: Interacciones proteína-proteína",
@@ -659,14 +542,6 @@ class FullWorkflow(IWorkflow):
             display="table",
             data=DataframesUtils.dataframe_to_dict(ppiatlas_result["ppi_table"])
         )
-
-        self.json_factory.add_content(
-            section="INTERACCIONES",
-            title="Pharos + Selleckchem : Ligandos asociados",
-            display="table",
-            data=DataframesUtils.dataframe_to_dict(pharos_result["ligands"])
-        )
-
         self.json_factory.add_content(
             section="INTERACCIONES",
             title="PharmGKB: Genes asociados",
@@ -692,21 +567,15 @@ class FullWorkflow(IWorkflow):
         # ----- SECCIÓN: TERAPÉUTICA -----
         self.json_factory.add_content(
             section="TERAPÉUTICA",
-            title="DrugCentral + Selleckchem: Resultados de fármacos",
-            display="table",
-            data=DataframesUtils.dataframe_to_dict(drugcentral_result["drug_results"])
-        )
-        self.json_factory.add_content(
-            section="TERAPÉUTICA",
-            title="Pharos: Fármacos asociados",
-            display="table",
-            data=DataframesUtils.dataframe_to_dict(pharos_result["drugs"])
-        )
-        self.json_factory.add_content(
-            section="TERAPÉUTICA",
             title="OpenTargets: Fármacos conocidos",
             display="table",
             data=DataframesUtils.dataframe_to_dict(opentargets_result["known_drugs"])
+        )
+        self.json_factory.add_content(
+            section="TERAPÉUTICA",
+            title="DrugCentral + Selleckchem: Resultados de fármacos",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(drugcentral_result["drug_results"])
         )
         self.json_factory.add_content(
             section="TERAPÉUTICA",
@@ -752,31 +621,19 @@ class FullWorkflow(IWorkflow):
             display="table",
             data=DataframesUtils.dataframe_to_dict(guide_to_pharmacology_result["interactions"])
         )
-        # ----- SECCIÓN: OPCIONALES -----
-        if "go_terms" in uniprot_result:
-                    self.json_factory.add_content(
-                        section="MÉTODOS OPCIONALES",
-                        title="UniProt: Términos GO",
-                        display="table",
-                        data=DataframesUtils.dataframe_to_dict(uniprot_result["go_terms"])
-                    )
-
-        # ----- SECCIÓN: ENLACES EXTERNOS -----
-        print(get_standard_external_links(self._search_param))
+         # ----- SECCIÓN: ENLACES EXTERNOS -----
         self.json_factory.add_content(
             section="ENLACES EXTERNOS",
             title="Fuentes variadas: Enlaces Externos",
             display="table",
             data=get_standard_external_links(self._search_param)
         )
-        print(uniprot_result["external_links"])
         self.json_factory.add_content(
             section="ENLACES EXTERNOS",
             title="Uniprot: Enlaces Externos",
             display="table",
             data=DataframesUtils.dataframe_to_dict(uniprot_result["external_links"])
         )
-        print(ensembl_result["external_links"])
         self.json_factory.add_content(
             section="ENLACES EXTERNOS",
             title="Ensembl: Enlaces Externos",
@@ -787,7 +644,7 @@ class FullWorkflow(IWorkflow):
         return self.json_factory.get_json()
 
 if __name__ == "__main__":
-    workflow = FullWorkflow()
+    workflow = NoPharosWorkflow()
     workflow._search_param = "TTR"
 
     print(workflow.steps_execution())
