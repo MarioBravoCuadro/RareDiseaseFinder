@@ -131,6 +131,10 @@ class FullWorkflow(IWorkflow):
                     {
                         "METHOD_ID": "external_links",
                         "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "function_references",
+                        "METHOD_PARSER_FILTERS": ""
                     }
                 ]
             },
@@ -473,11 +477,11 @@ class FullWorkflow(IWorkflow):
 
         drugcentral_result["drug_results"] = selleckchem_and_drugcentral_results
 
+        # Procesar los ligandos de Pharos y unirlos a selleckchem
         selleckchem_and_pharos_results = []
-        print("DrugCentral: " + str(pharos_result["ligands"].shape[0]) + " resultados")
         for row_dict in pharos_result["ligands"].to_dict(orient="records"):
-            if "name" in row_dict:
-                drug = row_dict["name"]
+            if "nombre" in row_dict:
+                drug = row_dict["nombre"]
                 print("Buscando en Selleckchem: " + drug)
 
                 selleckchem_step = self.get_step("Selleckchem")
@@ -494,9 +498,36 @@ class FullWorkflow(IWorkflow):
             selleckchem_and_pharos_results,
             "Link Selleckchem"
         )
+        print("Ligandos Pharos+Selleckchem:")
         print(selleckchem_and_pharos_results)
 
         pharos_result["ligands"] = selleckchem_and_pharos_results
+
+        # Procesar los fármacos de Pharos y unirlos a selleckchem
+        selleckchem_and_pharos_results = []
+        for row_dict in pharos_result["drugs"].to_dict(orient="records"):
+            if "nombre" in row_dict:
+                drug = row_dict["nombre"]
+                print("Buscando en Selleckchem: " + drug)
+
+                selleckchem_step = self.get_step("Selleckchem")
+                selleckchem_filters = selleckchem_step.get_filters()
+                selleckchem_filters.add_client_search_params(drug)
+                results_s = selleckchem_step.process()
+
+                if results_s and not NO_DATA_MARKER in results_s["obtener_links_selleckchem"]:
+                    row_dict["Link Selleckchem"] = results_s["obtener_links_selleckchem"].iloc[0, 0]
+                    selleckchem_and_pharos_results.append(row_dict)
+
+        selleckchem_and_pharos_results = DataframesUtils.create_dataframe(selleckchem_and_pharos_results)
+        selleckchem_and_pharos_results = DataframesUtils.expand_comma_separated_column(
+            selleckchem_and_pharos_results,
+            "Link Selleckchem"
+        )
+        print("Fármacos Pharos+Selleckchem:")
+        print(selleckchem_and_pharos_results)
+
+        pharos_result["drugs"] = selleckchem_and_pharos_results
 
         # Coger step de la lista de pasos
         pharmacology_step = self.get_step("Pharmacology")
@@ -580,8 +611,14 @@ class FullWorkflow(IWorkflow):
         self.json_factory.add_content(
             section="DESCRIPCIÓN",
             title="UniProt: Función molecular",
-            display="table",
+            display="sheet",
             data=DataframesUtils.dataframe_to_dict(uniprot_result["function"])
+        )
+        self.json_factory.add_content(
+            section="DESCRIPCIÓN",
+            title="UniProt: Referencias de la función molecular",
+            display="table",
+            data=DataframesUtils.dataframe_to_dict(uniprot_result["function_references"])
         )
 
         # Localización subcelular de UniProt
@@ -698,7 +735,7 @@ class FullWorkflow(IWorkflow):
         )
         self.json_factory.add_content(
             section="TERAPÉUTICA",
-            title="Pharos: Fármacos asociados",
+            title="Pharos + Selleckchem: Fármacos asociados",
             display="table",
             data=DataframesUtils.dataframe_to_dict(pharos_result["drugs"])
         )

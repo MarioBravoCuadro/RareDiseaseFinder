@@ -1,17 +1,26 @@
 {
   "search_term": "TTR",
-  "date": "2025-07-03 05:32:57",
+  "date": "2025-07-06 07:24:58",
   "categories": [
     {
       "section": "DESCRIPCIÓN",
       "content": [
         {
           "title": "UniProt: Función molecular",
+          "display": "sheet",
+          "data": [
+            {
+              "Function": "Thyroid hormone-binding protein. Probably transports thyroxine from the bloodstream to the brain"
+            }
+          ]
+        },
+        {
+          "title": "UniProt: Referencias de la función molecular",
           "display": "table",
           "data": [
             {
-              "Function": "Thyroid hormone-binding protein. Probably transports thyroxine from the bloodstream to the brain",
-              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/3714052"
+              "Fuente": "PubMed",
+              "Link": "https://pubmed.ncbi.nlm.nih.gov/3714052"
             }
           ]
         },
@@ -20,12 +29,12 @@
           "display": "sheet",
           "data": [
             {
-              "Value": "Secreted",
-              "ID": "SL-0243"
+              "Location": "Secreted",
+              "Link": "https://www.uniprot.org/locations/SL-0243"
             },
             {
-              "Value": "Cytoplasm",
-              "ID": "SL-0086"
+              "Location": "Cytoplasm",
+              "Link": "https://www.uniprot.org/locations/SL-0086"
             }
           ]
         },
@@ -2501,7 +2510,60 @@
         {
           "title": "Pharos + Selleckchem : Ligandos asociados",
           "display": "table",
-          "data": {}
+          "data": [
+            {
+              "nombre": "epigallocatechin gallate",
+              "Link Selleckchem": "https://www.selleckchem.com/products/(-)-Epigallocatechin-gallate.html"
+            },
+            {
+              "nombre": "epigallocatechin gallate",
+              "Link Selleckchem": "https://www.selleckchem.com/products/mst-312.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Resveratrol.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/cis-resveratrol.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/resveratroloside.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/oxyresveratrol.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/acetyl-resveratrol.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/4-methoxyresveratrol.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/dihydroresveratrol.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/3-4-5-trimethoxy-trans-stilbene.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/pdm11.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/ramulus-mori-extract.html"
+            },
+            {
+              "nombre": "resveratrol",
+              "Link Selleckchem": "https://www.selleckchem.com/products/dmu-212.html"
+            }
+          ]
         },
         {
           "title": "PharmGKB: Genes asociados",
@@ -2658,6 +2720,42 @@
               "Link Selleckchem": "https://www.selleckchem.com/products/tafamidis-meglumine.html"
             },
             {
+              "DrugName": "diflunisal",
+              "Description": "A salicylate derivative and anti-inflammatory analgesic with actions and side effects similar to those of ASPIRIN.",
+              "Link": "https://drugcentral.org/drugcard/880?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/diflunisal.html"
+            },
+            {
+              "DrugName": "gemfibrozil",
+              "Description": "A lipid-regulating agent that lowers elevated serum lipids primarily by decreasing serum triglycerides with a variable reduction in total cholesterol.",
+              "Link": "https://drugcentral.org/drugcard/1285?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Gemfibrozil(Lopid).html"
+            },
+            {
+              "DrugName": "amlexanox",
+              "Description": "The mechanism of action by which amlexanox accelerates healing of aphthous ulcers is unknown. In vitro studies have demonstrated amlexanox to be a potent inhibitor of the formation and/or release of inflammatory mediators (histamine and leukotrienes) from mast cells, neutrophils and mononuclear cells.",
+              "Link": "https://drugcentral.org/drugcard/182?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/amlexanox.html"
+            },
+            {
+              "DrugName": "tolfenamic acid",
+              "Description": "⚠️ No se han encontrado datos.",
+              "Link": "https://drugcentral.org/drugcard/2698?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/tolfenamic-acid.html"
+            },
+            {
+              "DrugName": "tolfenamic acid",
+              "Description": "⚠️ No se han encontrado datos.",
+              "Link": "https://drugcentral.org/drugcard/2698?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/fenamic-acid.html"
+            },
+            {
+              "DrugName": "aceclofenac",
+              "Description": "⚠️ No se han encontrado datos.",
+              "Link": "https://drugcentral.org/drugcard/43?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/aceclofenac.html"
+            },
+            {
               "DrugName": "levothyroxine",
               "Description": "The major hormone derived from the thyroid gland. Thyroxine is synthesized via the iodination of tyrosines (MONOIODOTYROSINE) and the coupling of iodotyrosines (DIIODOTYROSINE) in the THYROGLOBULIN. Thyroxine is released from thyroglobulin by proteolysis and secreted into the blood. Thyroxine is peripherally deiodinated to form TRIIODOTHYRONINE which exerts a broad spectrum of stimulatory effects on cell metabolism.",
               "Link": "https://drugcentral.org/drugcard/2646?q=TTR",
@@ -2730,12 +2828,6 @@
               "Link Selleckchem": "https://www.selleckchem.com/products/diclofenac-acid.html"
             },
             {
-              "DrugName": "bithionol",
-              "Description": "Halogenated anti-infective agent that is used against trematode and cestode infestations.",
-              "Link": "https://drugcentral.org/drugcard/3032?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/bithionol.html"
-            },
-            {
               "DrugName": "nitrendipine",
               "Description": "A calcium channel blocker with marked vasodilator action. It is an effective antihypertensive agent and differs from other calcium channel blockers in that it does not reduce glomerular filtration rate and is mildly natriuretic, rather than sodium retentive.",
               "Link": "https://drugcentral.org/drugcard/1947?q=TTR",
@@ -2754,6 +2846,12 @@
               "Link Selleckchem": "https://www.selleckchem.com/products/barnidipine-hydrochloride.html"
             },
             {
+              "DrugName": "bithionol",
+              "Description": "Halogenated anti-infective agent that is used against trematode and cestode infestations.",
+              "Link": "https://drugcentral.org/drugcard/3032?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/bithionol.html"
+            },
+            {
               "DrugName": "meclofenamic acid",
               "Description": "A non-steroidal anti-inflammatory agent with antipyretic and antigranulation activities. It also inhibits prostaglandin biosynthesis.",
               "Link": "https://drugcentral.org/drugcard/1650?q=TTR",
@@ -2764,42 +2862,6 @@
               "Description": "A non-steroidal anti-inflammatory agent with antipyretic and antigranulation activities. It also inhibits prostaglandin biosynthesis.",
               "Link": "https://drugcentral.org/drugcard/1650?q=TTR",
               "Link Selleckchem": "https://www.selleckchem.com/products/fenamic-acid.html"
-            },
-            {
-              "DrugName": "diflunisal",
-              "Description": "A salicylate derivative and anti-inflammatory analgesic with actions and side effects similar to those of ASPIRIN.",
-              "Link": "https://drugcentral.org/drugcard/880?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/diflunisal.html"
-            },
-            {
-              "DrugName": "gemfibrozil",
-              "Description": "A lipid-regulating agent that lowers elevated serum lipids primarily by decreasing serum triglycerides with a variable reduction in total cholesterol.",
-              "Link": "https://drugcentral.org/drugcard/1285?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/Gemfibrozil(Lopid).html"
-            },
-            {
-              "DrugName": "amlexanox",
-              "Description": "The mechanism of action by which amlexanox accelerates healing of aphthous ulcers is unknown. In vitro studies have demonstrated amlexanox to be a potent inhibitor of the formation and/or release of inflammatory mediators (histamine and leukotrienes) from mast cells, neutrophils and mononuclear cells.",
-              "Link": "https://drugcentral.org/drugcard/182?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/amlexanox.html"
-            },
-            {
-              "DrugName": "tolfenamic acid",
-              "Description": "⚠️ No se han encontrado datos.",
-              "Link": "https://drugcentral.org/drugcard/2698?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/tolfenamic-acid.html"
-            },
-            {
-              "DrugName": "tolfenamic acid",
-              "Description": "⚠️ No se han encontrado datos.",
-              "Link": "https://drugcentral.org/drugcard/2698?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/fenamic-acid.html"
-            },
-            {
-              "DrugName": "aceclofenac",
-              "Description": "⚠️ No se han encontrado datos.",
-              "Link": "https://drugcentral.org/drugcard/43?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/aceclofenac.html"
             }
           ]
         },
@@ -2808,34 +2870,96 @@
           "display": "table",
           "data": [
             {
-              "nombre": "flufenamic acid"
+              "nombre": "flufenamic acid",
+              "Link Selleckchem": "https://www.selleckchem.com/products/flufenamic-acid.html"
             },
             {
-              "nombre": "diclofenac"
+              "nombre": "flufenamic acid",
+              "Link Selleckchem": "https://www.selleckchem.com/products/fenamic-acid.html"
             },
             {
-              "nombre": "meclofenamic acid"
+              "nombre": "flufenamic acid",
+              "Link Selleckchem": "https://www.selleckchem.com/products/ufenamate.html"
             },
             {
-              "nombre": "niflumic acid"
+              "nombre": "diclofenac",
+              "Link Selleckchem": "https://www.selleckchem.com/products/diclofenac-epolamine.html"
             },
             {
-              "nombre": "diflunisal"
+              "nombre": "diclofenac",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Diclofenac-sodium.html"
             },
             {
-              "nombre": "gemfibrozil"
+              "nombre": "diclofenac",
+              "Link Selleckchem": "https://www.selleckchem.com/products/diclofenac-diethylamine.html"
             },
             {
-              "nombre": "tolcapone"
+              "nombre": "diclofenac",
+              "Link Selleckchem": "https://www.selleckchem.com/products/diclofenac-potassium.html"
             },
             {
-              "nombre": "tolfenamic acid"
+              "nombre": "diclofenac",
+              "Link Selleckchem": "https://www.selleckchem.com/products/diclofenac-acid.html"
             },
             {
-              "nombre": "tafamidis"
+              "nombre": "meclofenamic acid",
+              "Link Selleckchem": "https://www.selleckchem.com/products/meclofenamic-acid.html"
             },
             {
-              "nombre": "patisiran"
+              "nombre": "meclofenamic acid",
+              "Link Selleckchem": "https://www.selleckchem.com/products/fenamic-acid.html"
+            },
+            {
+              "nombre": "niflumic acid",
+              "Link Selleckchem": "https://www.selleckchem.com/products/niflumic-acid.html"
+            },
+            {
+              "nombre": "tolcapone",
+              "Link Selleckchem": "https://www.selleckchem.com/products/tolcapone.html"
+            },
+            {
+              "nombre": "tolfenamic acid",
+              "Link Selleckchem": "https://www.selleckchem.com/products/tolfenamic-acid.html"
+            },
+            {
+              "nombre": "tolfenamic acid",
+              "Link Selleckchem": "https://www.selleckchem.com/products/fenamic-acid.html"
+            },
+            {
+              "nombre": "tafamidis",
+              "Link Selleckchem": "https://www.selleckchem.com/products/tafamidis.html"
+            },
+            {
+              "nombre": "tafamidis",
+              "Link Selleckchem": "https://www.selleckchem.com/products/tafamidis-meglumine.html"
+            },
+            {
+              "nombre": "patisiran",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Lapatinib-Ditosylate.html"
+            },
+            {
+              "nombre": "patisiran",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Apatinib-YN968D1.html"
+            },
+            {
+              "nombre": "patisiran",
+              "Link Selleckchem": "https://www.selleckchem.com/products/lapatinib.html"
+            },
+            {
+              "nombre": "patisiran",
+              "Link Selleckchem": "https://www.selleckchem.com/products/eupatilin.html"
+            },
+            {
+              "nombre": "patisiran",
+              "Link Selleckchem": "https://www.selleckchem.com/products/apatinib.html"
+            },
+            {
+              "nombre": "patisiran",
+              "Link Selleckchem": "https://www.selleckchem.com/products/lapatinib-ditosylate-monohydrate.html"
+            },
+            {
+              "nombre": "patisiran",
+              "Link Selleckchem": "https://www.selleckchem.com/products/impatiens-balsamina-l.-extract.html"
             }
           ]
         },
@@ -3477,22 +3601,22 @@
           "display": "table",
           "data": [
             {
-              "LigandName": "⚠️ No se han encontrado datos.",
+              "LigandName": "tafamidis",
               "ActionType": "Binding",
               "Affinity": "8.7",
-              "LigandURL": "https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=⚠️ No se han encontrado datos."
+              "LigandURL": "https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=8378"
             },
             {
-              "LigandName": "⚠️ No se han encontrado datos.",
+              "LigandName": "acoramidis",
               "ActionType": "Binding",
               "Affinity": "8.3",
-              "LigandURL": "https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=⚠️ No se han encontrado datos."
+              "LigandURL": "https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=13628"
             },
             {
-              "LigandName": "⚠️ No se han encontrado datos.",
+              "LigandName": "apigenin",
               "ActionType": "Binding",
               "Affinity": "6.6",
-              "LigandURL": "https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=⚠️ No se han encontrado datos."
+              "LigandURL": "https://www.guidetopharmacology.org/GRAC/LigandDisplayForward?ligandId=4136"
             }
           ]
         }
@@ -3573,24 +3697,29 @@
           "display": "table",
           "data": [
             {
-              "Nombre": "PathwayCommons",
+              "Fuente": "PathwayCommons",
               "Enlace": "https://apps.pathwaycommons.org/search?type=Pathway&q=TTR",
               "Descripción": "Base de datos de vías de señalización biológicas"
             },
             {
-              "Nombre": "MalaCards",
+              "Fuente": "MalaCards",
               "Enlace": "https://www.malacards.org/search/results?q=TTR",
               "Descripción": "Base de datos de enfermedades humanas"
             },
             {
-              "Nombre": "Orphanet",
+              "Fuente": "Orphanet",
               "Enlace": "https://www.orpha.net/es/disease/gene/TTR",
               "Descripción": "Portal de enfermedades raras y medicamentos huérfanos"
             },
             {
-              "Nombre": "PharmGKB",
+              "Fuente": "PharmGKB",
               "Enlace": "https://www.pharmgkb.org/search?query=TTR",
               "Descripción": "Base de datos de farmacogenómica (búsqueda general)"
+            },
+            {
+              "Fuente": "Guide to Pharmacology",
+              "Enlace": "https://www.guidetopharmacology.org/GRAC/DatabaseSearchForward?searchString=TTR&searchCategories=all",
+              "Descripción": "Base de datos de farmacología y objetivos moleculares"
             }
           ]
         },
@@ -3599,22 +3728,22 @@
           "display": "table",
           "data": [
             {
-              "Nombre": "IntAct (UniProt)",
+              "Fuente": "UniProt",
               "Enlace": "https://www.uniprot.org/uniprotkb/P02766/publications?facets=categories%3AInteraction",
               "Descripción": "Base de datos de interacciones moleculares - UniProt"
             },
             {
-              "Nombre": "IntAct (EBI)",
-              "Enlace": "https://www.ebi.ac.uk/intact/search?query=P02766&interactionTypesFilter=direct%20interaction",
+              "Fuente": "IntAct (EBI)",
+              "Enlace": "https://www.ebi.ac.uk/intact/search?query=P02766",
               "Descripción": "Base de datos de interacciones moleculares - EBI"
             },
             {
-              "Nombre": "FunctiOnome",
+              "Fuente": "Functionome",
               "Enlace": "https://functionome.geneontology.org/gene/UniProtKB:P02766",
               "Descripción": "Análisis funcional basado en Gene Ontology"
             },
             {
-              "Nombre": "AlphaFold",
+              "Fuente": "AlphaFold",
               "Enlace": "https://alphafold.ebi.ac.uk/entry/P02766",
               "Descripción": "Base de datos de estructuras proteicas predichas por IA"
             }

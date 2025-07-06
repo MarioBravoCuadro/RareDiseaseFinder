@@ -1,33 +1,42 @@
 {
   "search_term": "DOHH",
-  "date": "2025-07-03 05:35:57",
+  "date": "2025-07-06 07:35:24",
   "categories": [
     {
       "section": "DESCRIPCIÓN",
       "content": [
         {
           "title": "UniProt: Función molecular",
+          "display": "sheet",
+          "data": [
+            {
+              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)"
+            }
+          ]
+        },
+        {
+          "title": "UniProt: Referencias de la función molecular",
           "display": "table",
           "data": [
             {
-              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
-              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/Q99LN9"
+              "Fuente": "UniProtKB",
+              "Link": "https://www.uniprot.org/uniprotkb/Q99LN9/entry"
             },
             {
-              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
-              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/MF_03101"
+              "Fuente": "HAMAP-Rule",
+              "Link": "https://hamap.expasy.org/rule/MF_03101"
             },
             {
-              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
-              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/16371467"
+              "Fuente": "PubMed",
+              "Link": "https://pubmed.ncbi.nlm.nih.gov/16371467"
             },
             {
-              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
-              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/16533814"
+              "Fuente": "PubMed",
+              "Link": "https://pubmed.ncbi.nlm.nih.gov/16533814"
             },
             {
-              "Function": "Catalyzes the hydroxylation of the N(6)-(4-aminobutyl)-L-lysine intermediate produced by deoxyhypusine synthase/DHPS on a critical lysine of the eukaryotic translation initiation factor 5A/eIF-5A. This is the second step of the post-translational modification of that lysine into an unusual amino acid residue named hypusine (PubMed:16371467, PubMed:16533814, PubMed:19706422). Hypusination is unique to mature eIF-5A factor and is essential for its function (By similarity)",
-              "PubMed": "https://pubmed.ncbi.nlm.nih.gov/19706422"
+              "Fuente": "PubMed",
+              "Link": "https://pubmed.ncbi.nlm.nih.gov/19706422"
             }
           ]
         },
@@ -67,18 +76,24 @@
       "section": "PROCESOS",
       "content": [
         {
-          "title": "Panther: Procesos",
+          "title": "UniProt: Términos GO",
           "display": "table",
           "data": [
             {
-              "Annotation_Type": "PANTHER GO-slim Molecular Function",
-              "Annotation_Name": "oxidoreductase activity",
-              "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=GO:0016491"
+              "GO_TERM and Evidence": "C:cytosol (TAS:Reactome)",
+              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0005829"
             },
             {
-              "Annotation_Type": "PANTHER protein class",
-              "Annotation_Name": "lyase",
-              "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=PC00144"
+              "GO_TERM and Evidence": "F:deoxyhypusine monooxygenase activity (IMP:UniProtKB)",
+              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0019135"
+            },
+            {
+              "GO_TERM and Evidence": "F:iron ion binding (IDA:UniProtKB)",
+              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0005506"
+            },
+            {
+              "GO_TERM and Evidence": "P:peptidyl-lysine modification to peptidyl-hypusine (IMP:UniProtKB)",
+              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0008612"
             }
           ]
         }
@@ -119,16 +134,6 @@
           ]
         },
         {
-          "title": "Panther: Pathways",
-          "display": "table",
-          "data": [
-            {
-              "Pathway": "⚠️ No se han encontrado datos.",
-              "Link": "⚠️ No se han encontrado datos."
-            }
-          ]
-        },
-        {
           "title": "OpenTargets: Pathways",
           "display": "table",
           "data": [
@@ -136,6 +141,17 @@
               "Link": "https://reactome.org/content/detail/R-HSA-204626",
               "Vía": "Hypusine synthesis from eIF5A-lysine",
               "Término de nivel superior": "Metabolism of proteins"
+            }
+          ]
+        },
+        {
+          "title": "PharmGKB: Pathways",
+          "display": "table",
+          "data": [
+            {
+              "Annotation_ID": "⚠️ No se han encontrado datos.",
+              "Summary": "⚠️ No se han encontrado datos.",
+              "Associated_Genes": "⚠️ No se han encontrado datos."
             }
           ]
         }
@@ -541,7 +557,7 @@
           ]
         },
         {
-          "title": "Pharos + Selleckchem : Ligandos asociados",
+          "title": "Pharos + Selleckchem: Ligandos asociados",
           "display": "table",
           "data": {}
         },
@@ -614,18 +630,6 @@
           "display": "table",
           "data": [
             {
-              "DrugName": "deferoxamine",
-              "Description": "Natural product isolated from Streptomyces pilosus. It forms iron complexes and is used as a chelating agent, particularly in the mesylate form.",
-              "Link": "https://drugcentral.org/drugcard/792?q=DOHH",
-              "Link Selleckchem": "https://www.selleckchem.com/products/deferoxamine.html"
-            },
-            {
-              "DrugName": "deferoxamine",
-              "Description": "Natural product isolated from Streptomyces pilosus. It forms iron complexes and is used as a chelating agent, particularly in the mesylate form.",
-              "Link": "https://drugcentral.org/drugcard/792?q=DOHH",
-              "Link Selleckchem": "https://www.selleckchem.com/products/deferoxamine-mesylate.html"
-            },
-            {
               "DrugName": "ciclopirox",
               "Description": "The mechanism of action of ciclopirox has been investigated using various in vitro and in vivo infection models. One in vitro study suggested that ciclopirox acts by chelation of polyvalent cations (Fe+3 or Al+3) resulting in the inhibition of the metal-dependent enzymes that are responsible for the degradation of peroxides within the fungal cell. The clinical significance of this observation is not known.",
               "Link": "https://drugcentral.org/drugcard/636?q=DOHH",
@@ -654,17 +658,25 @@
               "Description": "3-Hydroxy-4-oxo-1(4H)-pyridinealanine. An antineoplastic alanine-substituted pyridine derivative isolated from Leucena glauca.",
               "Link": "https://drugcentral.org/drugcard/1811?q=DOHH",
               "Link Selleckchem": "https://www.selleckchem.com/products/l-mimosine.html"
+            },
+            {
+              "DrugName": "deferoxamine",
+              "Description": "Natural product isolated from Streptomyces pilosus. It forms iron complexes and is used as a chelating agent, particularly in the mesylate form.",
+              "Link": "https://drugcentral.org/drugcard/792?q=DOHH",
+              "Link Selleckchem": "https://www.selleckchem.com/products/deferoxamine.html"
+            },
+            {
+              "DrugName": "deferoxamine",
+              "Description": "Natural product isolated from Streptomyces pilosus. It forms iron complexes and is used as a chelating agent, particularly in the mesylate form.",
+              "Link": "https://drugcentral.org/drugcard/792?q=DOHH",
+              "Link Selleckchem": "https://www.selleckchem.com/products/deferoxamine-mesylate.html"
             }
           ]
         },
         {
           "title": "Pharos: Fármacos asociados",
           "display": "table",
-          "data": [
-            {
-              "NO DATA": "⚠️ No se han encontrado datos."
-            }
-          ]
+          "data": {}
         },
         {
           "title": "OpenTargets: Fármacos conocidos",
@@ -759,30 +771,7 @@
     },
     {
       "section": "MÉTODOS OPCIONALES",
-      "content": [
-        {
-          "title": "UniProt: Términos GO",
-          "display": "table",
-          "data": [
-            {
-              "GO_TERM and Evidence": "C:cytosol (TAS:Reactome)",
-              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0005829"
-            },
-            {
-              "GO_TERM and Evidence": "F:deoxyhypusine monooxygenase activity (IMP:UniProtKB)",
-              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0019135"
-            },
-            {
-              "GO_TERM and Evidence": "F:iron ion binding (IDA:UniProtKB)",
-              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0005506"
-            },
-            {
-              "GO_TERM and Evidence": "P:peptidyl-lysine modification to peptidyl-hypusine (IMP:UniProtKB)",
-              "Link source": "https://www.ebi.ac.uk/QuickGO/term/GO:0008612"
-            }
-          ]
-        }
-      ]
+      "content": []
     },
     {
       "section": "ENLACES EXTERNOS",
@@ -792,24 +781,29 @@
           "display": "table",
           "data": [
             {
-              "Nombre": "PathwayCommons",
+              "Fuente": "PathwayCommons",
               "Enlace": "https://apps.pathwaycommons.org/search?type=Pathway&q=DOHH",
               "Descripción": "Base de datos de vías de señalización biológicas"
             },
             {
-              "Nombre": "MalaCards",
+              "Fuente": "MalaCards",
               "Enlace": "https://www.malacards.org/search/results?q=DOHH",
               "Descripción": "Base de datos de enfermedades humanas"
             },
             {
-              "Nombre": "Orphanet",
+              "Fuente": "Orphanet",
               "Enlace": "https://www.orpha.net/es/disease/gene/DOHH",
               "Descripción": "Portal de enfermedades raras y medicamentos huérfanos"
             },
             {
-              "Nombre": "PharmGKB",
+              "Fuente": "PharmGKB",
               "Enlace": "https://www.pharmgkb.org/search?query=DOHH",
               "Descripción": "Base de datos de farmacogenómica (búsqueda general)"
+            },
+            {
+              "Fuente": "Guide to Pharmacology",
+              "Enlace": "https://www.guidetopharmacology.org/GRAC/DatabaseSearchForward?searchString=DOHH&searchCategories=all",
+              "Descripción": "Base de datos de farmacología y objetivos moleculares"
             }
           ]
         },
@@ -818,22 +812,22 @@
           "display": "table",
           "data": [
             {
-              "Nombre": "IntAct (UniProt)",
+              "Fuente": "UniProt",
               "Enlace": "https://www.uniprot.org/uniprotkb/Q9BU89/publications?facets=categories%3AInteraction",
               "Descripción": "Base de datos de interacciones moleculares - UniProt"
             },
             {
-              "Nombre": "IntAct (EBI)",
-              "Enlace": "https://www.ebi.ac.uk/intact/search?query=Q9BU89&interactionTypesFilter=direct%20interaction",
+              "Fuente": "IntAct (EBI)",
+              "Enlace": "https://www.ebi.ac.uk/intact/search?query=Q9BU89",
               "Descripción": "Base de datos de interacciones moleculares - EBI"
             },
             {
-              "Nombre": "FunctiOnome",
+              "Fuente": "Functionome",
               "Enlace": "https://functionome.geneontology.org/gene/UniProtKB:Q9BU89",
               "Descripción": "Análisis funcional basado en Gene Ontology"
             },
             {
-              "Nombre": "AlphaFold",
+              "Fuente": "AlphaFold",
               "Enlace": "https://alphafold.ebi.ac.uk/entry/Q9BU89",
               "Descripción": "Base de datos de estructuras proteicas predichas por IA"
             }

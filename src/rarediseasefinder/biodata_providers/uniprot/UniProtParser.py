@@ -6,8 +6,10 @@ from ...core.constants import (
     QUICKGO_URL_TEMPLATE,
     PUBMED_URL_TEMPLATE,
     UNIPROT_URL_TEMPLATE,
+    UNIPROT_LOCATION_URL_TEMPLATE,
     OMIM_URL_TEMPLATE,
     PHAROS_URL_TEMPLATE,
+    HAMAP_URL_TEMPLATE,
     NOT_FOUND_MESSAGE,
     get_uniprot_external_links
 )
@@ -41,7 +43,7 @@ class UniProtParser(BaseParser):
     
     def parse_function(self, data: Dict[str, Any]) -> pd.DataFrame:
         """
-        Extrae información de función de una proteína
+        Extrae información de función de una proteína (solo el primer elemento)
         
         Args:
             data (Dict[str, Any]): Datos crudos de UniProt
@@ -51,24 +53,54 @@ class UniProtParser(BaseParser):
         """
         result = self._get_first_result(data)
         
-        function_data = [{
-            "Function": txt.get("value", ""),
-            "PubMed": PUBMED_URL_TEMPLATE.format(ev.get("id")) if ev.get("id") else NOT_FOUND_MESSAGE,
-        } for comment in result.get("comments", []) if comment.get("commentType") == "FUNCTION"
-        for txt in comment.get("texts", [])
-        for ev in txt.get("evidences", [{}])
-        ]
+        function_data = []
         
-        # Si no hay datos, usar datos de prueba
-        if not function_data:
-            function_data = [{
-                "Function": "Función no disponible",
-                "EvidenceCode": NOT_FOUND_MESSAGE,
-                "QuickGO": NOT_FOUND_MESSAGE,
-                "Source": NOT_FOUND_MESSAGE,
-                "PublicationID": NOT_FOUND_MESSAGE,
-                "PubMed": NOT_FOUND_MESSAGE
-            }]
+        for comment in result.get("comments", []):
+            if comment.get("commentType") == "FUNCTION":
+                texts = comment.get("texts", [])
+                if texts:
+                    first_text = texts[0]
+                    function_data.append({
+                        "Function": first_text.get("value", ""),
+                    })
+                    break
+        
+        return self.parse_to_dataframe(function_data)
+    
+    def parse_function_references(self, data: Dict[str, Any]) -> pd.DataFrame:
+        """
+        Extrae información de referencias de función de una proteína
+
+        Args:
+            data (Dict[str, Any]): Datos crudos de UniProt
+
+        Returns:
+            pd.DataFrame: Información de función estructurada
+        """
+        result = self._get_first_result(data)
+        
+        function_data = []
+        
+        for comment in result.get("comments", []):
+            if comment.get("commentType") == "FUNCTION":
+                for txt in comment.get("texts", []):
+                    for ev in txt.get("evidences", [{}]):
+                        source = ev.get("source", NOT_FOUND_MESSAGE)
+                        ev_id = ev.get("id", "")
+                    
+                        if source == "PubMed" and ev_id:
+                            link = PUBMED_URL_TEMPLATE.format(ev_id)
+                        elif source == "HAMAP-Rule" and ev_id:
+                            link = HAMAP_URL_TEMPLATE.format(ev_id)
+                        elif source == "UniProtKB" and ev_id:
+                            link = UNIPROT_URL_TEMPLATE.format(ev_id)
+                        else:
+                            link = NOT_FOUND_MESSAGE
+                        
+                        function_data.append({
+                            "Fuente": source,
+                            "Link": link,
+                        })
         
         return self.parse_to_dataframe(function_data)
     
@@ -86,8 +118,8 @@ class UniProtParser(BaseParser):
         result = self._get_first_result(data)
         
         location_data = [{
-            "Value": loc.get("location", {}).get("value", ""),
-            "ID": loc.get("location", {}).get("id", "")
+            "Location": loc.get("location", {}).get("value", ""),
+            "Link": UNIPROT_LOCATION_URL_TEMPLATE.format(loc.get("location", {}).get("id", ""))
         } for comment in result.get("comments", []) if comment.get("commentType") == "SUBCELLULAR LOCATION"
           for loc in comment.get("subcellularLocations", [])
         ]

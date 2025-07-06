@@ -139,12 +139,11 @@ class PharmacologyParser(BaseParser):
         interactions_data = []
         
         for interaction in interactions:
-            ligand = interaction.get("ligand", {})
             interaction_info = {
-                "LigandName": ligand.get("ligandName", NOT_FOUND_MESSAGE),
+                "LigandName": interaction.get("ligandName", NOT_FOUND_MESSAGE),
                 "ActionType": interaction.get("action", NOT_FOUND_MESSAGE),
                 "Affinity": interaction.get("affinity", NOT_FOUND_MESSAGE),
-                "LigandURL": GUIDETOPHARMACOLOGY_LIGAND_URL_TEMPLATE.format(ligand.get("ligandId", NOT_FOUND_MESSAGE)),
+                "LigandURL": GUIDETOPHARMACOLOGY_LIGAND_URL_TEMPLATE.format(interaction.get("ligandId", NOT_FOUND_MESSAGE)),
             }
             interactions_data.append(interaction_info)
         

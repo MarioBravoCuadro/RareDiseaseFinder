@@ -1,5 +1,8 @@
-from src.rarediseasefinder.core.BaseClient import BaseClient
-
+from ...core.BaseClient import BaseClient
+from ...core.constants import (
+    STRINGDB_PING_URL,
+    STRINGDB_BASE_URL,
+)
 
 class StringDbClient(BaseClient):
     """
@@ -8,8 +11,7 @@ class StringDbClient(BaseClient):
     Este cliente proporciona métodos para obtener datos de interacción de proteínas
     desde la base de datos STRING.
     """
-    STRINGDB_PING_URL = "https://string-db.org/api/json/version"
-    STRINGDB_BASE_URL = "https://string-db.org/api/json/get_string_ids?identifiers="
+
     def __init__(self):
         """Inicializa el cliente de la base de datos STRING."""
         pass
@@ -24,7 +26,7 @@ class StringDbClient(BaseClient):
         Returns:
             str: La URL formateada para la petición a la API.
         """
-        return str(self.STRINGDB_BASE_URL + id)
+        return str(STRINGDB_BASE_URL.format(id))
 
     def fetch(self,id: str) -> dict:
         """
@@ -45,8 +47,8 @@ class StringDbClient(BaseClient):
         Returns:
             int: Código de estado HTTP de la petición ping, o 999 si la conexión falló.
         """
-        if self._try_connection(self.STRINGDB_PING_URL):
-            response = self._http_response(self.STRINGDB_PING_URL)
+        if self._try_connection(STRINGDB_PING_URL):
+            response = self._http_response(STRINGDB_PING_URL)
             return response.status_code
         else:
             return 999

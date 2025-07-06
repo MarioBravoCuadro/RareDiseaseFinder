@@ -20,6 +20,7 @@ class UniprotProcessor(BaseProcessor):
         """Devuelve el mapeo de filtros a nombres de métodos de parseo."""
         return {
             "function": "parse_function",
+            "function_references": "parse_function_references",
             "subcellular_location": "parse_subcellular_location",
             "go_terms": "parse_go_terms",
             "disease": "parse_disease",

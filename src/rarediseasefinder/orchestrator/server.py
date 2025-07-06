@@ -9,6 +9,7 @@ from marshmallow import fields, Schema
 from .Orchestrator import Orchestrator
 from .Workflows.FullWorkflow import FullWorkflow
 from .Workflows.NoPharosWorkflow import NoPharosWorkflow
+from .Workflows.NoPantherWorkflow import NoPantherWorkflow
 
 server = Flask(__name__)
 
@@ -298,6 +299,7 @@ class SetSearchParamCollection(MethodView):
         search_term = json_data["search_id"]
         logger.info(f"POST /stage2/set_search_param - Estableciendo parámetro de búsqueda '{search_term}' para workflow {workflow_name}")
         try:
+            search_term = search_term.upper()
             orchestrator.set_workflow_search_param(search_term, workflow_name)
             logger.info(f"POST /stage2/set_search_param - Parámetro de búsqueda establecido exitosamente para {workflow_name}")
             return {"message": f"Search parameter '{search_term}' set for workflow {workflow_name}"}
@@ -351,6 +353,8 @@ class StartWorkflowCollection(MethodView):
             
         except Exception as e:
             logger.error(f"POST /stage3/start_workflow - Error al iniciar workflow {workflow_name}: {str(e)}")
+            logger.error(f"Reseteando workflow {workflow_name} a stage 1 debido al error")
+            orchestrator.set_stage_1(workflow_name)
             return {
                 "error_message" : "Search_ID inválido, no se han encontrado resultados."
             }, 500
@@ -376,5 +380,5 @@ api.register_blueprint(stage_1)
 api.register_blueprint(stage_2)
 api.register_blueprint(stage_3)
 
-workflows_instances = [FullWorkflow(),NoPharosWorkflow()]
+workflows_instances = [FullWorkflow(), NoPharosWorkflow(), NoPantherWorkflow()]
 orchestrator = Orchestrator(workflows_instances)

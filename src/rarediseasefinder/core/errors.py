@@ -1,6 +1,3 @@
-from setuptools.errors import ExecError
-
-
 class BaseError(Exception):
     """Excepción base para errores"""
     pass

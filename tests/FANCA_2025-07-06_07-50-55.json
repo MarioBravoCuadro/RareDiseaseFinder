@@ -1,17 +1,26 @@
 {
   "search_term": "FANCA",
-  "date": "2025-07-03 05:34:01",
+  "date": "2025-07-06 07:50:55",
   "categories": [
     {
       "section": "DESCRIPCIÓN",
       "content": [
         {
           "title": "UniProt: Función molecular",
+          "display": "sheet",
+          "data": [
+            {
+              "Function": "DNA repair protein that may operate in a postreplication repair or a cell cycle checkpoint function. May be involved in interstrand DNA cross-link repair and in the maintenance of normal chromosome stability"
+            }
+          ]
+        },
+        {
+          "title": "UniProt: Referencias de la función molecular",
           "display": "table",
           "data": [
             {
-              "Function": "DNA repair protein that may operate in a postreplication repair or a cell cycle checkpoint function. May be involved in interstrand DNA cross-link repair and in the maintenance of normal chromosome stability",
-              "PubMed": "⚠️ No se han encontrado datos."
+              "Fuente": "⚠️ No se han encontrado datos.",
+              "Link": "⚠️ No se han encontrado datos."
             }
           ]
         },
@@ -20,12 +29,12 @@
           "display": "sheet",
           "data": [
             {
-              "Value": "Nucleus",
-              "ID": "SL-0191"
+              "Location": "Nucleus",
+              "Link": "https://www.uniprot.org/locations/SL-0191"
             },
             {
-              "Value": "Cytoplasm",
-              "ID": "SL-0086"
+              "Location": "Cytoplasm",
+              "Link": "https://www.uniprot.org/locations/SL-0086"
             }
           ]
         },
@@ -339,8 +348,8 @@
               "Puntuación": 0.999
             },
             {
-              "Prefered name": "VCP",
-              "Annotation": "Transitional endoplasmic reticulum ATPase; Necessary for the fragmentation of Golgi stacks during mitosis and for their reassembly after mitosis. Involved in the formation of the transitional endoplasmic reticulum (tER). The transfer of membranes from the endoplasmic reticulum to the Golgi apparatus occurs via 50-70 nm transition vesicles which derive from part-rough, part-smooth transitional elements of the endoplasmic reticulum (tER). Vesicle budding from the tER is an ATP-dependent process. The ternary complex containing UFD1, VCP and NPLOC4 binds ubiquitinated proteins and is neces [...] ",
+              "Prefered name": "FANCG",
+              "Annotation": "Fanconi anemia group G protein; DNA repair protein that may operate in a postreplication repair or a cell cycle checkpoint function. May be implicated in interstrand DNA cross-link repair and in the maintenance of normal chromosome stability. Candidate tumor suppressor gene.",
               "Puntuación": 0.999
             },
             {
@@ -3426,13 +3435,9 @@
           "data": {}
         },
         {
-          "title": "Pharos: Fármacos asociados",
+          "title": "Pharos + Selleckchem: Fármacos asociados",
           "display": "table",
-          "data": [
-            {
-              "NO DATA": "⚠️ No se han encontrado datos."
-            }
-          ]
+          "data": {}
         },
         {
           "title": "OpenTargets: Fármacos conocidos",
@@ -3655,24 +3660,29 @@
           "display": "table",
           "data": [
             {
-              "Nombre": "PathwayCommons",
+              "Fuente": "PathwayCommons",
               "Enlace": "https://apps.pathwaycommons.org/search?type=Pathway&q=FANCA",
               "Descripción": "Base de datos de vías de señalización biológicas"
             },
             {
-              "Nombre": "MalaCards",
+              "Fuente": "MalaCards",
               "Enlace": "https://www.malacards.org/search/results?q=FANCA",
               "Descripción": "Base de datos de enfermedades humanas"
             },
             {
-              "Nombre": "Orphanet",
+              "Fuente": "Orphanet",
               "Enlace": "https://www.orpha.net/es/disease/gene/FANCA",
               "Descripción": "Portal de enfermedades raras y medicamentos huérfanos"
             },
             {
-              "Nombre": "PharmGKB",
+              "Fuente": "PharmGKB",
               "Enlace": "https://www.pharmgkb.org/search?query=FANCA",
               "Descripción": "Base de datos de farmacogenómica (búsqueda general)"
+            },
+            {
+              "Fuente": "Guide to Pharmacology",
+              "Enlace": "https://www.guidetopharmacology.org/GRAC/DatabaseSearchForward?searchString=FANCA&searchCategories=all",
+              "Descripción": "Base de datos de farmacología y objetivos moleculares"
             }
           ]
         },
@@ -3681,22 +3691,22 @@
           "display": "table",
           "data": [
             {
-              "Nombre": "IntAct (UniProt)",
+              "Fuente": "UniProt",
               "Enlace": "https://www.uniprot.org/uniprotkb/O15360/publications?facets=categories%3AInteraction",
               "Descripción": "Base de datos de interacciones moleculares - UniProt"
             },
             {
-              "Nombre": "IntAct (EBI)",
-              "Enlace": "https://www.ebi.ac.uk/intact/search?query=O15360&interactionTypesFilter=direct%20interaction",
+              "Fuente": "IntAct (EBI)",
+              "Enlace": "https://www.ebi.ac.uk/intact/search?query=O15360",
               "Descripción": "Base de datos de interacciones moleculares - EBI"
             },
             {
-              "Nombre": "FunctiOnome",
+              "Fuente": "Functionome",
               "Enlace": "https://functionome.geneontology.org/gene/UniProtKB:O15360",
               "Descripción": "Análisis funcional basado en Gene Ontology"
             },
             {
-              "Nombre": "AlphaFold",
+              "Fuente": "AlphaFold",
               "Enlace": "https://alphafold.ebi.ac.uk/entry/O15360",
               "Descripción": "Base de datos de estructuras proteicas predichas por IA"
             }
