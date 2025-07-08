@@ -1,13 +1,13 @@
 {
   "search_term": "KCNA2",
-  "date": "2025-07-06 04:21:12",
+  "date": "2025-07-07 19:02:55",
   "categories": [
     {
       "section": "DESCRIPCIÓN",
       "content": [
         {
           "title": "UniProt: Función molecular",
-          "display": "table",
+          "display": "sheet",
           "data": [
             {
               "Function": "Voltage-gated potassium channel that mediates transmembrane potassium transport in excitable membranes, primarily in the brain and the central nervous system, but also in the cardiovascular system. Prevents aberrant action potential firing and regulates neuronal output. Forms tetrameric potassium-selective channels through which potassium ions pass in accordance with their electrochemical gradient. The channel alternates between opened and closed conformations in response to the voltage difference across the membrane (PubMed:11211111, PubMed:19912772, PubMed:23769686, PubMed:8495559). Can form functional homotetrameric channels and heterotetrameric channels that contain variable proportions of KCNA1, KCNA2, KCNA4, KCNA5, KCNA6, KCNA7, and possibly other family members as well; channel properties depend on the type of alpha subunits that are part of the channel (PubMed:20220134, PubMed:8495559). Channel properties are modulated by cytoplasmic beta subunits that regulate the subcellular location of the alpha subunits and promote rapid inactivation of delayed rectifier potassium channels. In vivo, membranes probably contain a mixture of heteromeric potassium channel complexes, making it difficult to assign currents observed in intact tissues to any particular potassium channel family member. Homotetrameric KCNA2 forms a delayed-rectifier potassium channel that opens in response to membrane depolarization, followed by slow spontaneous channel closure (PubMed:19912772, PubMed:23769686). In contrast, a heteromultimer formed by KCNA2 and KCNA4 shows rapid inactivation (PubMed:8495559). Regulates neuronal excitability and plays a role as pacemaker in the regulation of neuronal action potentials (By similarity). KCNA2-containing channels play a presynaptic role and prevent hyperexcitability and aberrant action potential firing (By similarity). Response to toxins that are selective for KCNA2-containing potassium channels suggests that in Purkinje cells, dendritic subthreshold KCNA2-containing potassium channels prevent random spontaneous calcium spikes, suppressing dendritic hyperexcitability without hindering the generation of somatic action potentials, and thereby play an important role in motor coordination (By similarity). Plays a role in the induction of long-term potentiation of neuron excitability in the CA3 layer of the hippocampus (By similarity). May function as down-stream effector for G protein-coupled receptors and inhibit GABAergic inputs to basolateral amygdala neurons (By similarity). May contribute to the regulation of neurotransmitter release, such as gamma-aminobutyric acid (GABA) (By similarity). Contributes to the regulation of the axonal release of the neurotransmitter dopamine (By similarity). Reduced KCNA2 expression plays a role in the perception of neuropathic pain after peripheral nerve injury, but not acute pain (By similarity). Plays a role in the regulation of the time spent in non-rapid eye movement (NREM) sleep (By similarity)"
@@ -59,7 +59,7 @@
               "Link": "https://pubmed.ncbi.nlm.nih.gov/8495559"
             },
             {
-              "Fuente": "",
+              "Fuente": "⚠️ No se han encontrado datos.",
               "Link": "⚠️ No se han encontrado datos."
             }
           ]
@@ -160,16 +160,6 @@
             },
             {
               "Annotation_Type": "PANTHER GO-slim Cellular Component",
-              "Annotation_Name": "axon terminus",
-              "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=GO:0043679"
-            },
-            {
-              "Annotation_Type": "PANTHER GO-slim Cellular Component",
-              "Annotation_Name": "dendrite",
-              "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=GO:0030425"
-            },
-            {
-              "Annotation_Type": "PANTHER GO-slim Cellular Component",
               "Annotation_Name": "voltage-gated potassium channel complex",
               "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=GO:0008076"
             },
@@ -177,6 +167,16 @@
               "Annotation_Type": "PANTHER GO-slim Cellular Component",
               "Annotation_Name": "main axon",
               "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=GO:0044304"
+            },
+            {
+              "Annotation_Type": "PANTHER GO-slim Cellular Component",
+              "Annotation_Name": "axon terminus",
+              "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=GO:0043679"
+            },
+            {
+              "Annotation_Type": "PANTHER GO-slim Cellular Component",
+              "Annotation_Name": "dendrite",
+              "Annotation_ID": "http://www.pantherdb.org/panther/category.do?categoryAcc=GO:0030425"
             },
             {
               "Annotation_Type": "PANTHER protein class",
@@ -5470,6 +5470,106 @@
               "Nombre": "genetic disorder",
               "Descripción": "Genetic diseases are diseases in which inherited genes predispose to increased risk. The genetic disorders associated with cancer often result from an alteration or mutation in a single gene. The diseases range from rare dominant cancer family syndrome to familial tendencies in which low-penetrance genes may interact with other genes or environmental factors to induce cancer. Research may involve clinical, epidemiologic, and laboratory studies of persons, families, and populations at high risk of these disorders.",
               "Puntuación": 0.52
+            },
+            {
+              "Nombre": "Seizure",
+              "Descripción": "A seizure is an intermittent abnormality of nervous system physiology characterized by a transient occurrence of signs and/or symptoms due to abnormal excessive or synchronous neuronal activity in the brain.",
+              "Puntuación": 0.4985
+            },
+            {
+              "Nombre": "Epileptic encephalopathy",
+              "Descripción": "A condition in which epileptiform abnormalities are believed to contribute to the progressive disturbance in cerebral function. Epileptic encephalaopathy is characterized by (1) electrographic EEG paroxysmal activity that is often aggressive, (2) seizures that are usually multiform and intractable, (3) cognitive, behavioral and neurological deficits that may be relentless, and (4) sometimes early death.",
+              "Puntuación": 0.4638
+            },
+            {
+              "Nombre": "Nizon-Isidor syndrome",
+              "Descripción": "⚠️ No se han encontrado datos.",
+              "Puntuación": 0.462
+            },
+            {
+              "Nombre": "body mass index",
+              "Descripción": "An indicator of body density as determined by the relationship of BODY WEIGHT to BODY HEIGHT. BMI=weight (kg)/height squared (m2). BMI correlates with body fat (ADIPOSE TISSUE). Their relationship varies with age and gender. For adults, BMI falls into these categories: below 18.5 (underweight); 18.5-24.9 (normal); 25.0-29.9 (overweight); 30.0 and above (obese). (National Center for Health Statistics, Centers for Disease Control and Prevention)",
+              "Puntuación": 0.4473
+            },
+            {
+              "Nombre": "Neurodevelopmental disorder",
+              "Descripción": "A childhood disorder that has a neurological basis and manifests as a developmental disability.",
+              "Puntuación": 0.4075
+            },
+            {
+              "Nombre": "small cell carcinoma",
+              "Descripción": "A neuroendocrine carcinoma composed of small malignant cells which are often said to resemble \"oat cells\" under the microscope. Small cell carcinoma most often affects the lungs. Clinically, this is often a rapidly growing cancer that spreads to distant sites early.",
+              "Puntuación": 0.3701
+            },
+            {
+              "Nombre": "Muscle weakness",
+              "Descripción": "Reduced strength of muscles.",
+              "Puntuación": 0.3696
+            },
+            {
+              "Nombre": "atrial fibrillation",
+              "Descripción": "Abnormal cardiac rhythm that is characterized by rapid, uncoordinated firing of electrical impulses in the upper chambers of the heart (HEART ATRIA). In such case, blood cannot be effectively pumped into the lower chambers of the heart (HEART VENTRICLES). It is caused by abnormal impulse generation.",
+              "Puntuación": 0.3521
+            },
+            {
+              "Nombre": "atrial flutter",
+              "Descripción": "Rapid, irregular atrial contractions caused by a block of electrical impulse conduction in the right atrium and a reentrant wave front traveling up the inter-atrial septum and down the right atrial free wall or vice versa. Unlike ATRIAL FIBRILLATION which is caused by abnormal impulse generation, typical atrial flutter is caused by abnormal impulse conduction. As in atrial fibrillation, patients with atrial flutter cannot effectively pump blood into the lower chambers of the heart (HEART VENTRICLES).",
+              "Puntuación": 0.3521
+            },
+            {
+              "Nombre": "Intellectual disability",
+              "Descripción": "Intellectual disability, previously referred to as mental retardation, is characterized by subnormal intellectual functioning that occurs during the developmental period. It is defined by an IQ score below 70.",
+              "Puntuación": 0.3413
+            },
+            {
+              "Nombre": "complex neurodevelopmental disorder",
+              "Descripción": "A disorder that involves more than one phenotype associated with the central nervous system, including but not limited to intellectual disability, autism, and seizures (epilepsy).",
+              "Puntuación": 0.34
+            },
+            {
+              "Nombre": "Lambert-Eaton myasthenic syndrome",
+              "Descripción": "Lambert-Eaton myasthenic syndrome (LEMS) is an autoimmune, presynaptic disorder of neuromuscular transmission characterized by fluctuating muscle weakness and autonomic dysfunction frequently associated with small-cell lung cancer (SCLC).",
+              "Puntuación": 0.3316
+            },
+            {
+              "Nombre": "body weight",
+              "Descripción": "The mass or quantity of heaviness of an individual. It is expressed by units of pounds or kilograms.",
+              "Puntuación": 0.325
+            },
+            {
+              "Nombre": "infantile epileptic-dyskinetic encephalopathy",
+              "Descripción": "Infantile epileptic-dyskinetic encephalopathy is a monogenic disease with epilepsy characterized by developmental delay and infantile spasms in the first months of life, followed by chorea and generalized dystonia and progressing to quadriplegic dyskinesia, recurrent status dystonicus, intractable focal epilepsy and severe intellectual disability.",
+              "Puntuación": 0.3234
+            },
+            {
+              "Nombre": "Spasticity - intellectual disability - X-linked epilepsy",
+              "Descripción": "⚠️ No se han encontrado datos.",
+              "Puntuación": 0.3234
+            },
+            {
+              "Nombre": "Brugada syndrome",
+              "Descripción": "A genetically heterogeneous condition characterized by complete or incomplete right bundle branch block accompanied by ST elevation in leads V1-V3. There is a high incidence of ventricular arrhythmia that may result in sudden death.",
+              "Puntuación": 0.3234
+            },
+            {
+              "Nombre": "developmental and epileptic encephalopathy, 1",
+              "Descripción": "Any early infantile epileptic encephalopathy in which the cause of the disease is a mutation in the ARX gene.",
+              "Puntuación": 0.3234
+            },
+            {
+              "Nombre": "West syndrome",
+              "Descripción": "West syndrome (or infantile spasms) is characterized by the association of clusters of axial spasms, psychomotor retardation and an hypsarrhythmic interictal EEG pattern. It is the most frequent type of epileptic encephalopathy. It may occur in otherwise healthy infants and in those with abnormal cognitive development.",
+              "Puntuación": 0.3234
+            },
+            {
+              "Nombre": "neutrophil count",
+              "Descripción": "The number of granulocytes (polymorphonuclear leukocytes) in a specified volume of blood, usually 1 cubic millimeter.",
+              "Puntuación": 0.3069
+            },
+            {
+              "Nombre": "granulocyte count",
+              "Descripción": "The number of granulocytes (polymorphonuclear leukocytes) in a specified volume of blood, usually 1 cubic millimeter.",
+              "Puntuación": 0.3002
             }
           ]
         }
@@ -5617,29 +5717,132 @@
           ]
         },
         {
-          "title": "Pharos: Fármacos asociados",
+          "title": "Pharos + Selleckchem: Fármacos asociados",
           "display": "table",
           "data": [
             {
-              "nombre": "fampridine"
+              "nombre": "fampridine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/aminopyridine.html"
             },
             {
-              "nombre": "guanidine"
+              "nombre": "fampridine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/3-4-diaminopyridine.html"
             },
             {
-              "nombre": "amifampridine"
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/aminoguanidine-hydrochloride.html"
             },
             {
-              "nombre": "nifedipine"
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/1-methyl-3-nitro-1-nitrosoguanidine.html"
             },
             {
-              "nombre": "diltiazem"
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/ditolylguanidine.html"
             },
             {
-              "nombre": "flecainide"
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/guanidine-aminoformamidine-hcl.html"
             },
             {
-              "nombre": "capsaicin"
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/sulfaguanidine.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/methylguanidine-hcl.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/guanidine-thiocyanate.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Moroxydine-hydrochloride.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Amiloride-hydrochloride(Midamor).html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Cimetidine(Tagamet).html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/gmx1778-chs828.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/a-804598.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/guanethidine-monosulfate.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/mpo-in-28.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/gc7-sulfate.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/dinotefuran.html"
+            },
+            {
+              "nombre": "guanidine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/1a-116.html"
+            },
+            {
+              "nombre": "amifampridine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/3-4-diaminopyridine.html"
+            },
+            {
+              "nombre": "nifedipine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Nifedipine(Adalat).html"
+            },
+            {
+              "nombre": "nifedipine",
+              "Link Selleckchem": "https://www.selleckchem.com/products/nifedipine-d6.html"
+            },
+            {
+              "nombre": "capsaicin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/dihydrocapsaicin.html"
+            },
+            {
+              "nombre": "capsaicin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/capsaicin.html"
+            },
+            {
+              "nombre": "capsaicin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/zucapsaicin.html"
+            },
+            {
+              "nombre": "capsaicin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/sb705498.html"
+            },
+            {
+              "nombre": "capsaicin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/amg-517.html"
+            },
+            {
+              "nombre": "capsaicin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/capsazepine.html"
+            },
+            {
+              "nombre": "capsaicin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/bctc.html"
+            },
+            {
+              "nombre": "capsaicin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/amg-9810.html"
+            },
+            {
+              "nombre": "capsaicin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/n-vanillyldecanamide.html"
             }
           ]
         },
@@ -5964,24 +6167,29 @@
           "display": "table",
           "data": [
             {
-              "Nombre": "PathwayCommons",
+              "Fuente": "PathwayCommons",
               "Enlace": "https://apps.pathwaycommons.org/search?type=Pathway&q=KCNA2",
               "Descripción": "Base de datos de vías de señalización biológicas"
             },
             {
-              "Nombre": "MalaCards",
+              "Fuente": "MalaCards",
               "Enlace": "https://www.malacards.org/search/results?q=KCNA2",
               "Descripción": "Base de datos de enfermedades humanas"
             },
             {
-              "Nombre": "Orphanet",
+              "Fuente": "Orphanet",
               "Enlace": "https://www.orpha.net/es/disease/gene/KCNA2",
               "Descripción": "Portal de enfermedades raras y medicamentos huérfanos"
             },
             {
-              "Nombre": "PharmGKB",
+              "Fuente": "PharmGKB",
               "Enlace": "https://www.pharmgkb.org/search?query=KCNA2",
               "Descripción": "Base de datos de farmacogenómica (búsqueda general)"
+            },
+            {
+              "Fuente": "Guide to Pharmacology",
+              "Enlace": "https://www.guidetopharmacology.org/GRAC/DatabaseSearchForward?searchString=KCNA2&searchCategories=all",
+              "Descripción": "Base de datos de farmacología y objetivos moleculares"
             }
           ]
         },
@@ -5990,22 +6198,22 @@
           "display": "table",
           "data": [
             {
-              "Nombre": "IntAct (UniProt)",
+              "Fuente": "UniProt",
               "Enlace": "https://www.uniprot.org/uniprotkb/P16389/publications?facets=categories%3AInteraction",
               "Descripción": "Base de datos de interacciones moleculares - UniProt"
             },
             {
-              "Nombre": "IntAct (EBI)",
+              "Fuente": "IntAct (EBI)",
               "Enlace": "https://www.ebi.ac.uk/intact/search?query=P16389",
               "Descripción": "Base de datos de interacciones moleculares - EBI"
             },
             {
-              "Nombre": "Functionome",
+              "Fuente": "Functionome",
               "Enlace": "https://functionome.geneontology.org/gene/UniProtKB:P16389",
               "Descripción": "Análisis funcional basado en Gene Ontology"
             },
             {
-              "Nombre": "AlphaFold",
+              "Fuente": "AlphaFold",
               "Enlace": "https://alphafold.ebi.ac.uk/entry/P16389",
               "Descripción": "Base de datos de estructuras proteicas predichas por IA"
             }

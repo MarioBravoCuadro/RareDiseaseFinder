@@ -1,6 +1,6 @@
 {
   "search_term": "TTR",
-  "date": "2025-07-06 07:24:58",
+  "date": "2025-07-07 18:58:23",
   "categories": [
     {
       "section": "DESCRIPCIÓN",
@@ -385,11 +385,6 @@
               "Puntuación": 0.949
             },
             {
-              "Prefered name": "TTR",
-              "Annotation": "Transthyretin; Thyroid hormone-binding protein. Probably transports thyroxine from the bloodstream to the brain.",
-              "Puntuación": 0.93
-            },
-            {
               "Prefered name": "LRP2",
               "Annotation": "Low-density lipoprotein receptor-related protein 2; Multiligand endocytic receptor (By similarity). Acts together with CUBN to mediate endocytosis of high-density lipoproteins (By similarity). Mediates receptor-mediated uptake of polybasic drugs such as aprotinin, aminoglycosides and polymyxin B (By similarity). In the kidney, mediates the tubular uptake and clearance of leptin (By similarity). Also mediates transport of leptin across the blood-brain barrier through endocytosis at the choroid plexus epithelium (By similarity). Endocytosis of leptin in neuronal cells is required for hyp [...] ",
               "Puntuación": 0.905
@@ -463,31 +458,6 @@
               "Prefered name": "ORM1",
               "Annotation": "Alpha-1-acid glycoprotein 1; Functions as transport protein in the blood stream. Binds various ligands in the interior of its beta-barrel domain. Also binds synthetic drugs and influences their distribution and availability in the body. Appears to function in modulating the activity of the immune system during the acute-phase reaction; Belongs to the calycin superfamily. Lipocalin family.",
               "Puntuación": 0.85
-            },
-            {
-              "Prefered name": "APOA2",
-              "Annotation": "Truncated apolipoprotein A-II; May stabilize HDL (high density lipoprotein) structure by its association with lipids, and affect the HDL metabolism; Belongs to the apolipoprotein A2 family.",
-              "Puntuación": 0.843
-            },
-            {
-              "Prefered name": "IAPP",
-              "Annotation": "Islet amyloid polypeptide; Selectively inhibits insulin-stimulated glucose utilization and glycogen deposition in muscle, while not affecting adipocyte glucose metabolism; Belongs to the calcitonin family.",
-              "Puntuación": 0.842
-            },
-            {
-              "Prefered name": "SAA1",
-              "Annotation": "Serum amyloid protein A(2-102); Major acute phase protein; Belongs to the SAA family.",
-              "Puntuación": 0.834
-            },
-            {
-              "Prefered name": "CP",
-              "Annotation": "Ceruloplasmin; Ceruloplasmin is a blue, copper-binding (6-7 atoms per molecule) glycoprotein. It has ferroxidase activity oxidizing Fe(2+) to Fe(3+) without releasing radical oxygen species. It is involved in iron transport across the cell membrane. Provides Cu(2+) ions for the ascorbate-mediated deaminase degradation of the heparan sulfate chains of GPC1. May also play a role in fetal lung development or pulmonary antioxidant defense (By similarity).",
-              "Puntuación": 0.827
-            },
-            {
-              "Prefered name": "SAA4",
-              "Annotation": "Serum amyloid A-4 protein; Major acute phase reactant. Apolipoprotein of the HDL complex; Belongs to the SAA family.",
-              "Puntuación": 0.824
             }
           ]
         },
@@ -2562,6 +2532,34 @@
             {
               "nombre": "resveratrol",
               "Link Selleckchem": "https://www.selleckchem.com/products/dmu-212.html"
+            },
+            {
+              "nombre": "Luteolin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/luteolin.html"
+            },
+            {
+              "nombre": "Luteolin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/luteolin-7-o-glucuronide.html"
+            },
+            {
+              "nombre": "Luteolin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Diosmetin(Luteolin-4-methyl-ether).html"
+            },
+            {
+              "nombre": "Luteolin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/luteoloside.html"
+            },
+            {
+              "nombre": "Luteolin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/orientin.html"
+            },
+            {
+              "nombre": "Luteolin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/hydroxygenkwanin.html"
+            },
+            {
+              "nombre": "Luteolin",
+              "Link Selleckchem": "https://www.selleckchem.com/products/homoorientin.html"
             }
           ]
         },
@@ -2635,6 +2633,106 @@
               "Nombre": "amyloidosis",
               "Descripción": "A disorder characterized by the localized or diffuse accumulation of amyloid protein in various anatomic sites. It may be primary, due to clonal plasma cell proliferations; secondary, due to long standing infections, chronic inflammatory disorders, or malignancies; or familial. It may affect the nerves, skin, tongue, joints, heart, liver, spleen, kidneys and adrenal glands.",
               "Puntuación": 0.7017
+            },
+            {
+              "Nombre": "hyperthyroxinemia",
+              "Descripción": "Abnormally elevated thyroxine level in the blood.",
+              "Puntuación": 0.6935
+            },
+            {
+              "Nombre": "Familial transthyretin-related amyloidosis",
+              "Descripción": "⚠️ No se han encontrado datos.",
+              "Puntuación": 0.6592
+            },
+            {
+              "Nombre": "hereditary amyloidosis",
+              "Descripción": "Hereditary amyloidosis refers to a group of inherited conditions that make up one of the subtypes of amyloidosis. Hereditary amyloidosisis characterized by the deposit of an abnormal protein called amyloid in multiple organs of the body where it should not be, which causes disruption of organ tissue structure and function. In hereditary amyloidosis, amyloid deposits most often occur in tissues of the heart, kidneys, and nervous system. While symptoms of hereditary amyloidosis may appear in childhood, most individuals do not experience symptoms until adulthood. There are many types of hereditary amyloidosis associated with different gene mutations and abnormal proteins. The most common type of hereditary amyloidosis is transthyretin amyloidosis (ATTR),a condition in which the amyloid deposits are most often made up of the transthyretin protein which is made in the liver. Other examplesof hereditary amyloidosis include, but are not limited to, apolipoprotein AI amyloidosis (A ApoAI), gelsolin amyloidosis (A Gel), lysozyme amyloidosis (A Lys), cystatin C amyloidosis (A Cys), fibrinogen Aα-chain amyloidosis (A Fib), and apolipoprotein AII amyloidosis (A ApoAII). Most types of hereditary amyloidosis are inherited in an autosomal dominant manner. Treatment is focused on addressing symptoms of organ damage and slowing down the production of amyloid when possible through methods such as liver transplants.",
+              "Puntuación": 0.5837
+            },
+            {
+              "Nombre": "AL amyloidosis",
+              "Descripción": "AL Amyloidosis is a plasma cell disorder characterized by the aggregation and deposition of insoluble amyloid fibrils derived from misfolding of monoclonal immunoglobulin light chains usually produced by a plasma cell tumor. It usually presents as primary systemic amyloidosis (PSA) with multiple organ involvement and less frequently as primary localized amyloidosis (PLA) restricted to a single organ.",
+              "Puntuación": 0.5798
+            },
+            {
+              "Nombre": "Abnormality of the cardiovascular system",
+              "Descripción": "Any abnormality of the cardiovascular system.",
+              "Puntuación": 0.5646
+            },
+            {
+              "Nombre": "carpal tunnel syndrome",
+              "Descripción": "Entrapment of the median nerve in the wrist that is characterized by numbness, tingling and painful movement.",
+              "Puntuación": 0.5586
+            },
+            {
+              "Nombre": "polyneuropathy",
+              "Descripción": "A disease or disorder affecting more than one nerve.",
+              "Puntuación": 0.5364
+            },
+            {
+              "Nombre": "Charcot-Marie-Tooth disease",
+              "Descripción": "An inherited degenerative disorder involving the peripheral nerves. It is caused by mutations in the genes that are responsible for the production of proteins necessary for the function and structure of the peripheral nerves. It is characterized by muscle atrophy and weakness in the feet, legs, hands, and arms and loss of sensation in the limbs.",
+              "Puntuación": 0.5203
+            },
+            {
+              "Nombre": "ATTRV122I amyloidosis",
+              "Descripción": "A rare hereditary Transthyretin (TTR)-related systemic amyloidosis (ATTR) with predominant cardiac involvement resulting from myocardial infiltration of abnormal amyloid protein.",
+              "Puntuación": 0.4998
+            },
+            {
+              "Nombre": "cardiac amyloidosis",
+              "Descripción": "Cardiac amyloidosis is a condition whereby cardiac tissue is infiltrated by amyloid fibrils. Patients with cardiac amyloidosis commonly develop diastolic and systolic dysfunction, progressive heart failure (HF), arrhythmias, and symptoms of orthostatic hypotension. [PMID:28279425]",
+              "Puntuación": 0.4655
+            },
+            {
+              "Nombre": "Familial adenomatous polyposis",
+              "Descripción": "Familial adenomatous polyposis (FAP) is characterized by the development of hundreds to thousands of adenomas in the rectum and colon during the second decade of life.",
+              "Puntuación": 0.462
+            },
+            {
+              "Nombre": "classic familial adenomatous polyposis",
+              "Descripción": "Familial adenomatous polyposis (FAP) is characterized by the development of hundreds to thousands of adenomas in the rectum and colon during the second decade of life.",
+              "Puntuación": 0.462
+            },
+            {
+              "Nombre": "serum creatinine amount",
+              "Descripción": "The amount of a creatinine when measured in blood serum.",
+              "Puntuación": 0.4049
+            },
+            {
+              "Nombre": "glomerular filtration rate",
+              "Descripción": "The rate of a glomerular filtration.",
+              "Puntuación": 0.3988
+            },
+            {
+              "Nombre": "retinol measurement",
+              "Descripción": "quantification in a sample (eg blood) of retinol, a vitamin A retinoid synthesized from the breakdown of β-carotene",
+              "Puntuación": 0.3934
+            },
+            {
+              "Nombre": "thyroxine measurement",
+              "Descripción": "quantification of the thyroid hormone thyroxine (T4) in the blood, usually as an indicator of thyroid function",
+              "Puntuación": 0.3779
+            },
+            {
+              "Nombre": "metabolite measurement",
+              "Descripción": "This is an annotation class for metabolite measurements where the exact metabolite measurements are unknown. Do not annotate to this class.",
+              "Puntuación": 0.3712
+            },
+            {
+              "Nombre": "hereditary ATTR amyloidosis",
+              "Descripción": "A rare genetic systemic disease characterized by adult onset, progressive sensorimotor and autonomic neuropathy and infiltrative cardiomyopathy. Neurological involvement usually starts with sensory loss in the extremities and progresses with motor neuropathy. Cardiomyopathy presents with rhythm abnormalities and heart failure. The disease also frequently manifests with a range of additional clinical signs and symptoms due to associated ocular, renal, central nervous system and gastrointestinal involvement.",
+              "Puntuación": 0.3704
+            },
+            {
+              "Nombre": "heart conduction disease",
+              "Descripción": "A disease that has its basis in the disruption of the heart's electrical conduction system.",
+              "Puntuación": 0.3696
+            },
+            {
+              "Nombre": "microphthalmia",
+              "Descripción": "Congenital or developmental anomaly in which the eyeballs are abnormally small.",
+              "Puntuación": 0.3696
             }
           ]
         }
@@ -2720,22 +2818,10 @@
               "Link Selleckchem": "https://www.selleckchem.com/products/tafamidis-meglumine.html"
             },
             {
-              "DrugName": "diflunisal",
-              "Description": "A salicylate derivative and anti-inflammatory analgesic with actions and side effects similar to those of ASPIRIN.",
-              "Link": "https://drugcentral.org/drugcard/880?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/diflunisal.html"
-            },
-            {
-              "DrugName": "gemfibrozil",
-              "Description": "A lipid-regulating agent that lowers elevated serum lipids primarily by decreasing serum triglycerides with a variable reduction in total cholesterol.",
-              "Link": "https://drugcentral.org/drugcard/1285?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/Gemfibrozil(Lopid).html"
-            },
-            {
-              "DrugName": "amlexanox",
-              "Description": "The mechanism of action by which amlexanox accelerates healing of aphthous ulcers is unknown. In vitro studies have demonstrated amlexanox to be a potent inhibitor of the formation and/or release of inflammatory mediators (histamine and leukotrienes) from mast cells, neutrophils and mononuclear cells.",
-              "Link": "https://drugcentral.org/drugcard/182?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/amlexanox.html"
+              "DrugName": "diacerein",
+              "Description": "chelates with bivalent metals; a quinone which possesses redox properties; metabolized to active rhein; proposed mechanisms include inhibiting IL1 and metalloproteinases; called a slow acting symptomatic drug in osteoarthritis; no effect of cyclooxygenase",
+              "Link": "https://drugcentral.org/drugcard/849?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/diacerein.html"
             },
             {
               "DrugName": "tolfenamic acid",
@@ -2780,22 +2866,16 @@
               "Link Selleckchem": "https://www.selleckchem.com/products/triclabendazole.html"
             },
             {
-              "DrugName": "dasatinib",
-              "Description": "A pyrimidine and thiazole derived ANTINEOPLASTIC AGENT and PROTEIN KINASE INHIBITOR of BCR-ABL KINASE. It is used in the treatment of patients with CHRONIC MYELOID LEUKEMIA who are resistant or intolerant to IMATINIB.",
-              "Link": "https://drugcentral.org/drugcard/785?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/Dasatinib.html"
+              "DrugName": "nifedipine",
+              "Description": "A potent vasodilator agent with calcium antagonistic action. It is a useful anti-anginal agent that also lowers blood pressure.",
+              "Link": "https://drugcentral.org/drugcard/1922?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Nifedipine(Adalat).html"
             },
             {
-              "DrugName": "dasatinib",
-              "Description": "A pyrimidine and thiazole derived ANTINEOPLASTIC AGENT and PROTEIN KINASE INHIBITOR of BCR-ABL KINASE. It is used in the treatment of patients with CHRONIC MYELOID LEUKEMIA who are resistant or intolerant to IMATINIB.",
-              "Link": "https://drugcentral.org/drugcard/785?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/dasatinib-monohydrate.html"
-            },
-            {
-              "DrugName": "dasatinib",
-              "Description": "A pyrimidine and thiazole derived ANTINEOPLASTIC AGENT and PROTEIN KINASE INHIBITOR of BCR-ABL KINASE. It is used in the treatment of patients with CHRONIC MYELOID LEUKEMIA who are resistant or intolerant to IMATINIB.",
-              "Link": "https://drugcentral.org/drugcard/785?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/dasatinib-hydrochloride.html"
+              "DrugName": "nifedipine",
+              "Description": "A potent vasodilator agent with calcium antagonistic action. It is a useful anti-anginal agent that also lowers blood pressure.",
+              "Link": "https://drugcentral.org/drugcard/1922?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/nifedipine-d6.html"
             },
             {
               "DrugName": "diclofenac",
@@ -2828,6 +2908,12 @@
               "Link Selleckchem": "https://www.selleckchem.com/products/diclofenac-acid.html"
             },
             {
+              "DrugName": "bithionol",
+              "Description": "Halogenated anti-infective agent that is used against trematode and cestode infestations.",
+              "Link": "https://drugcentral.org/drugcard/3032?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/bithionol.html"
+            },
+            {
               "DrugName": "nitrendipine",
               "Description": "A calcium channel blocker with marked vasodilator action. It is an effective antihypertensive agent and differs from other calcium channel blockers in that it does not reduce glomerular filtration rate and is mildly natriuretic, rather than sodium retentive.",
               "Link": "https://drugcentral.org/drugcard/1947?q=TTR",
@@ -2846,27 +2932,39 @@
               "Link Selleckchem": "https://www.selleckchem.com/products/barnidipine-hydrochloride.html"
             },
             {
-              "DrugName": "bithionol",
-              "Description": "Halogenated anti-infective agent that is used against trematode and cestode infestations.",
-              "Link": "https://drugcentral.org/drugcard/3032?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/bithionol.html"
+              "DrugName": "niflumic acid",
+              "Description": "An analgesic and anti-inflammatory agent used in the treatment of rheumatoid arthritis.",
+              "Link": "https://drugcentral.org/drugcard/1925?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/niflumic-acid.html"
             },
             {
-              "DrugName": "meclofenamic acid",
-              "Description": "A non-steroidal anti-inflammatory agent with antipyretic and antigranulation activities. It also inhibits prostaglandin biosynthesis.",
-              "Link": "https://drugcentral.org/drugcard/1650?q=TTR",
-              "Link Selleckchem": "https://www.selleckchem.com/products/meclofenamic-acid.html"
+              "DrugName": "flufenamic acid",
+              "Description": "An anthranilic acid derivative with analgesic, anti-inflammatory, and antipyretic properties. It is used in musculoskeletal and joint disorders and administered by mouth and topically. (From Martindale, The Extra Pharmacopoeia, 30th ed, p16)",
+              "Link": "https://drugcentral.org/drugcard/1193?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/flufenamic-acid.html"
             },
             {
-              "DrugName": "meclofenamic acid",
-              "Description": "A non-steroidal anti-inflammatory agent with antipyretic and antigranulation activities. It also inhibits prostaglandin biosynthesis.",
-              "Link": "https://drugcentral.org/drugcard/1650?q=TTR",
+              "DrugName": "flufenamic acid",
+              "Description": "An anthranilic acid derivative with analgesic, anti-inflammatory, and antipyretic properties. It is used in musculoskeletal and joint disorders and administered by mouth and topically. (From Martindale, The Extra Pharmacopoeia, 30th ed, p16)",
+              "Link": "https://drugcentral.org/drugcard/1193?q=TTR",
               "Link Selleckchem": "https://www.selleckchem.com/products/fenamic-acid.html"
+            },
+            {
+              "DrugName": "flufenamic acid",
+              "Description": "An anthranilic acid derivative with analgesic, anti-inflammatory, and antipyretic properties. It is used in musculoskeletal and joint disorders and administered by mouth and topically. (From Martindale, The Extra Pharmacopoeia, 30th ed, p16)",
+              "Link": "https://drugcentral.org/drugcard/1193?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/ufenamate.html"
+            },
+            {
+              "DrugName": "gemfibrozil",
+              "Description": "A lipid-regulating agent that lowers elevated serum lipids primarily by decreasing serum triglycerides with a variable reduction in total cholesterol.",
+              "Link": "https://drugcentral.org/drugcard/1285?q=TTR",
+              "Link Selleckchem": "https://www.selleckchem.com/products/Gemfibrozil(Lopid).html"
             }
           ]
         },
         {
-          "title": "Pharos: Fármacos asociados",
+          "title": "Pharos + Selleckchem: Fármacos asociados",
           "display": "table",
           "data": [
             {

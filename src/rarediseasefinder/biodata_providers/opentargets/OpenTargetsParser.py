@@ -128,7 +128,8 @@ class OpenTargetsParser(BaseParser):
             # Filtrar interacciones duplicadas o con el mismo target
             df = df[df["Proteína interactuante"] != data.get("approvedSymbol", "")]
             df = df.drop_duplicates(subset=["Proteína interactuante"])
-            df = df.reset_index(drop=True)
+            # Filtrar solo proteínas que empiecen por "ENSP"
+            df = df[df["Proteína interactuante"].str.startswith("ENSP", na=False)]
         return df
     
     def create_mouse_phenotypes_df(self, data: Dict[str, Any]) -> pd.DataFrame:

@@ -1,6 +1,6 @@
 {
   "search_term": "FANCA",
-  "date": "2025-07-06 07:50:55",
+  "date": "2025-07-07 19:00:02",
   "categories": [
     {
       "section": "DESCRIPCIÓN",
@@ -388,39 +388,9 @@
               "Puntuación": 0.968
             },
             {
-              "Prefered name": "FANCG",
-              "Annotation": "Fanconi anemia group G protein; DNA repair protein that may operate in a postreplication repair or a cell cycle checkpoint function. May be implicated in interstrand DNA cross-link repair and in the maintenance of normal chromosome stability. Candidate tumor suppressor gene.",
-              "Puntuación": 0.96
-            },
-            {
               "Prefered name": "ATRIP",
               "Annotation": "ATR-interacting protein; Required for checkpoint signaling after DNA damage. Required for ATR expression, possibly by stabilizing the protein. Belongs to the ATRIP family.",
               "Puntuación": 0.955
-            },
-            {
-              "Prefered name": "ATR",
-              "Annotation": "Serine/threonine-protein kinase ATR; Serine/threonine protein kinase which activates checkpoint signaling upon genotoxic stresses such as ionizing radiation (IR), ultraviolet light (UV), or DNA replication stalling, thereby acting as a DNA damage sensor. Recognizes the substrate consensus sequence [ST]- Q. Phosphorylates BRCA1, CHEK1, MCM2, RAD17, RPA2, SMC1 and p53/TP53, which collectively inhibit DNA replication and mitosis and promote DNA repair, recombination and apoptosis. Phosphorylates 'Ser-139' of histone variant H2AX at sites of DNA damage, thereby regulating DNA damage respon [...] ",
-              "Puntuación": 0.953
-            },
-            {
-              "Prefered name": "RAD51",
-              "Annotation": "DNA repair protein RAD51 homolog 1; Plays an important role in homologous strand exchange, a key step in DNA repair through homologous recombination (HR). Binds to single and double-stranded DNA and exhibits DNA-dependent ATPase activity. Catalyzes the recognition of homology and strand exchange between homologous DNA partners to form a joint molecule between a processed DNA break and the repair template. Binds to single-stranded DNA in an ATP-dependent manner to form nucleoprotein filaments which are essential for the homology search and strand exchange. Part of a PALB2-scaffolded HR  [...] ",
-              "Puntuación": 0.936
-            },
-            {
-              "Prefered name": "SLX4",
-              "Annotation": "Structure-specific endonuclease subunit SLX4; Regulatory subunit that interacts with and increases the activity of different structure-specific endonucleases. Has several distinct roles in protecting genome stability by resolving diverse forms of deleterious DNA structures originating from replication and recombination intermediates and from DNA damage. Component of the SLX1- SLX4 structure-specific endonuclease that resolves DNA secondary structures generated during DNA repair and recombination. Has endonuclease activity towards branched DNA substrates, introducing single-strand cuts  [...] ",
-              "Puntuación": 0.935
-            },
-            {
-              "Prefered name": "SMARCA4",
-              "Annotation": "Transcription activator BRG1; Involved in transcriptional activation and repression of select genes by chromatin remodeling (alteration of DNA-nucleosome topology). Component of SWI/SNF chromatin remodeling complexes that carry out key enzymatic activities, changing chromatin structure by altering DNA-histone contacts within a nucleosome in an ATP-dependent manner. Component of the CREST-BRG1 complex, a multiprotein complex that regulates promoter activation by orchestrating the calcium- dependent release of a repressor complex and the recruitment of an activator complex. In resting ne [...] ",
-              "Puntuación": 0.925
-            },
-            {
-              "Prefered name": "ERCC4",
-              "Annotation": "DNA repair endonuclease XPF; Catalytic component of a structure-specific DNA repair endonuclease responsible for the 5-prime incision during DNA repair. Involved in homologous recombination that assists in removing interstrand cross-link; Belongs to the XPF family.",
-              "Puntuación": 0.912
             }
           ]
         },
@@ -3421,6 +3391,106 @@
               "Nombre": "myelodysplastic syndrome",
               "Descripción": "A clonal hematopoietic disorder characterized by dysplasia and ineffective hematopoiesis in one or more of the hematopoietic cell lines. The dysplasia may be accompanied by an increase in myeloblasts, but the number is less than 20%, which, according to the WHO guidelines, is the requisite threshold for the diagnosis of acute myeloid leukemia. It may occur de novo or as a result of exposure to alkylating agents and/or radiotherapy. (WHO, 2001)",
               "Puntuación": 0.48
+            },
+            {
+              "Nombre": "leukemia",
+              "Descripción": "A malignant (clonal) hematologic disorder, involving hematopoietic stem cells and characterized by the presence of primitive or atypical myeloid or lymphoid cells in the bone marrow and the blood. Leukemias are classified as acute or chronic based on the degree of cellular differentiation and the predominant cell type present. Leukemia is usually associated with anemia, fever, hemorrhagic episodes, and splenomegaly. Common leukemias include acute myeloid leukemia, chronic myelogenous leukemia, acute lymphoblastic or precursor lymphoblastic leukemia, and chronic lymphocytic leukemia. Treatment is vital to patient survival; untreated, the natural course of acute leukemias is normally measured in weeks or months, while that of chronic leukemias is more often measured in months or years.",
+              "Puntuación": 0.4725
+            },
+            {
+              "Nombre": "Abnormality of skin pigmentation",
+              "Descripción": "An abnormality of the pigmentation of the skin.",
+              "Puntuación": 0.4718
+            },
+            {
+              "Nombre": "genetic disorder",
+              "Descripción": "Genetic diseases are diseases in which inherited genes predispose to increased risk. The genetic disorders associated with cancer often result from an alteration or mutation in a single gene. The diseases range from rare dominant cancer family syndrome to familial tendencies in which low-penetrance genes may interact with other genes or environmental factors to induce cancer. Research may involve clinical, epidemiologic, and laboratory studies of persons, families, and populations at high risk of these disorders.",
+              "Puntuación": 0.4543
+            },
+            {
+              "Nombre": "Abnormality of blood and blood-forming tissues",
+              "Descripción": "An abnormality of the hematopoietic system.",
+              "Puntuación": 0.4065
+            },
+            {
+              "Nombre": "prostate carcinoma",
+              "Descripción": "A carcinoma that arises from epithelial cells of the prostate gland.",
+              "Puntuación": 0.3995
+            },
+            {
+              "Nombre": "head and neck squamous cell carcinoma",
+              "Descripción": "A squamous cell carcinoma that arises from any of the following anatomic sites: lip and oral cavity, nasal cavity, paranasal sinuses, pharynx, larynx, and salivary glands.",
+              "Puntuación": 0.3889
+            },
+            {
+              "Nombre": "ovarian cancer",
+              "Descripción": "A primary or metastatic malignant neoplasm involving the ovary. Most primary malignant ovarian neoplasms are either carcinomas (serous, mucinous, or endometrioid adenocarcinomas) or malignant germ cell tumors. Metastatic malignant neoplasms to the ovary include carcinomas, lymphomas, and melanomas.",
+              "Puntuación": 0.3854
+            },
+            {
+              "Nombre": "gastric carcinoma",
+              "Descripción": "A carcinoma that arises from epithelial cells of the stomach.",
+              "Puntuación": 0.3794
+            },
+            {
+              "Nombre": "skin basal cell carcinoma",
+              "Descripción": "The most frequently seen skin cancer. It arises from basal cells of the epidermis and pilosebaceous units. Clinically it is divided into the following types: nodular, ulcerative, superficial, multicentric, erythematous, and sclerosing or morphea-like. More than 95% of these carcinomas occur in patients over 40. They develop on hair-bearing skin, most commonly on sun-exposed areas. Approximately 85% are found on the head and neck and the remaining 15% on the trunk and extremities. Basal cell carcinoma usually grows in a slow and indolent fashion. However, if untreated, the tumor may invade the subcutaneous fat, skeletal muscle and bone. Distant metastases are rare. Excision, curettage and irradiation cure most basal cell carcinomas.",
+              "Puntuación": 0.3758
+            },
+            {
+              "Nombre": "head and neck malignant neoplasia",
+              "Descripción": "A primary or metastatic malignant neoplasm affecting the head and neck. Representative examples include oral cavity squamous cell carcinoma, laryngeal squamous cell carcinoma, and salivary gland carcinoma.",
+              "Puntuación": 0.3756
+            },
+            {
+              "Nombre": "lung carcinoma",
+              "Descripción": "A carcinoma that arises from epithelial cells of the lung",
+              "Puntuación": 0.3748
+            },
+            {
+              "Nombre": "kidney neoplasm",
+              "Descripción": "Tumors or cancers of the KIDNEY.",
+              "Puntuación": 0.3736
+            },
+            {
+              "Nombre": "hearing loss",
+              "Descripción": "A partial or complete loss of hearing in one or both ears. It is classified as conductive, sensory, or central.",
+              "Puntuación": 0.3724
+            },
+            {
+              "Nombre": "skin squamous cell carcinoma",
+              "Descripción": "A carcinoma arising from the squamous cells of the epidermis. Skin squamous cell carcinoma is most commonly found on sun-exposed areas. The majority of the tumors are well-differentiated.",
+              "Puntuación": 0.3719
+            },
+            {
+              "Nombre": "nodular melanoma",
+              "Descripción": "An aggressive form of melanoma, frequently metastasizing to the lymph nodes. It presents as a papular or nodular raised skin lesion. It comprises approximately 10-15% of melanomas. Morphologically, it often displays an epithelioid appearance.",
+              "Puntuación": 0.3707
+            },
+            {
+              "Nombre": "hereditary neoplastic syndrome",
+              "Descripción": "The inherited predisposition toward getting a tumor.",
+              "Puntuación": 0.3705
+            },
+            {
+              "Nombre": "colorectal adenocarcinoma",
+              "Descripción": "The most common type of colorectal carcinoma. It is characterized by the presence of malignant glandular epithelial cells invading through the muscularis mucosa into the submucosa. Histologic variants include mucinous adenocarcinoma, signet ring cell carcinoma, medullary carcinoma, serrated adenocarcinoma, cribriform comedo-type adenocarcinoma, and micropapillary adenocarcinoma.",
+              "Puntuación": 0.3701
+            },
+            {
+              "Nombre": "skin pigmentation",
+              "Descripción": "The degree of pigmentation of a skin of body.",
+              "Puntuación": 0.3696
+            },
+            {
+              "Nombre": "Endometrial Endometrioid Adenocarcinoma",
+              "Descripción": "A primary endometrial adenocarcinoma composed of neoplastic cells that form complex glandular patterns associated with budding and branching of the neoplastic glands. The neoplastic glands resemble those of the normal endometrium and may or may not be associated with sheet-like proliferation of malignant cells. Endometrioid adenocarcinoma is the most commonly seen morphologic variant of endometrial adenocarcinoma.",
+              "Puntuación": 0.3696
+            },
+            {
+              "Nombre": "Ovarian Endometrioid Adenocarcinoma with Squamous Differentiation",
+              "Descripción": "An endometrioid adenocarcinoma that arises from the ovary and exhibits squamous differentiation. The squamous cell component often has a cytologically benign appearance.",
+              "Puntuación": 0.3696
             }
           ]
         }

@@ -52,7 +52,7 @@ class OpenTargetsClient(BaseClient):
                         }
                     }
                 }
-                associatedDiseases(page: {index: 0, size: 5}) {
+                associatedDiseases {
                     rows {
                         disease {
                             id
@@ -62,7 +62,7 @@ class OpenTargetsClient(BaseClient):
                         score
                     }
                 }
-                interactions(scoreThreshold: 0.8, page: {index: 0, size: 30}) {
+                interactions(scoreThreshold: 0.8) {
                     count
                     rows {
                         intA
