@@ -155,6 +155,20 @@ El sistema expone una API REST organizada en tres stages:
 ### Stage 3: Ejecución (POST)
 - `/stage3/start_workflow` - Ejecutar workflow y obtener resultados
 
+### Documentación Interactiva
+
+La documentación completa de todos los endpoints está disponible a través de Swagger UI cuando el servidor está ejecutándose:
+
+```
+http://localhost:4999/docs
+```
+
+Esta interfaz interactiva permite:
+- Explorar todos los endpoints disponibles
+- Ver parámetros requeridos y opcionales
+- Probar las llamadas a la API directamente desde el navegador
+- Consultar ejemplos de request/response para cada endpoint
+
 ## Workflows Disponibles
 
 El sistema ofrece varios workflows predefinidos:
