@@ -1,6 +1,7 @@
 from typing import Union, List, Dict, Any
 
 import pandas as pd
+from rarediseasefinder.core.constants import NOT_FOUND_MESSAGE, NO_DATA_MARKER
 
 
 class DataframesUtils:
@@ -92,8 +93,8 @@ class DataframesUtils:
             pd.DataFrame: DataFrame resultante de la unión.
         """
         if not df_list:
-            return pd.DataFrame()
-            
+            return pd.DataFrame({NO_DATA_MARKER: [NOT_FOUND_MESSAGE]})
+
         # Verificar si son DataFrames o diccionarios
         if all(isinstance(item, pd.DataFrame) for item in df_list):
             # Si son todos DataFrames, concatenarlos

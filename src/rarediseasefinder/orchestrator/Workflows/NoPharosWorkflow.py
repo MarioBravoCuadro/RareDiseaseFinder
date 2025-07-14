@@ -143,6 +143,10 @@ class NoPharosWorkflow(IWorkflow):
                     {
                         "METHOD_ID": "ensembl_id",
                         "METHOD_PARSER_FILTERS": ""
+                    },
+                    {
+                        "METHOD_ID": "external_links",
+                        "METHOD_PARSER_FILTERS": ""
                     }
                 ]
             },
