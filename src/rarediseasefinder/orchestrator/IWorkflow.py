@@ -1,8 +1,7 @@
 from abc import abstractmethod, ABC
-from typing import List, Dict, Any
+from typing import Any
 
-from src.rarediseasefinder.orchestrator.IWorkflowStep import IWorkflowStep
-from src.rarediseasefinder.orchestrator.WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
+from .WorkflowSteps.BaseWorkflowStep import BaseWorkflowStep
 
 
 class IWorkflow(ABC):
