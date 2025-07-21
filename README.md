@@ -8,6 +8,9 @@
 
 RareDiseaseFinder es un sistema de búsqueda de información sobre enfermedades raras que funciona como el **backend** de un sistema más amplio. Este sistema permite realizar búsquedas exhaustivas de información biomédica a través de múltiples fuentes de datos especializadas, proporcionando resultados integrados y estructurados.
 
+### 🎥 Demo del Sistema
+**Frontend en funcionamiento**: https://youtu.be/ESQv-lsty60
+
 ### Arquitectura del Sistema
 
 Este backend está diseñado para trabajar en conjunto con un frontend desarrollado en React que se encuentra en el repositorio: https://github.com/jennygatv/front-RD/
