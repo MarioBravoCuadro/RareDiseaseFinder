@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from typing import Dict, Any
 import tempfile
+import chromedriver_autoinstaller
 
 from ..core.BaseRetriever import BaseRetriever
 
@@ -23,6 +24,7 @@ class BaseScraper(BaseRetriever, ABC):
         self.unique_dir = self._tmpdir.name
         self.chrome_options = self.getOptionsChromeDriver()
         self.chrome_options.add_argument(f"--user-data-dir={self.unique_dir}")
+        chromedriver_autoinstaller.install()
         
         try:
             self.driver = webdriver.Chrome(options=self.chrome_options)
